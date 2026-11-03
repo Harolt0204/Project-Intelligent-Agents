@@ -1,0 +1,59 @@
+{
+  "runs": [
+    {
+      "seed": 42,
+      "before": 22.42,
+      "after": 135.66,
+      "final_threshold_met": false,
+      "training_seconds": 8.463964399998076,
+      "total_seconds": 13.090317199996207,
+      "visited_states": 573,
+      "possible_states": 10000,
+      "training_input_observations": 30000,
+      "outside_range_counts_by_dimension": [
+        0,
+        6,
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 43,
+      "before": 21.71,
+      "after": 104.29,
+      "final_threshold_met": false,
+      "training_seconds": 8.993965100031346,
+      "total_seconds": 12.826650300004985,
+      "visited_states": 307,
+      "possible_states": 10000,
+      "training_input_observations": 30000,
+      "outside_range_counts_by_dimension": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "seed": 44,
+      "before": 24.16,
+      "after": 133.48,
+      "final_threshold_met": false,
+      "training_seconds": 8.989902599947527,
+      "total_seconds": 12.883037699968554,
+      "visited_states": 411,
+      "possible_states": 10000,
+      "training_input_observations": 30000,
+      "outside_range_counts_by_dimension": [
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "mean_before": 22.763333333333335,
+  "mean_after": 124.47666666666665,
+  "std_across_seed_means": 14.301846811591224,
+  "note": "Piloto; no sustituye la comparaci\u00f3n formal de Tier 1"
+}

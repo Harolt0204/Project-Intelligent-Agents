@@ -1,0 +1,20 @@
+[
+  {
+    "seed": 42,
+    "training_steps": 200000,
+    "updates": 49751,
+    "final_100_returns_reproduced_exactly": true
+  },
+  {
+    "seed": 43,
+    "training_steps": 200000,
+    "updates": 49751,
+    "final_100_returns_reproduced_exactly": true
+  },
+  {
+    "seed": 44,
+    "training_steps": 200000,
+    "updates": 49751,
+    "final_100_returns_reproduced_exactly": true
+  }
+]

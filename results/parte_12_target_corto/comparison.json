@@ -1,0 +1,58 @@
+{
+  "summaries": [
+    {
+      "target_interval": 500,
+      "final_mean_100_episodes": 104.10333333333334,
+      "std_across_seed_means": 35.98216440898957,
+      "final_returns_by_seed": {
+        "42": 53.25,
+        "43": 127.94,
+        "44": 131.12
+      },
+      "final_max_q_on_256_probe_states_by_seed": {
+        "42": 79.42591857910156,
+        "43": 72.42790985107422,
+        "44": 75.56182861328125
+      },
+      "mean_training_seconds": 43.36109176668106
+    },
+    {
+      "target_interval": 2000,
+      "final_mean_100_episodes": 75.36999999999999,
+      "std_across_seed_means": 27.888094233919965,
+      "final_returns_by_seed": {
+        "42": 75.1,
+        "43": 109.66,
+        "44": 41.35
+      },
+      "final_max_q_on_256_probe_states_by_seed": {
+        "42": 24.783506393432617,
+        "43": 24.130748748779297,
+        "44": 24.576679229736328
+      },
+      "mean_training_seconds": 38.44626743330931
+    }
+  ],
+  "config_checks": [
+    {
+      "seed": 42,
+      "changed_fields": [
+        "target_sync_every_environment_steps"
+      ]
+    },
+    {
+      "seed": 43,
+      "changed_fields": [
+        "target_sync_every_environment_steps"
+      ]
+    },
+    {
+      "seed": 44,
+      "changed_fields": [
+        "target_sync_every_environment_steps"
+      ]
+    }
+  ],
+  "baseline_prefix_reproduces_original": true,
+  "note": "50k pasos; no equivale a entrenar 200k ni confirma estabilidad posterior. Curvas de 10 episodios, resumen final de 100."
+}

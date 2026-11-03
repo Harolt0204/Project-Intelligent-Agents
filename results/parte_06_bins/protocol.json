@@ -1,0 +1,22 @@
+{
+  "bins": [
+    6,
+    10,
+    20
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "training_steps_per_run": 200000,
+  "eval_every": 10000,
+  "alpha": 0.1,
+  "gamma": 0.99,
+  "epsilon": "1 -> 0.05 durante el primer 80% de pasos",
+  "periodic_eval_episodes": 10,
+  "initial_final_eval_episodes": 100,
+  "band": "Desviaci\u00f3n est\u00e1ndar entre medias de semillas, ddof=0",
+  "training_order": "6, 10, 20 bins; semillas 42, 43, 44; secuencial",
+  "note": "Comparaci\u00f3n tabular; DQN y an\u00e1lisis final de Tier 1 pendientes"
+}

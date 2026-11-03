@@ -1,0 +1,74 @@
+[
+  {
+    "method": "Q-learning (6 intervalos)",
+    "final_mean_100_episodes": 295.33,
+    "std_across_seed_means": 109.05952258591024,
+    "final_returns_by_seed": {
+      "42": 295.51,
+      "43": 428.81,
+      "44": 161.67
+    },
+    "mean_training_seconds": 48.640411533337705,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Tabular: solo se comprob\u00f3 con 100 episodios al inicio/final; DQN: confirmaciones adicionales"
+  },
+  {
+    "method": "Q-learning (10 intervalos)",
+    "final_mean_100_episodes": 359.7033333333333,
+    "std_across_seed_means": 102.56590152460785,
+    "final_returns_by_seed": {
+      "42": 406.04,
+      "43": 217.5,
+      "44": 455.57
+    },
+    "mean_training_seconds": 45.853242233298566,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Tabular: solo se comprob\u00f3 con 100 episodios al inicio/final; DQN: confirmaciones adicionales"
+  },
+  {
+    "method": "Q-learning (20 intervalos)",
+    "final_mean_100_episodes": 209.0,
+    "std_across_seed_means": 39.24673064940146,
+    "final_returns_by_seed": {
+      "42": 264.22,
+      "43": 186.24,
+      "44": 176.54
+    },
+    "mean_training_seconds": 44.83238093335725,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Tabular: solo se comprob\u00f3 con 100 episodios al inicio/final; DQN: confirmaciones adicionales"
+  },
+  {
+    "method": "DQN",
+    "final_mean_100_episodes": 9.373333333333335,
+    "std_across_seed_means": 0.00942809041582127,
+    "final_returns_by_seed": {
+      "42": 9.36,
+      "43": 9.38,
+      "44": 9.38
+    },
+    "mean_training_seconds": 216.7708307999031,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Tabular: solo se comprob\u00f3 con 100 episodios al inicio/final; DQN: confirmaciones adicionales"
+  }
+]

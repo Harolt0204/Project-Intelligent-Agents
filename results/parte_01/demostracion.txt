@@ -1,0 +1,18 @@
+Gymnasium: 1.4.0
+Observaciones: Box([-4.8               -inf -0.41887903        -inf], [4.8               inf 0.41887903        inf], (4,), float32)
+Acciones: Discrete(2) (0: izquierda, 1: derecha)
+Límite de pasos por episodio: 500
+Umbral registrado por Gymnasium: 475.0
+Criterio del proyecto: retorno medio >= 475 en 100 episodios.
+Este ejercicio es una demostración, no una evaluación del proyecto.
+
+Estado inicial [posición, velocidad, ángulo, velocidad angular]:
+[ 0.0273956  -0.00611216  0.03585979  0.0197368 ]
+Paso 1: acción=0, recompensa=1.0, nuevo estado=[ 0.02727336 -0.20172954  0.03625453  0.32351476]
+Paso 2: acción=1, recompensa=1.0, nuevo estado=[ 0.02323877 -0.00714208  0.04272482  0.04248186]
+Paso 3: acción=1, recompensa=1.0, nuevo estado=[ 0.02309593  0.187342    0.04357446 -0.23642075]
+Episodio 1: pasos=30, retorno=30, terminated=True, truncated=False
+Episodio 2: pasos=20, retorno=20, terminated=True, truncated=False
+Episodio 3: pasos=20, retorno=20, terminated=True, truncated=False
+Episodio 4: pasos=22, retorno=22, terminated=True, truncated=False
+Episodio 5: pasos=26, retorno=26, terminated=True, truncated=False

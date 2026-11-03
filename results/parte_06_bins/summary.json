@@ -1,0 +1,44 @@
+[
+  {
+    "bins": 6,
+    "states": 1296,
+    "final_mean": 295.33,
+    "final_std_across_seeds": 109.05952258591024,
+    "final_return_by_seed": {
+      "42": 295.51,
+      "43": 428.81,
+      "44": 161.67
+    },
+    "mean_training_seconds": 48.640411533337705,
+    "mean_visited_states": 368.6666666666667,
+    "seeds_meeting_final_threshold": 0
+  },
+  {
+    "bins": 10,
+    "states": 10000,
+    "final_mean": 359.7033333333333,
+    "final_std_across_seeds": 102.56590152460785,
+    "final_return_by_seed": {
+      "42": 406.04,
+      "43": 217.5,
+      "44": 455.57
+    },
+    "mean_training_seconds": 45.853242233298566,
+    "mean_visited_states": 1228.3333333333333,
+    "seeds_meeting_final_threshold": 0
+  },
+  {
+    "bins": 20,
+    "states": 160000,
+    "final_mean": 209.0,
+    "final_std_across_seeds": 39.24673064940146,
+    "final_return_by_seed": {
+      "42": 264.22,
+      "43": 186.24,
+      "44": 176.54
+    },
+    "mean_training_seconds": 44.83238093335725,
+    "mean_visited_states": 3823.3333333333335,
+    "seeds_meeting_final_threshold": 0
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "training_steps_per_run": 200000,
+  "parameter_selection": "Configuraci\u00f3n fijada antes del entrenamiento; no se barre en Tier 1",
+  "model_selection": "Se entrega el modelo final, sin elegir el mejor checkpoint",
+  "comparison": "Q-learning ya registrado con 200000 pasos; mismas semillas y evaluaciones",
+  "order": "Secuencial en CPU, sin ejecutar otros entrenamientos a la vez"
+}

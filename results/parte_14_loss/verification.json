@@ -1,0 +1,26 @@
+[
+  {
+    "seed": 42,
+    "only_changed_field": "loss",
+    "steps": 50000,
+    "updates": 12251,
+    "final_100_returns_reproduced_exactly": true,
+    "final_q_probe_fraction_above_100": 0.83203125
+  },
+  {
+    "seed": 43,
+    "only_changed_field": "loss",
+    "steps": 50000,
+    "updates": 12251,
+    "final_100_returns_reproduced_exactly": true,
+    "final_q_probe_fraction_above_100": 0.759765625
+  },
+  {
+    "seed": 44,
+    "only_changed_field": "loss",
+    "steps": 50000,
+    "updates": 12251,
+    "final_100_returns_reproduced_exactly": true,
+    "final_q_probe_fraction_above_100": 0.701171875
+  }
+]

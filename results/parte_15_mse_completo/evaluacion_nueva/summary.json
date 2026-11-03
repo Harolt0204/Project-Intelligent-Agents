@@ -1,0 +1,57 @@
+[
+  {
+    "method": "Q-learning (6 intervalos)",
+    "mean_return": 285.28333333333336,
+    "std_across_training_seed_means": 112.59004110291262,
+    "means_by_training_seed": {
+      "42": 274.89,
+      "43": 428.08,
+      "44": 152.88
+    },
+    "models_meeting_475": 0
+  },
+  {
+    "method": "Q-learning (10 intervalos)",
+    "mean_return": 352.87000000000006,
+    "std_across_training_seed_means": 96.64443732914309,
+    "means_by_training_seed": {
+      "42": 394.7,
+      "43": 219.27,
+      "44": 444.64
+    },
+    "models_meeting_475": 0
+  },
+  {
+    "method": "Q-learning (20 intervalos)",
+    "mean_return": 208.12,
+    "std_across_training_seed_means": 47.738157344693,
+    "means_by_training_seed": {
+      "42": 274.02,
+      "43": 187.87,
+      "44": 162.47
+    },
+    "models_meeting_475": 0
+  },
+  {
+    "method": "DQN (Smooth L1 inicial)",
+    "mean_return": 47.080000000000005,
+    "std_across_training_seed_means": 24.01617094098613,
+    "means_by_training_seed": {
+      "42": 32.45,
+      "43": 80.94,
+      "44": 27.85
+    },
+    "models_meeting_475": 0
+  },
+  {
+    "method": "DQN (MSE)",
+    "mean_return": 234.18999999999997,
+    "std_across_training_seed_means": 187.95617804867885,
+    "means_by_training_seed": {
+      "42": 101.55,
+      "43": 101.02,
+      "44": 500.0
+    },
+    "models_meeting_475": 1
+  }
+]

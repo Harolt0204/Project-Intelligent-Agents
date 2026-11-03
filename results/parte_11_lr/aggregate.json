@@ -1,0 +1,46 @@
+{
+  "runs": [
+    {
+      "seed": 42,
+      "before": 9.36,
+      "after": 9.36,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "threshold_note": "Primer control observado; no es el instante exacto de aprendizaje",
+      "training_seconds": 220.1956854997552,
+      "total_seconds": 221.59363079996547,
+      "updates": 49751,
+      "target_syncs": 400,
+      "stored_experiences": 50000
+    },
+    {
+      "seed": 43,
+      "before": 9.24,
+      "after": 9.38,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "threshold_note": "Primer control observado; no es el instante exacto de aprendizaje",
+      "training_seconds": 239.71094960003393,
+      "total_seconds": 241.24270810000598,
+      "updates": 49751,
+      "target_syncs": 400,
+      "stored_experiences": 50000
+    },
+    {
+      "seed": 44,
+      "before": 9.38,
+      "after": 9.38,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "threshold_note": "Primer control observado; no es el instante exacto de aprendizaje",
+      "training_seconds": 190.40585729992017,
+      "total_seconds": 191.5248755000066,
+      "updates": 49751,
+      "target_syncs": 400,
+      "stored_experiences": 50000
+    }
+  ],
+  "mean_before": 9.326666666666668,
+  "mean_after": 9.373333333333335,
+  "std_across_seed_means": 0.00942809041582127
+}

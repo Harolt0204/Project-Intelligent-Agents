@@ -1,0 +1,5 @@
+method,final_mean_100_episodes,std_across_seed_means,final_returns_by_seed,mean_training_seconds,final_successful_seeds,first_confirmed_threshold_step_by_seed,threshold_note
+Q-learning (6 intervalos),295.33,109.05952258591024,"{'42': 295.51, '43': 428.81, '44': 161.67}",48.640411533337705,0,"[None, None, None]",Tabular: solo se comprobó con 100 episodios al inicio/final; DQN: confirmaciones adicionales
+Q-learning (10 intervalos),359.7033333333333,102.56590152460785,"{'42': 406.04, '43': 217.5, '44': 455.57}",45.853242233298566,0,"[None, None, None]",Tabular: solo se comprobó con 100 episodios al inicio/final; DQN: confirmaciones adicionales
+Q-learning (20 intervalos),209.0,39.24673064940146,"{'42': 264.22, '43': 186.24, '44': 176.54}",44.83238093335725,0,"[None, None, None]",Tabular: solo se comprobó con 100 episodios al inicio/final; DQN: confirmaciones adicionales
+DQN,9.373333333333335,0.00942809041582127,"{'42': 9.36, '43': 9.38, '44': 9.38}",216.7708307999031,0,"[None, None, None]",Tabular: solo se comprobó con 100 episodios al inicio/final; DQN: confirmaciones adicionales

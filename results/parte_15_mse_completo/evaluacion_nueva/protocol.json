@@ -1,0 +1,15 @@
+{
+  "purpose": "Evaluaci\u00f3n adicional al cerrar Tier 1, sin ajustes posteriores de estos modelos",
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "episodes_per_model": 100,
+  "evaluation_function_seed": "1000000 + 1000 * training_seed",
+  "environment_reset_seeds": "1010000 + 1000 * training_seed + episode_index",
+  "evaluation_action_seed": "1020000 + 1000 * training_seed",
+  "training": false,
+  "model_selection": "Final de 200000 pasos",
+  "parameter_selection_history": "La configuraci\u00f3n MSE fue elegida tras experimentos exploratorios anteriores"
+}

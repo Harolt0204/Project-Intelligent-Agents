@@ -1,0 +1,19 @@
+{
+  "training_steps": 50000,
+  "target_intervals": [
+    500,
+    2000
+  ],
+  "learning_rate": 0.0005,
+  "epsilon_decay_steps": 160000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "q_probe_states": 256,
+  "hypothesis": "Copias menos frecuentes podr\u00edan frenar el crecimiento de estimaciones Q",
+  "reference": "Tasa original 0.0005; no se usa la configuraci\u00f3n fallida de tasa menor",
+  "scope": "Prueba corta antes de decidir sobre entrenamientos completos",
+  "order": "Secuencial: target500 semillas42/43/44, luego target2000 semillas42/43/44"
+}

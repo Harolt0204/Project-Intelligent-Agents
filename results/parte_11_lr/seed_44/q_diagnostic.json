@@ -1,0 +1,25 @@
+{
+  "seed": 44,
+  "diagnostic_env_seed": 90044,
+  "observations": 1000,
+  "policy_used_for_diagnostic_states": "random",
+  "q_min": 584.0028076171875,
+  "q_max": 1465808.125,
+  "theoretical_upper_bound": 99.99999999999991,
+  "fraction_entries_above_bound": 1.0,
+  "fraction_entries_below_zero": 0.0,
+  "q_std_across_diagnostic_states_by_action": [
+    325500.4375,
+    229266.953125
+  ],
+  "greedy_action_counts": [
+    1000,
+    0
+  ],
+  "first_hidden_units_zero_on_all_diagnostic_states": 3,
+  "second_hidden_units_zero_on_all_diagnostic_states": 7,
+  "mean_loss_first_1000_updates": 0.4055772526189685,
+  "mean_loss_last_1000_updates": 257329.2895625,
+  "reason": "Reward <=1, gamma<1: discounted return <=1/(1-gamma); all rewards are nonnegative",
+  "limit": "Diagn\u00f3stico del modelo final en 1000 estados de una pol\u00edtica aleatoria; no demuestra la causa \u00fanica de un fallo"
+}

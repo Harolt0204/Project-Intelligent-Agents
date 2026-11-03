@@ -1,0 +1,38 @@
+{
+  "purpose": "Tier 1: comparaci\u00f3n tabular de granularidades",
+  "environment": "CartPole-v1",
+  "seed": 43,
+  "bins": 10,
+  "training_steps": 200000,
+  "alpha": 0.1,
+  "gamma": 0.99,
+  "epsilon_start": 1.0,
+  "epsilon_end": 0.05,
+  "decay_fraction": 0.8,
+  "eval_every": 10000,
+  "periodic_eval_episodes": 10,
+  "initial_and_final_eval_episodes": 100,
+  "success_threshold": 475,
+  "low": [
+    -2.4,
+    -3.0,
+    -0.20943951023931956,
+    -3.5
+  ],
+  "high": [
+    2.4,
+    3.0,
+    0.20943951023931956,
+    3.5
+  ],
+  "eval_reset_seeds": "seed + 10000 + episode; mismas condiciones por checkpoint",
+  "eval_action_rng_seed": 20043,
+  "python": "3.12.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+  "logical_cpus": 8,
+  "packages": {
+    "gymnasium": "1.4.0",
+    "numpy": "2.5.4"
+  }
+}

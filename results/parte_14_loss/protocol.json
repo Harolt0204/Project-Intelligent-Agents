@@ -1,0 +1,21 @@
+{
+  "training_steps": 50000,
+  "losses": [
+    "Smooth L1",
+    "MSE"
+  ],
+  "baseline_root": "results\\parte_12_target_corto\\target_500",
+  "reuse_existing_verified_controls": true,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "learning_rate": 0.0005,
+  "target_sync_every": 500,
+  "epsilon_decay_steps": 160000,
+  "q_probe_states": 256,
+  "hypothesis": "MSE podr\u00eda cambiar la respuesta a errores grandes y mejorar rendimiento",
+  "data_note": "Mismas reglas y semillas de recolecci\u00f3n; las experiencias pueden divergir cuando cambian las acciones aprendidas",
+  "scope": "Prueba corta; no selecci\u00f3n del mejor checkpoint ni entrenamiento largo"
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "seed": 42,
+    "steps": 200000,
+    "updates": 49751,
+    "learning_change_vs_initial": "loss only; added probe metadata is diagnostic",
+    "first_50k_evaluation_prefix_matches_short_run": true,
+    "final_100_returns_reproduced_exactly": true
+  },
+  {
+    "seed": 43,
+    "steps": 200000,
+    "updates": 49751,
+    "learning_change_vs_initial": "loss only; added probe metadata is diagnostic",
+    "first_50k_evaluation_prefix_matches_short_run": true,
+    "final_100_returns_reproduced_exactly": true
+  },
+  {
+    "seed": 44,
+    "steps": 200000,
+    "updates": 49751,
+    "learning_change_vs_initial": "loss only; added probe metadata is diagnostic",
+    "first_50k_evaluation_prefix_matches_short_run": true,
+    "final_100_returns_reproduced_exactly": true
+  }
+]

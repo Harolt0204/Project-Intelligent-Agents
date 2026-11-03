@@ -1,0 +1,25 @@
+{
+  "purpose": "Demostraci\u00f3n de una red Q sin entrenar",
+  "trained": false,
+  "seed": 42,
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "architecture": [
+    4,
+    64,
+    64,
+    2
+  ],
+  "parameters": 4610,
+  "observation": [
+    0.02739560417830944,
+    -0.006112155970185995,
+    0.03585979342460632,
+    0.019736802205443382
+  ],
+  "q_values": [
+    -0.04283241927623749,
+    -0.17526736855506897
+  ],
+  "greedy_action": 0
+}

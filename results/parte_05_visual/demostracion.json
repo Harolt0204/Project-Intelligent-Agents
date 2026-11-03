@@ -1,0 +1,21 @@
+{
+  "source_run": "results\\parte_04_tabular\\seed_42",
+  "env_seed": 10042,
+  "action_seed": 20042,
+  "epsilon": 0,
+  "learning": false,
+  "selection": "Primer episodio de evaluaci\u00f3n; no seleccionado por rendimiento",
+  "before": {
+    "return": 63.0,
+    "steps": 63,
+    "terminated": true,
+    "truncated": false
+  },
+  "after": {
+    "return": 90.0,
+    "steps": 90,
+    "terminated": true,
+    "truncated": false
+  },
+  "note": "Una demostraci\u00f3n visual no sustituye la evaluaci\u00f3n de 100 episodios"
+}

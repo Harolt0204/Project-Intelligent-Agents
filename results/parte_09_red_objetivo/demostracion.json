@@ -1,0 +1,35 @@
+{
+  "purpose": "Demostraci\u00f3n de una sola actualizaci\u00f3n, no entrenamiento completo",
+  "seed": 42,
+  "torch": "2.15.0+cpu",
+  "collected_steps": 64,
+  "batch_size": 8,
+  "updates": 1,
+  "learning_rate": 0.001,
+  "gamma": 0.99,
+  "loss": 0.5502718091011047,
+  "predictions_before": [
+    -0.03298087418079376,
+    -0.1469695270061493,
+    -0.028612632304430008,
+    -0.027048949152231216,
+    -0.1440812051296234,
+    -0.18752942979335785,
+    -0.1566655933856964,
+    -0.01822115108370781
+  ],
+  "targets": [
+    0.9742091298103333,
+    0.9742166996002197,
+    0.9822303056716919,
+    0.9773886799812317,
+    0.9702644944190979,
+    0.83408522605896,
+    0.9621273875236511,
+    0.9855436086654663
+  ],
+  "loss_after_same_targets": 0.5297897458076477,
+  "online_changed": true,
+  "target_unchanged_during_learning": true,
+  "networks_equal_after_sync": true
+}

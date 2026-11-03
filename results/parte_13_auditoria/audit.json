@@ -1,0 +1,118 @@
+{
+  "purpose": "Auditor\u00eda de integraci\u00f3n, no resultado experimental de CartPole",
+  "torch": "2.15.0+cpu",
+  "transitions": {
+    "collected": 600,
+    "capacity": 128,
+    "checked_retained_transitions": 128,
+    "episode_ends": {
+      "terminated": 13,
+      "truncated": 27
+    },
+    "final_observation_preserved_after_reset": true
+  },
+  "numeric": {
+    "numpy_target_max_abs_error": 8.063197931562627e-08,
+    "torch_loss": 0.5973546504974365,
+    "independent_numpy_loss": 0.5973546626915736,
+    "finite_difference_gradient": -0.4842158391582529,
+    "torch_gradient": -0.4842158555984497,
+    "gradient_norm": 0.7334511280059814
+  },
+  "known_mdp_controls": [
+    {
+      "seed": 42,
+      "updates": 4000,
+      "gamma": 0.9,
+      "target_sync_every_updates": 100,
+      "known_optimal_q": [
+        [
+          10.0,
+          9.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "learned_q": [
+        [
+          9.850468635559082,
+          8.85047721862793
+        ],
+        [
+          8.847877502441406,
+          9.847885131835938
+        ]
+      ],
+      "max_abs_error": 0.15212249755859375,
+      "greedy_actions": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 43,
+      "updates": 4000,
+      "gamma": 0.9,
+      "target_sync_every_updates": 100,
+      "known_optimal_q": [
+        [
+          10.0,
+          9.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "learned_q": [
+        [
+          9.855490684509277,
+          8.855491638183594
+        ],
+        [
+          8.8553466796875,
+          9.855345726013184
+        ]
+      ],
+      "max_abs_error": 0.1446542739868164,
+      "greedy_actions": [
+        0,
+        1
+      ]
+    },
+    {
+      "seed": 44,
+      "updates": 4000,
+      "gamma": 0.9,
+      "target_sync_every_updates": 100,
+      "known_optimal_q": [
+        [
+          10.0,
+          9.0
+        ],
+        [
+          9.0,
+          10.0
+        ]
+      ],
+      "learned_q": [
+        [
+          9.84399127960205,
+          8.843992233276367
+        ],
+        [
+          8.841004371643066,
+          9.841002464294434
+        ]
+      ],
+      "max_abs_error": 0.1589975357055664,
+      "greedy_actions": [
+        0,
+        1
+      ]
+    }
+  ],
+  "scope": "No se encontr\u00f3 error en estos controles; no demuestra ausencia de todos los errores ni estabilidad en CartPole"
+}

@@ -1,0 +1,76 @@
+{
+  "summaries": [
+    {
+      "loss": "Smooth L1",
+      "source_root": "results\\parte_12_target_corto\\target_500",
+      "final_mean_100_episodes": 104.10333333333334,
+      "std_across_seed_means": 35.98216440898957,
+      "final_returns_by_seed": {
+        "42": 53.25,
+        "43": 127.94,
+        "44": 131.12
+      },
+      "final_max_q_on_256_probe_states_by_seed": {
+        "42": 79.42591857910156,
+        "43": 72.42790985107422,
+        "44": 75.56182861328125
+      },
+      "final_successful_seeds": 0,
+      "first_confirmed_success_steps": {
+        "42": null,
+        "43": null,
+        "44": null
+      },
+      "mean_training_seconds": 43.36109176668106
+    },
+    {
+      "loss": "MSE",
+      "source_root": "results\\parte_14_loss\\mse",
+      "final_mean_100_episodes": 244.67999999999998,
+      "std_across_seed_means": 29.678824100695085,
+      "final_returns_by_seed": {
+        "42": 260.65,
+        "43": 203.08,
+        "44": 270.31
+      },
+      "final_max_q_on_256_probe_states_by_seed": {
+        "42": 123.48246002197266,
+        "43": 128.38795471191406,
+        "44": 146.14450073242188
+      },
+      "final_successful_seeds": 0,
+      "first_confirmed_success_steps": {
+        "42": null,
+        "43": null,
+        "44": null
+      },
+      "mean_training_seconds": 56.50986343331169
+    }
+  ],
+  "config_checks": [
+    {
+      "seed": 42,
+      "changed_fields": [
+        "loss"
+      ]
+    },
+    {
+      "seed": 43,
+      "changed_fields": [
+        "loss"
+      ]
+    },
+    {
+      "seed": 44,
+      "changed_fields": [
+        "loss"
+      ]
+    }
+  ],
+  "paired_return_differences_mse_minus_smooth_l1": {
+    "42": 207.39999999999998,
+    "43": 75.14000000000001,
+    "44": 139.19
+  },
+  "note": "Prueba de 50k; no demuestra estabilidad a 200k. Las p\u00e9rdidas num\u00e9ricas MSE y Smooth L1 no se comparan como si tuvieran la misma escala."
+}

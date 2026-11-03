@@ -1,0 +1,13 @@
+{
+  "seed": 44,
+  "before": 9.38,
+  "after": 41.35,
+  "final_threshold_met": false,
+  "first_confirmed_threshold_step": null,
+  "threshold_note": "Primer control observado; no es el instante exacto de aprendizaje",
+  "training_seconds": 38.15050569997402,
+  "total_seconds": 41.10464190004859,
+  "updates": 12251,
+  "target_syncs": 25,
+  "stored_experiences": 50000
+}
