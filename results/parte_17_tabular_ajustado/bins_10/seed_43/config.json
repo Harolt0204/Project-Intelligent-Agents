@@ -1,0 +1,40 @@
+{
+  "purpose": "Comparaci\u00f3n Tier 1 con par\u00e1metros documentados",
+  "environment": "CartPole-v1",
+  "seed": 43,
+  "bins": 10,
+  "training_steps": 200000,
+  "alpha": 0.1,
+  "gamma": 0.99,
+  "epsilon_start": 1.0,
+  "epsilon_end": 0.01,
+  "decay_fraction": 0.2,
+  "epsilon_decay_steps": 40000,
+  "eval_every": 10000,
+  "periodic_eval_episodes": 10,
+  "initial_and_final_eval_episodes": 100,
+  "success_threshold": 475,
+  "threshold_confirmation": "100 episodios cuando el control de 10 obtiene >=475",
+  "low": [
+    -2.4,
+    -0.75,
+    -0.20943951023931956,
+    -0.8726646259971648
+  ],
+  "high": [
+    2.4,
+    0.75,
+    0.20943951023931956,
+    0.8726646259971648
+  ],
+  "eval_reset_seeds": "seed + 10000 + episode; mismas condiciones por checkpoint",
+  "eval_action_rng_seed": 20043,
+  "python": "3.12.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+  "logical_cpus": 8,
+  "packages": {
+    "gymnasium": "1.4.0",
+    "numpy": "2.5.4"
+  }
+}

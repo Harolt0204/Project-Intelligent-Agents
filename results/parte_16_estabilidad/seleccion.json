@@ -1,0 +1,29 @@
+{
+  "purpose": "Búsqueda de una configuración DQN más estable y accesible desde notebook",
+  "training_steps_per_run": 200000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "candidate": "dqn_referencia",
+  "reference": "https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/dqn.py",
+  "changes_from_previous": [
+    "architecture 64/64 to 120/84",
+    "learning_rate 0.0005 to 0.00025",
+    "buffer 50000 to 10000",
+    "batch 64 to 128",
+    "learning_starts 1000 to 10000",
+    "train_every 4 to 10",
+    "epsilon_decay_steps 160000 to 100000"
+  ],
+  "unchanged": [
+    "own vanilla DQN",
+    "MSE",
+    "gamma 0.99",
+    "target every 500",
+    "reward +1",
+    "final model without checkpoint selection"
+  ],
+  "interpretation": "Cambios conjuntos: no permiten atribuir mejora a un único parámetro. Todas las semillas se conservan."
+}

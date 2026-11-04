@@ -1,0 +1,14 @@
+{
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "episodes_per_model": 100,
+  "new_evaluation_function_seed": "3000000 + 1000 * training_seed",
+  "new_environment_reset_seed": "3010000 + 1000 * training_seed + episode",
+  "purpose": "Verificar modelos finales y medir nuevos inicios tras fijar configuraci\u00f3n",
+  "model_selection": "Modelo final de 200000 pasos; no mejor checkpoint ni mejor semilla",
+  "selection_history": "Configuraci\u00f3n elegida tras pruebas exploratorias guardadas; estas semillas de entrenamiento no son un test independiente",
+  "new_sample_policy": "Muestra fijada antes de evaluar. No ajustar estos modelos ni seleccionar otra muestra despu\u00e9s de verla."
+}

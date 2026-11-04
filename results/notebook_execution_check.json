@@ -1,0 +1,7 @@
+{
+  "short_training_both_methods": true,
+  "editable_parameters_verified": true,
+  "overwrite_protected": true,
+  "steps": 1000,
+  "formal_result": false
+}

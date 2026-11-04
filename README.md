@@ -4,15 +4,22 @@ Proyecto de dos integrantes, desarrollado en una sola computadora, por etapas.
 El enunciado de referencia está en `Project_01_Reinforcement_Learning_DQN.md`.
 
 **Estado actual:** Tier 1 experimental consolidado. Resumen vigente en
-`report/cierre_tier1.md`; los ensayos exploratorios anteriores se conservan.
+`report/mejora_tier1.md`; los ensayos exploratorios anteriores se conservan.
 El artículo final, Tier 2, Tier 3 y defensa siguen pendientes.
+
+## Estudiar el código en VS Code
+
+Abre **Tier1_Explicado.ipynb** y selecciona el kernel de `.venv`. Incluye explicaciones,
+código real, parámetros editables, ejemplos, resultados y animación del carrito.
+Guía: [Cómo usar el notebook](COMO_USAR_NOTEBOOK.md). En otra computadora, después
+de preparar el proyecto, ejecuta **Preparar_Notebook.bat** una vez.
 
 ## Para el compañero: empezar aquí
 
 1. Clona este repositorio o descarga y extrae su ZIP.
 2. En Windows con Python 3.12, abre **Preparar_Proyecto.bat** una vez.
 3. Abre **Mostrar_Tier1.bat** para ver los agentes ya entrenados.
-4. Lee [el cierre de Tier 1](report/cierre_tier1.md) y la [guía completa de reproducción](REPRODUCIR_TIER1.md).
+4. Lee [los resultados actuales](report/mejora_tier1.md) y la [guía completa de reproducción](REPRODUCIR_TIER1.md).
 
 Se incluyen modelos y resultados: no necesitas repetir los entrenamientos para
 verlos funcionar. El entorno virtual se crea en cada computadora y no se sube a Git.
@@ -20,6 +27,19 @@ verlos funcionar. El entorno virtual se crea en cada computadora y no se sube a 
 **Para verlo funcionar:** abre `Mostrar_Tier1.bat` con doble clic y selecciona
 una simulación o la gráfica. Guía de presentación: `COMO_MOSTRAR_TIER1.md`.
 Se cargan los modelos ya entrenados; no se vuelve a entrenar.
+
+## Resultados actuales del Tier 1
+
+DQN propio ajustado: **498.60 ± 1.98**, con **3/3 semillas ≥475** en 100 episodios
+por modelo (495.79, 500, 500). Una evaluación adicional fijada antes de medirla
+obtuvo **499.00 ± 1.41** con nuevos inicios. No se eligió el mejor checkpoint.
+
+La mejor granularidad tabular actual fue 6 intervalos: **414.48 ± 62.85**;
+solo una de sus tres semillas alcanzó 475. Las configuraciones de 10 y 20
+empeoraron y se conservan para el análisis. Mismo presupuesto: 200000 pasos.
+
+Informe: [mejora_tier1.md](report/mejora_tier1.md). El historial de las partes
+1–15 que aparece más abajo corresponde a las versiones anteriores.
 
 ## Ruta de trabajo
 

@@ -72,7 +72,7 @@ def main():
                           "mean_training_seconds": float(np.mean(times)),
                           "final_successful_seeds": sum(value >= 475 for value in finals),
                           "first_confirmed_threshold_step_by_seed": first_confirmed,
-                          "threshold_note": "Tabular: solo se comprobó con 100 episodios al inicio/final; DQN: confirmaciones adicionales"})
+                          "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"})
     axes[0].axhline(475, color="#64748b", linestyle="--", label="Objetivo: 475 en 100 episodios")
     axes[0].set_title("Evaluación sin exploración")
     axes[0].set_ylabel("Retorno medio (10 episodios por checkpoint)")

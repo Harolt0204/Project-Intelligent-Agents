@@ -191,3 +191,15 @@ de prompts del artículo final. No sustituye la revisión de los integrantes.
   guardado. Se usó el entorno Python ya instalado para esta comprobación.
 - La instalación documentada está comprobada para Windows con Python 3.12;
   no se presenta una validación nueva en Linux o macOS.
+
+## Notebook y mejora de Tier 1
+
+- Solicitud del usuario: «dale, hazlo y mejoremos los resultados para cumplir con las instrucciones del proyecto», tras valorar un notebook central para explicar código y editar parámetros.
+- Asistencia: notebook educativo que utiliza los módulos originales, parámetros expuestos, instalación y ejecución de celdas mediante un kernel real. No se duplican los algoritmos dentro del cuaderno.
+- Optimización DQN inspirada en la configuración pública de CleanRL (red 120/84, lr 0.00025, memoria 10000, lote 128, inicio 10000 y ajuste cada 10 pasos); se conserva el agente propio, 200000 pasos y evaluación final sin selección del mejor checkpoint.
+- También se investigan rangos de discretización y exploración tabular. Los cambios conjuntos no se presentan como una ablación causal.
+- Se conservarán todas las semillas y los intentos anteriores, con configuración y resultados por ejecución. Las nuevas condiciones de evaluación se fijan en el protocolo antes de medirlas.
+- Referencias: https://docs.cleanrl.dev/rl-algorithms/dqn/ y https://gymnasium.farama.org/environments/classic_control/cart_pole/ .
+
+- Resultado de la mejora: DQN 498.60±1.98 (3/3 semillas ≥475), evaluación adicional 499.00±1.41. Mejor tabular actual: 6 intervalos, 414.48±62.85; las otras granularidades empeoraron y no se ocultaron.
+- Verificación: 22 pruebas unitarias, ejecución del notebook con kernel real, animación HTML y dos pruebas cortas de 1000 pasos que comprobaron parámetros editables y protección contra sobrescritura. Los retornos finales de los 12 modelos se reprodujeron exactamente y se evaluaron otros 1200 episodios con el protocolo fijado.

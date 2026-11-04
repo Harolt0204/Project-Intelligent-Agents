@@ -60,26 +60,35 @@ def collect_probe_states(seed, count=256):
 
 
 def train(args, seed):
+    # Los valores originales siguen siendo los defaults para reproducir el historial.
+    width = getattr(args, "hidden_widths", (64, 64))
+    buffer_size = getattr(args, "buffer_size", 50_000)
+    batch_size = getattr(args, "batch_size", 64)
+    learning_starts = getattr(args, "learning_starts", 1000)
+    train_every = getattr(args, "train_every", 4)
+    epsilon_end = getattr(args, "epsilon_end", 0.05)
+    gamma = getattr(args, "gamma", 0.99)
+    eval_every = getattr(args, "eval_every", 10_000)
     folder = args.output / f"seed_{seed}"
     folder.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(1)
     torch.use_deterministic_algorithms(True)
     loss_name = getattr(args, "loss", "smooth_l1")
-    agent = DQNAgent(seed=seed, learning_rate=args.learning_rate, gamma=0.99, loss=loss_name)
-    memory = ReplayBuffer(50_000, seed=seed + 30_000)
+    agent = DQNAgent(seed=seed, learning_rate=args.learning_rate, gamma=gamma, loss=loss_name, hidden_width=width)
+    memory = ReplayBuffer(buffer_size, seed=seed + 30_000)
     decay_steps = args.epsilon_decay_steps if args.epsilon_decay_steps is not None else 0.8 * args.steps
     probe_states = collect_probe_states(seed)
     config = {"environment": "CartPole-v1", "algorithm": "vanilla DQN propio",
-              "seed": seed, "training_steps": args.steps, "architecture": [4, 64, 64, 2],
-              "learning_rate": args.learning_rate, "gamma": 0.99, "buffer_size": 50_000,
-              "batch_size": 64, "learning_starts": 1000, "train_every": 4,
+              "seed": seed, "training_steps": args.steps, "architecture": [4, *width, 2],
+              "learning_rate": args.learning_rate, "gamma": gamma, "buffer_size": buffer_size,
+              "batch_size": batch_size, "learning_starts": learning_starts, "train_every": train_every,
               "target_sync_every_environment_steps": args.target_sync_every, "optimizer": "Adam",
               "loss": "MSE" if loss_name == "mse" else "Smooth L1", "gradient_norm_limit": 10,
-              "epsilon_start": 1, "epsilon_end": 0.05, "decay_fraction": decay_steps / args.steps,
+              "epsilon_start": 1, "epsilon_end": epsilon_end, "decay_fraction": decay_steps / args.steps,
               "epsilon_decay_steps": decay_steps,
               "q_probe": {"states": 256, "policy": "random", "seed": seed + 90_000,
                           "used_for_training": False},
-              "eval_every": 10_000, "periodic_eval_episodes": 10,
+              "eval_every": eval_every, "periodic_eval_episodes": 10,
               "initial_final_eval_episodes": 100, "success_threshold": 475,
               "threshold_confirmation": "100 episodios cuando el control de 10 obtiene >=475",
               "eval_reset_seeds": "seed + 10000 + episode",
@@ -143,12 +152,12 @@ def train(args, seed):
             timer = time.perf_counter()
             for step in range(1, args.steps + 1):
                 fraction = min((step - 1) / decay_steps, 1.0)
-                epsilon = 1 + fraction * (0.05 - 1)
+                epsilon = 1 + fraction * (epsilon_end - 1)
                 action = agent.choose_action(observation, epsilon)
                 following, reward, terminated, truncated, _ = env.step(action)
                 memory.add(observation, action, reward, following, terminated, truncated)
-                if step >= 1000 and step % 4 == 0:
-                    metrics = agent.learn(memory.sample(64))
+                if step >= learning_starts and len(memory) >= batch_size and step % train_every == 0:
+                    metrics = agent.learn(memory.sample(batch_size))
                     updates += 1
                     loss_writer.writerow([step, updates, metrics["loss"]])
                 if step % args.target_sync_every == 0:
@@ -167,7 +176,7 @@ def train(args, seed):
                         observation, _ = env.reset()
                     episode_return = 0.0
                     episode_steps = 0
-                if step % 10_000 == 0 or step == args.steps:
+                if step % eval_every == 0 or step == args.steps:
                     training_seconds += time.perf_counter() - timer
                     train_file.flush()
                     loss_file.flush()
@@ -198,7 +207,19 @@ def main():
     parser.add_argument("--epsilon-decay-steps", type=int, default=None,
                         help="Si se omite, usa el 80%% del presupuesto de pasos")
     parser.add_argument("--seeds", type=int, nargs="+", default=[42, 43, 44])
+    parser.add_argument("--hidden-widths", type=int, nargs=2, default=[64, 64])
+    parser.add_argument("--buffer-size", type=int, default=50_000)
+    parser.add_argument("--batch-size", type=int, default=64)
+    parser.add_argument("--learning-starts", type=int, default=1000)
+    parser.add_argument("--train-every", type=int, default=4)
+    parser.add_argument("--epsilon-end", type=float, default=0.05)
+    parser.add_argument("--gamma", type=float, default=0.99)
+    parser.add_argument("--eval-every", type=int, default=10_000)
     args = parser.parse_args()
+    if min(*args.hidden_widths, args.buffer_size, args.batch_size, args.learning_starts, args.train_every, args.eval_every) < 1:
+        parser.error("Tamaños e intervalos deben ser positivos")
+    if args.batch_size > args.buffer_size or not 0 <= args.epsilon_end <= 1 or not 0 <= args.gamma < 1:
+        parser.error("Revisar batch-size, buffer-size, epsilon-end y gamma (<1)")
     if args.steps < 1000 or len(set(args.seeds)) != len(args.seeds) or min(args.seeds) < 0:
         parser.error("Usar al menos 1000 pasos y semillas diferentes no negativas")
     if not np.isfinite(args.learning_rate) or args.learning_rate <= 0:

@@ -18,7 +18,7 @@ def main():
     args = parser.parse_args()
     torch.set_num_threads(1)
     config = json.loads((args.run / "config.json").read_text(encoding="utf-8"))
-    network = QNetwork(hidden_width=config["architecture"][1]).eval()
+    network = QNetwork(hidden_width=config["architecture"][1:-1]).eval()
     network.load_state_dict(torch.load(args.run / "online_final.pt", map_location="cpu", weights_only=True))
     rng = np.random.default_rng(config["seed"] + 20_000)
     env_seed = config["seed"] + 10_000

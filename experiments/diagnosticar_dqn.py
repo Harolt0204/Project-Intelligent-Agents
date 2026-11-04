@@ -19,7 +19,7 @@ def main():
     torch.set_num_threads(1)
     for folder in sorted(args.root.glob("seed_*")):
         config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
-        model = QNetwork(hidden_width=config["architecture"][1]).eval()
+        model = QNetwork(hidden_width=config["architecture"][1:-1]).eval()
         model.load_state_dict(torch.load(folder / "online_final.pt", map_location="cpu", weights_only=True))
         diagnostic_seed = config["seed"] + 90_000
         env = gym.make("CartPole-v1")

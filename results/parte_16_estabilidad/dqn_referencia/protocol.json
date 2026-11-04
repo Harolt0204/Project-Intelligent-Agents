@@ -1,0 +1,16 @@
+{
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "training_steps_per_run": 200000,
+  "learning_rate": 0.00025,
+  "loss": "mse",
+  "target_sync_every": 500,
+  "epsilon_decay_steps": 100000,
+  "parameter_selection": "Tasa fijada antes de esta ejecuci\u00f3n; conservar cada experimento en una carpeta distinta",
+  "model_selection": "Se entrega el modelo final, sin elegir el mejor checkpoint",
+  "comparison": "Comparar solo ejecuciones con igual presupuesto y calendario de exploraci\u00f3n",
+  "order": "Secuencial en CPU, sin ejecutar otros entrenamientos a la vez"
+}

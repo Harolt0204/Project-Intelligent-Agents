@@ -17,14 +17,16 @@ class QNetwork(nn.Module):
 
     def __init__(self, obs_dim=4, n_actions=2, hidden_width=64):
         super().__init__()
-        if min(obs_dim, n_actions, hidden_width) < 1:
+        # Un entero mantiene dos capas iguales; una pareja permite, por ejemplo, 120/84.
+        widths = (hidden_width, hidden_width) if isinstance(hidden_width, int) else tuple(hidden_width)
+        if len(widths) != 2 or min(obs_dim, n_actions, *widths) < 1:
             raise ValueError("Las dimensiones deben ser positivas")
         self.layers = nn.Sequential(
-            nn.Linear(obs_dim, hidden_width),
+            nn.Linear(obs_dim, widths[0]),
             nn.ReLU(),
-            nn.Linear(hidden_width, hidden_width),
+            nn.Linear(widths[0], widths[1]),
             nn.ReLU(),
-            nn.Linear(hidden_width, n_actions),
+            nn.Linear(widths[1], n_actions),
         )
 
     def forward(self, observations):

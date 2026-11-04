@@ -12,7 +12,17 @@ import numpy as np
 PROJECT = Path(__file__).resolve().parents[1]
 
 
-def load_policy(kind, seed):
+def model_folder(kind, seed, original=False):
+    pointer = PROJECT / "results/tier1_actual.json"
+    data = json.loads(pointer.read_text(encoding="utf-8")) if pointer.exists() and not original else {
+        "dqn_root": "results/parte_15_mse_completo", "tabular_root": "results/parte_06_bins"}
+    root = PROJECT / (data["tabular_root"] if kind == "tabular" else data["dqn_root"])
+    if kind == "tabular":
+        root = root / f"bins_{data.get('tabular_bins', 10)}"
+    return root / f"seed_{seed}"
+
+
+def load_policy(kind, seed, original=False):
     if kind == "random":
         rng = np.random.default_rng(seed + 20_000)
         return lambda observation: int(rng.integers(2))
@@ -21,9 +31,9 @@ def load_policy(kind, seed):
         from agents.tabular import QLearningAgent
         from envs.discretizers import CartPoleDiscretizer
 
-        folder = PROJECT / f"results/parte_06_bins/bins_10/seed_{seed}"
+        folder = model_folder(kind, seed, original)
         config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
-        discretizer = CartPoleDiscretizer(config["bins"])
+        discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3])
         if not (np.allclose(discretizer.low, config["low"]) and np.allclose(discretizer.high, config["high"])):
             raise ValueError("Los rangos no coinciden con el entrenamiento guardado")
         agent = QLearningAgent(discretizer.shape, seed=seed + 20_000)
@@ -37,9 +47,9 @@ def load_policy(kind, seed):
     from agents.dqn import QNetwork
 
     torch.set_num_threads(1)
-    folder = PROJECT / f"results/parte_15_mse_completo/seed_{seed}"
+    folder = model_folder(kind, seed, original)
     config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
-    network = QNetwork(hidden_width=config["architecture"][1]).eval()
+    network = QNetwork(hidden_width=config["architecture"][1:-1]).eval()
     network.load_state_dict(torch.load(folder / "online_final.pt", map_location="cpu", weights_only=True))
     rng = np.random.default_rng(seed + 20_000)
 
@@ -51,16 +61,18 @@ def load_policy(kind, seed):
     return choose
 
 
-def show(kind, seed=44, episodes=3, headless=False):
-    labels = {"random": "Acciones al azar", "tabular": "Q-learning, 10 intervalos", "dqn": "DQN con MSE"}
+def show(kind, seed=42, episodes=3, headless=False, original=False):
+    labels = {"random": "Acciones al azar", "tabular": "Q-learning entrenado", "dqn": "DQN con MSE"}
     print(f"\n{labels[kind]}" + (f" | ejecución entrenada: {seed}" if kind != "random" else ""), flush=True)
     if kind != "random":
         print("Cargando el modelo guardado. Durante esta muestra no aprende.", flush=True)
-    if kind == "dqn" and seed == 44:
-        print("Esta es la ejecución exitosa; el promedio de las tres fue 234,1 puntos.")
-    if kind == "tabular":
-        print("El promedio de las tres ejecuciones de Q-learning fue 359,7 puntos.")
-    policy = load_policy(kind, seed)
+    if kind != "random":
+        folder = model_folder(kind, seed, original)
+        mean = json.loads((folder / "summary.json").read_text(encoding="utf-8"))["after"]
+        means = [json.loads((folder.parent / f"seed_{s}/summary.json").read_text(encoding="utf-8"))["after"] for s in (42, 43, 44)]
+        print(f"Modelo: {folder.relative_to(PROJECT)}")
+        print(f"Su media de 100 episodios: {mean:.2f}. Media entre tres semillas: {np.mean(means):.2f}.")
+    policy = load_policy(kind, seed, original)
     env = gym.make("CartPole-v1", render_mode=None if headless else "human")
     returns = []
     try:
@@ -83,13 +95,14 @@ def show(kind, seed=44, episodes=3, headless=False):
 
 
 def print_summary():
-    folder = PROJECT / "results/parte_15_mse_completo"
-    rows = json.loads((folder / "comparacion/summary.json").read_text(encoding="utf-8"))
+    data = json.loads((PROJECT / "results/tier1_actual.json").read_text(encoding="utf-8"))
+    rows = json.loads((PROJECT / data["comparison"] / "summary.json").read_text(encoding="utf-8"))
     print("\nRESULTADOS FINALES DEL TIER 1")
     print("Cada promedio incluye tres entrenamientos y 100 intentos por modelo.\n")
     for row in rows:
         print(f"{row['method']}: {row['final_mean_100_episodes']:.1f} puntos de media")
-    print("\nDQN MSE: una ejecución obtuvo 500; las otras dos quedaron cerca de 101.")
+    for row in rows:
+        print(f"{row['method']}: {row['final_successful_seeds']}/3 semillas alcanzaron 475 en evaluación final.")
     print("El mejor intento de una demostración no es el promedio del experimento.")
     input("\nPulsa Enter para volver al menú...")
 
@@ -99,8 +112,8 @@ def menu():
         print("\nMOSTRAR TIER 1 — CARTPOLE")
         print("1. Ver acciones al azar")
         print("2. Ver Q-learning entrenado")
-        print("3. Ver DQN entrenado: ejecución exitosa")
-        print("4. Ver DQN: otra ejecución, para mostrar su variación")
+        print("3. Ver DQN actual entrenado")
+        print("4. Ver DQN anterior, para comparar antes y después")
         print("5. Abrir la gráfica de resultados")
         print("6. Ver el resumen de resultados")
         print("0. Salir")
@@ -110,9 +123,10 @@ def menu():
         try:
             if option in ("1", "2", "3", "4"):
                 kind = {"1": "random", "2": "tabular", "3": "dqn", "4": "dqn"}[option]
-                show(kind, seed=42 if option == "4" else 44)
+                show(kind, seed=42, original=option == "4")
             elif option == "5":
-                file = PROJECT / "results/parte_15_mse_completo/comparacion/tier1_comparacion.png"
+                data = json.loads((PROJECT / "results/tier1_actual.json").read_text(encoding="utf-8"))
+                file = PROJECT / data["comparison"] / "tier1_comparacion.png"
                 os.startfile(str(file))
             elif option == "6":
                 print_summary()
@@ -125,7 +139,8 @@ def menu():
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--agent", choices=("random", "tabular", "dqn"))
-    parser.add_argument("--seed", type=int, choices=(42, 43, 44), default=44)
+    parser.add_argument("--seed", type=int, choices=(42, 43, 44), default=42)
+    parser.add_argument("--original", action="store_true", help="Mostrar modelos previos a la mejora")
     parser.add_argument("--episodes", type=int, default=3)
     parser.add_argument("--headless", action="store_true", help="Comprobar sin abrir ventana")
     args = parser.parse_args()
@@ -134,7 +149,7 @@ def main():
     if args.agent is None:
         menu()
     else:
-        show(args.agent, args.seed, args.episodes, args.headless)
+        show(args.agent, args.seed, args.episodes, args.headless, args.original)
 
 
 if __name__ == "__main__":

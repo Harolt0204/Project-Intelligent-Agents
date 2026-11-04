@@ -1,0 +1,92 @@
+[
+  {
+    "method": "Q-learning (6 intervalos)",
+    "final_mean_100_episodes": 414.48,
+    "std_across_seed_means": 62.84899203646786,
+    "final_returns_by_seed": {
+      "42": 350.75,
+      "43": 500.0,
+      "44": 392.69
+    },
+    "mean_training_seconds": 58.88650313318552,
+    "final_successful_seeds": 1,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      160000,
+      null
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "Q-learning (10 intervalos)",
+    "final_mean_100_episodes": 89.08666666666666,
+    "std_across_seed_means": 5.4783837843737135,
+    "final_returns_by_seed": {
+      "42": 93.94,
+      "43": 81.43,
+      "44": 91.89
+    },
+    "mean_training_seconds": 81.07382853333063,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "Q-learning (20 intervalos)",
+    "final_mean_100_episodes": 26.28333333333333,
+    "std_across_seed_means": 2.4026420642469586,
+    "final_returns_by_seed": {
+      "42": 28.48,
+      "43": 22.94,
+      "44": 27.43
+    },
+    "mean_training_seconds": 50.70170580013655,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "DQN ajustado",
+    "final_mean_100_episodes": 498.59666666666664,
+    "std_across_seed_means": 1.9846130325302338,
+    "final_returns_by_seed": {
+      "42": 495.79,
+      "43": 500.0,
+      "44": 500.0
+    },
+    "mean_training_seconds": 243.47979069997868,
+    "final_successful_seeds": 3,
+    "first_confirmed_threshold_step_by_seed": [
+      190000,
+      160000,
+      160000
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "DQN MSE anterior",
+    "final_mean_100_episodes": 234.1,
+    "std_across_seed_means": 188.02017249930034,
+    "final_returns_by_seed": {
+      "42": 101.67,
+      "43": 100.63,
+      "44": 500.0
+    },
+    "mean_training_seconds": 250.15474133339012,
+    "final_successful_seeds": 1,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      200000
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  }
+]

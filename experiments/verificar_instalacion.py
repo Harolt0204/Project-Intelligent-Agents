@@ -24,19 +24,17 @@ def main():
             raise SystemExit(f"Versión diferente: {requirement.name}={installed}; se necesita {requirement.specifier}")
     print("Dependencias: versiones correctas.", flush=True)
 
-    from experiments.mostrar_tier1 import show
+    from experiments.mostrar_tier1 import show, model_folder
 
-    examples = [("tabular", "results/parte_06_bins/bins_10/seed_44"),
-                ("dqn", "results/parte_15_mse_completo/seed_44")]
-    for kind, relative in examples:
-        with (root / relative / "evaluation.csv").open(newline="", encoding="utf-8") as file:
+    for kind in ("tabular", "dqn"):
+        with (model_folder(kind, 42) / "evaluation.csv").open(newline="", encoding="utf-8") as file:
             final = list(csv.DictReader(file))[-1]
         expected = json.loads(final["returns"])[0]
-        actual = show(kind, seed=44, episodes=1, headless=True)[0]
+        actual = show(kind, seed=42, episodes=1, headless=True)[0]
         if actual != expected:
             raise SystemExit(f"La demostración {kind} no reprodujo el retorno guardado: {actual} vs {expected}")
-    required = ["report/cierre_tier1.md", "results/parte_15_mse_completo/comparacion/tier1_comparacion.png",
-                "results/parte_15_mse_completo/evaluacion_nueva/records.json"]
+    current = json.loads((root / "results/tier1_actual.json").read_text(encoding="utf-8"))
+    required = [current["report"], current["comparison"] + "/tier1_comparacion.png", "Tier1_Explicado.ipynb"]
     for relative in required:
         if not (root / relative).is_file():
             raise SystemExit(f"Falta un archivo del Tier 1: {relative}")

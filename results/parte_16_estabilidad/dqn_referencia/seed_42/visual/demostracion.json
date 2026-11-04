@@ -1,0 +1,9 @@
+{
+  "selection": "Primera semilla y primer episodio de evaluaci\u00f3n; sin buscar el mejor intento",
+  "env_seed": 10042,
+  "return": 500.0,
+  "steps": 500,
+  "terminated": false,
+  "truncated": true,
+  "model": "online_final.pt"
+}

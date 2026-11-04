@@ -3,6 +3,9 @@ venv/
 __pycache__/
 *.pyc
 .pytest_cache/
+.jupyter_runtime/
+.ipynb_checkpoints/
+.tier1_checks/
 .env
 .env.*
 .DS_Store

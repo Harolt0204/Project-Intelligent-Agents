@@ -46,7 +46,7 @@ def main():
             assert config["training_steps"] == 200_000
             evaluation_seed = 1_000_000 + 1000 * seed
             if bins is None:
-                model = QNetwork(hidden_width=config["architecture"][1]).eval()
+                model = QNetwork(hidden_width=config["architecture"][1:-1]).eval()
                 model.load_state_dict(torch.load(folder / "online_final.pt", map_location="cpu", weights_only=True))
                 returns = evaluate_network(model, evaluation_seed, 100)
             else:

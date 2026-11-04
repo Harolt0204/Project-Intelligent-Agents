@@ -1,0 +1,27 @@
+{
+  "steps": 200000,
+  "seeds": [42, 43, 44],
+  "bins": [6, 10, 20],
+  "eval_every": 10000,
+  "dqn": {
+    "learning_rate": 0.00025,
+    "hidden_widths": [120, 84],
+    "loss": "mse",
+    "gamma": 0.99,
+    "buffer_size": 10000,
+    "batch_size": 128,
+    "learning_starts": 10000,
+    "train_every": 10,
+    "target_sync_every": 500,
+    "epsilon_decay_steps": 100000,
+    "epsilon_end": 0.05
+  },
+  "tabular": {
+    "alpha": 0.1,
+    "gamma": 0.99,
+    "velocity_limit": 0.75,
+    "angular_velocity_limit": 0.8726646259971648,
+    "epsilon_decay_steps": 40000,
+    "epsilon_end": 0.01
+  }
+}

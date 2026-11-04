@@ -1,0 +1,9 @@
+{
+  "description": "Tier 1 mejorado: DQN 498.60, tres semillas con media >=475; todas las granularidades tabulares conservadas",
+  "dqn_root": "results/parte_16_estabilidad/dqn_referencia",
+  "tabular_root": "results/parte_17_tabular_ajustado",
+  "tabular_bins": 6,
+  "comparison": "results/parte_16_estabilidad/dqn_referencia/comparacion",
+  "report": "report/mejora_tier1.md",
+  "new_evaluation": "results/parte_16_estabilidad/evaluacion_nueva"
+}
