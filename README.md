@@ -5,7 +5,36 @@ El enunciado de referencia está en `Project_01_Reinforcement_Learning_DQN.md`.
 
 **Estado actual:** Tier 1 experimental consolidado. Resumen vigente en
 `report/qlearning_objetivo.md`; los ensayos exploratorios anteriores se conservan.
-El artículo final, Tier 2, Tier 3 y defensa siguen pendientes.
+Tier 2 y Tier 3 tienen implementación y cuadernos separados; sus estudios están
+en ejecución. El artículo final y la defensa siguen pendientes.
+
+## Tier 2 y Tier 3: notebooks separados
+
+- [Tier2_LunarLander.ipynb](Tier2_LunarLander.ipynb): DQN propio, estudios de tasa de aprendizaje y frecuencia de target, y ablación sin target.
+- [Tier3_DoubleDQN.ipynb](Tier3_DoubleDQN.ipynb): Double DQN y comparación con el mismo DQN base.
+
+Guía: [COMO_USAR_TIER2_TIER3.md](COMO_USAR_TIER2_TIER3.md). Los algoritmos se comparten
+entre notebooks. Los entrenamientos largos están desactivados inicialmente; los
+resultados pendientes se identifican sin presentarlos como evaluaciones terminadas.
+La comparación formal tiene siete grupos únicos × tres semillas, con 500000 pasos
+por modelo. DQN base se reutiliza en ambos estudios y Tier 3.
+
+Cada experimento puede reproducirse por separado. Estos comandos reutilizan
+ejecuciones completas; para volver a entrenar desde cero añade `--output` con
+una carpeta nueva, como explica la guía.
+
+| Figura / experimento | Comando desde esta carpeta |
+|---|---|
+| Tasa de aprendizaje | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base learning_rate_0p0001 learning_rate_0p001` |
+| Frecuencia de target | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base target_sync_every_500 target_sync_every_8000` |
+| Ablación | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base no_target` |
+| Double DQN | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base double` |
+
+Regenerar las cuatro figuras desde los CSV incluidos, sin entrenar:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.analizar_tier23
+```
 
 ## Estudiar el código en VS Code
 

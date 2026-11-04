@@ -77,7 +77,7 @@ class DQNAgent:
         # De las dos salidas solo comparamos la correspondiente a la acción tomada.
         predictions = self.online(observations).gather(1, actions[:, None]).squeeze(1)
         with torch.no_grad():
-            next_values = self.target(next_observations).max(dim=1).values
+            next_values = self.bootstrap_values(next_observations)
             # Un corte por tiempo no elimina el valor futuro: solo terminated.
             targets = rewards + self.gamma * (~terminated).float() * next_values
 
@@ -96,3 +96,7 @@ class DQNAgent:
     def sync_target(self):
         """Actualizar la referencia mediante una copia completa de la red online."""
         self.target.load_state_dict(self.online.state_dict())
+
+    def bootstrap_values(self, next_observations):
+        """DQN estándar: seleccionar y valorar con la red objetivo."""
+        return self.target(next_observations).max(dim=1).values

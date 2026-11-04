@@ -1,0 +1,52 @@
+{
+  "environment": "LunarLander-v3",
+  "environment_kwargs": {
+    "continuous": false,
+    "enable_wind": false,
+    "gravity": -10.0
+  },
+  "steps": 500000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "eval_every": 50000,
+  "periodic_eval_episodes": 10,
+  "final_eval_episodes": 100,
+  "threshold": 200.0,
+  "evaluation_base": 10000000,
+  "heldout_evaluation_base": 20000000,
+  "base": {
+    "hidden_widths": [
+      128,
+      128
+    ],
+    "learning_rate": 0.0005,
+    "loss": "smooth_l1",
+    "gamma": 0.99,
+    "buffer_size": 100000,
+    "batch_size": 64,
+    "learning_starts": 5000,
+    "train_every": 8,
+    "gradient_steps": 1,
+    "target_sync_every": 2000,
+    "epsilon_decay_steps": 150000,
+    "epsilon_end": 0.05
+  },
+  "studies": {
+    "learning_rate": [
+      0.0001,
+      0.0005,
+      0.001
+    ],
+    "target_sync_every": [
+      500,
+      2000,
+      8000
+    ]
+  },
+  "selection": "Modelos finales de 200000 pasos, sin escoger el mejor checkpoint. DQN base se reutiliza en ambos estudios, ablación y Tier 3.",
+  "reference": "https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/dqn.yml",
+  "reference_note": "Implementación propia. Protocolo fijado tras medir coste: red 128/128, lote 64, un ajuste cada ocho pasos. Todos los tratamientos usan 500000 pasos. Se conservan las pruebas parciales de coste, fuera de la comparación formal."
+}

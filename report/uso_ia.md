@@ -217,3 +217,17 @@ de prompts del artículo final. No sustituye la revisión de los integrantes.
 - El notebook y el menú usan la resolución guardada por dimensión. Las pruebas cubren inicialización, formas de tabla y fronteras; la variante no uniforme quedó como resultado negativo, no como configuración seleccionada.
 
 - Validación de esta actualización: 25 pruebas unitarias pasaron; se ejecutaron las 18 celdas del notebook y la animación tabular con kernel real. Una prueba de 1000 pasos desde los parámetros del notebook comprobó forma 2/2/6/6, alpha final, carga/evaluación reproducible y protección contra sobrescritura; no es un resultado formal.
+
+## Tier 2 y Tier 3 — LunarLander y Double DQN
+
+- Solicitud: «Hagámos el Tier 2 y Tier 3 ... ipynb separados ... o el mismo ... Tier 1». Se crean notebooks independientes que comparten algoritmos. Se conserva el notebook de Tier 1 modificado por el usuario.
+- Asistencia: instalación de Box2D en Python 3.12, verificación física, entrenamiento/carga de prueba y evaluación reproducida; DQN general de ocho entradas/cuatro acciones, ablación sin target y Double DQN propio.
+- Diseño: dos estudios de tres valores (learning_rate y target_sync_every), cambiando un parámetro a la vez; base reutilizada para ablación y Tier 3. Siete grupos únicos con tres semillas.
+- Antes de fijar el estudio se midió coste de configuración de referencia (red 256/256 y cuatro ajustes cada cuatro pasos) y red 128/128 con ajustes cada cuatro pasos. Las ejecuciones parciales se conservan como perfiles de coste, no como resultados formales.
+- Protocolo formal fijado: red 128/128, lote 64, replay 100000, gamma 0.99, Smooth L1, Adam 0.0005, inicio 5000, un ajuste cada ocho pasos, target cada 2000, epsilon de 1 a 0.05 en 150000 pasos; 500000 pasos por ejecución. Se estudiarán lr=[0.0001,0.0005,0.001] y target=[500,2000,8000].
+- Semillas en procesos independientes para reducir tiempo de espera; un hilo por proceso. Los tiempos no son benchmarks aislados. No se modifican recompensas ni se selecciona el mejor checkpoint.
+- Fuentes primarias consultadas: documentación Gymnasium de LunarLander, configuración pública DQN de RL Baselines3 Zoo y artículo Double DQN (van Hasselt, Guez y Silver). Solo se usan como referencias, no como agentes entregados.
+- Pruebas numéricas distinguen los objetivos DQN y Double; la ablación no conserva una target independiente. También se verifica que los estudios cambien un solo parámetro.
+- Verificación inicial: 28 pruebas unitarias pasaron y ambos notebooks se ejecutaron con kernel real y entrenamiento desactivado. Una prueba corta de LunarLander reprodujo exactamente los retornos al cargar el modelo guardado.
+- Una interrupción del primer grupo de tasa baja fue causada por la codificación de texto de la consola de Windows, no por los valores de aprendizaje. Se conserva el intento parcial en results/tier23_interrupted_encoding, marcado como no formal; se corrigió la consola UTF-8 y se repitió únicamente ese grupo desde cero con las mismas semillas. La base completa se reutilizó.
+- Errata documental: selection en el protocolo congelado menciona 200000 por arrastre de un piloto. El presupuesto numérico steps=500000 gobierna todas las ejecuciones formales. Se conserva el protocolo histórico y la aclaración aparece en el notebook, guía y discusión; no se alteran las huellas de resultados ya entrenados.
