@@ -33,7 +33,10 @@ def load_policy(kind, seed, original=False):
 
         folder = model_folder(kind, seed, original)
         config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
-        discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3])
+        discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3],
+                                         config.get("spacing_power", 1.0),
+                                         position_bins=config.get("bins_per_dimension", [None, None])[0],
+                                         velocity_bins=config.get("bins_per_dimension", [None, None])[1])
         if not (np.allclose(discretizer.low, config["low"]) and np.allclose(discretizer.high, config["high"])):
             raise ValueError("Los rangos no coinciden con el entrenamiento guardado")
         agent = QLearningAgent(discretizer.shape, seed=seed + 20_000)
@@ -71,6 +74,9 @@ def show(kind, seed=42, episodes=3, headless=False, original=False):
         mean = json.loads((folder / "summary.json").read_text(encoding="utf-8"))["after"]
         means = [json.loads((folder.parent / f"seed_{s}/summary.json").read_text(encoding="utf-8"))["after"] for s in (42, 43, 44)]
         print(f"Modelo: {folder.relative_to(PROJECT)}")
+        if kind == "tabular":
+            config = json.loads((folder / "config.json").read_text(encoding="utf-8"))
+            print(f"Intervalos por observación: {config.get('bins_per_dimension', [config['bins']] * 4)}")
         print(f"Su media de 100 episodios: {mean:.2f}. Media entre tres semillas: {np.mean(means):.2f}.")
     policy = load_policy(kind, seed, original)
     env = gym.make("CartPole-v1", render_mode=None if headless else "human")

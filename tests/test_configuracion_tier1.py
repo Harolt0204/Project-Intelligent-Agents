@@ -10,6 +10,21 @@ from envs.discretizers import CartPoleDiscretizer
 
 
 class ConfigurationTests(unittest.TestCase):
+    def test_different_resolution_per_variable_preserves_four_observations(self):
+        grid = CartPoleDiscretizer(10, position_bins=2, velocity_bins=2)
+        self.assertEqual(grid.shape, (2, 2, 10, 10))
+        self.assertEqual(grid.encode([-1, 1, -999, 999]), (0, 1, 0, 9))
+        self.assertEqual(int(np.prod(grid.shape)), 400)
+
+    def test_nonuniform_edges_are_symmetric_ordered_and_finer_near_zero(self):
+        grid = CartPoleDiscretizer(6, spacing_power=2)
+        uniform = CartPoleDiscretizer(6)
+        for edges, old in zip(grid.edges, uniform.edges):
+            self.assertTrue(np.all(np.diff(edges) > 0))
+            np.testing.assert_allclose(edges, -edges[::-1], atol=1e-14)
+            self.assertLess(edges[3] - edges[2], old[3] - old[2])
+        self.assertEqual(grid.encode([999, -999, 999, -999]), (5, 0, 5, 0))
+
     def test_saved_square_architecture_loads_with_two_widths(self):
         original = QNetwork(hidden_width=64)
         restored = QNetwork(hidden_width=[64, 64])

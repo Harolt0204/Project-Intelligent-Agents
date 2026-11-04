@@ -14,6 +14,7 @@ from jupyter_client import KernelManager
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--animacion", action="store_true", help="Comprobar la celda opcional del carrito en un notebook temporal")
+    parser.add_argument("--agente", choices=("dqn", "tabular"), default="dqn")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     runtime = root / ".jupyter_runtime"
@@ -24,7 +25,9 @@ def main():
     if args.animacion:
         setup = next(c.source for c in nb.cells if c.cell_type == "code" and "from pathlib import Path" in c.source)
         demo = next(c.source for c in nb.cells if c.cell_type == "code" and "VER_CARRITO = False" in c.source)
-        nb.cells = [nbformat.v4.new_code_cell(setup), nbformat.v4.new_code_cell("ACTUAL = actual()\n" + demo.replace("VER_CARRITO = False", "VER_CARRITO = True"))]
+        demo = demo.replace("VER_CARRITO = False", "VER_CARRITO = True")
+        demo = demo.replace("AGENTE = 'dqn'", f"AGENTE = '{args.agente}'")
+        nb.cells = [nbformat.v4.new_code_cell(setup), nbformat.v4.new_code_cell("ACTUAL = actual()\n" + demo)]
     nbformat.validate(nb)
     for i, cell in enumerate(nb.cells):
         if cell.cell_type == "code":
@@ -45,9 +48,10 @@ def main():
         html = [out["data"]["text/html"] for cell in nb.cells for out in cell.get("outputs", [])
                 if "data" in out and "text/html" in out["data"]]
         assert any("data:image/png;base64" in item for item in html), "No se encontró la animación HTML"
-        check = {"kernel_executable": sys.executable, "animation_html_verified": True,
+        check = {"kernel_executable": sys.executable, "agent": args.agente, "animation_html_verified": True,
                  "html_characters": [len(item) for item in html]}
-        (root / "results/notebook_animation_check.json").write_text(json.dumps(check, indent=2), encoding="utf-8")
+        filename = "notebook_animation_check.json" if args.agente == "dqn" else "notebook_animation_check_tabular.json"
+        (root / "results" / filename).write_text(json.dumps(check, indent=2), encoding="utf-8")
     else:
         nbformat.write(nb, path)
     print(f"Notebook verificado: {sum(c.cell_type == 'code' for c in nb.cells)} celdas ejecutadas sin errores")

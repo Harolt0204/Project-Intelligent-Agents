@@ -203,3 +203,17 @@ de prompts del artículo final. No sustituye la revisión de los integrantes.
 
 - Resultado de la mejora: DQN 498.60±1.98 (3/3 semillas ≥475), evaluación adicional 499.00±1.41. Mejor tabular actual: 6 intervalos, 414.48±62.85; las otras granularidades empeoraron y no se ocultaron.
 - Verificación: 22 pruebas unitarias, ejecución del notebook con kernel real, animación HTML y dos pruebas cortas de 1000 pasos que comprobaron parámetros editables y protección contra sobrescritura. Los retornos finales de los 12 modelos se reprodujeron exactamente y se evaluaron otros 1200 episodios con el protocolo fijado.
+
+## Búsqueda para que Q-learning alcance el umbral
+
+- Solicitud del usuario: «solo Q-learning no llega al objetivo verdad?, hay como ir mejorando algo para que llegue al objetivo?»
+- Asistencia: ensayos de inicialización optimista, espaciado de intervalos y alpha decreciente; diagnóstico de causas de terminación; prueba de resolución distinta por variable. Se mantienen las recompensas originales y la actualización Q-learning.
+- Las tres granularidades por dimensión del enunciado ya se estudiaron en las etapas anteriores. La búsqueda adicional prueba (2,2,6,6), (2,2,10,10), (2,2,20,20), preservando las cuatro observaciones y dedicando más detalle a las variables angulares.
+- Cada resultado agregado usa semillas 42/43/44 y 200000 pasos por ejecución. Se conservan los resultados negativos; no se sustituyen los modelos finales por sus mejores controles intermedios.
+- Evidencia en results/parte_18_qlearning; los diagnósticos reproducen las evaluaciones previas y documentan fallos por inclinación de la vara. Eso motiva el diseño, sin probar una causa única.
+
+- Resultado final de la búsqueda: Q-learning 2/2/6/6 con Q inicial=100 y alpha 0.1→0.01 obtuvo 487.19, 500 y 500 (495.73±6.04). Las variantes angulares 10 y 20 no alcanzaron el objetivo y permanecen en el repositorio.
+- La muestra fijada con base 5000000 se ejecutó tras fijar la configuración: 489.41, 500 y 500 (496.47±4.99), sin ajustes posteriores. También se reevaluó el DQN previamente guardado, sin reentrenarlo. Los 12 modelos finales reprodujeron exactamente sus 100 retornos de desarrollo.
+- El notebook y el menú usan la resolución guardada por dimensión. Las pruebas cubren inicialización, formas de tabla y fronteras; la variante no uniforme quedó como resultado negativo, no como configuración seleccionada.
+
+- Validación de esta actualización: 25 pruebas unitarias pasaron; se ejecutaron las 18 celdas del notebook y la animación tabular con kernel real. Una prueba de 1000 pasos desde los parámetros del notebook comprobó forma 2/2/6/6, alpha final, carga/evaluación reproducible y protección contra sobrescritura; no es un resultado formal.

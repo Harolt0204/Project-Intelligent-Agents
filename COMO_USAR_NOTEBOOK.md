@@ -6,6 +6,9 @@
 4. En **Seleccionar kernel**, elige **Entornos de Python → .venv\Scripts\python.exe**.
 5. Ejecuta las celdas en orden con **Shift+Enter** o **Ejecutar todo**.
 
+Después de actualizar el proyecto desde GitHub, usa **Reiniciar kernel** y luego
+**Ejecutar todo** para cargar las versiones nuevas del código y los parámetros.
+
 En esta computadora las dependencias del notebook ya están instaladas. En otra,
 ejecuta primero **Preparar_Proyecto.bat** y después **Preparar_Notebook.bat**.
 

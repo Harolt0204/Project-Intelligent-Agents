@@ -1,0 +1,75 @@
+{
+  "purpose": "Piloto did\u00e1ctico; comparaci\u00f3n formal de granularidades pendiente",
+  "environment": "CartPole-v1",
+  "seed": 42,
+  "bins": 6,
+  "training_steps": 200000,
+  "alpha": 0.1,
+  "gamma": 0.99,
+  "initial_q": 100.0,
+  "alpha_end": 0.01,
+  "alpha_decay_steps": 200000,
+  "alpha_schedule": "Lineal por pasos; constante si alpha_end=alpha",
+  "epsilon_start": 1.0,
+  "epsilon_end": 0.01,
+  "decay_fraction": 0.2,
+  "epsilon_decay_steps": 40000,
+  "eval_every": 10000,
+  "periodic_eval_episodes": 10,
+  "initial_and_final_eval_episodes": 100,
+  "success_threshold": 475,
+  "threshold_confirmation": "100 episodios cuando el control de 10 obtiene >=475",
+  "low": [
+    -2.4,
+    -0.75,
+    -0.20943951023931956,
+    -0.872664625997165
+  ],
+  "high": [
+    2.4,
+    0.75,
+    0.20943951023931956,
+    0.872664625997165
+  ],
+  "spacing_power": 2.0,
+  "edges": [
+    [
+      -1.0666666666666669,
+      -0.2666666666666667,
+      0.0,
+      0.26666666666666655,
+      1.0666666666666662
+    ],
+    [
+      -0.33333333333333337,
+      -0.08333333333333334,
+      0.0,
+      0.0833333333333333,
+      0.3333333333333332
+    ],
+    [
+      -0.09308422677303094,
+      -0.023271056693257734,
+      0.0,
+      0.02327105669325772,
+      0.09308422677303088
+    ],
+    [
+      -0.38785094488762895,
+      -0.09696273622190724,
+      0.0,
+      0.09696273622190718,
+      0.3878509448876287
+    ]
+  ],
+  "eval_reset_seeds": "seed + 10000 + episode; mismas condiciones por checkpoint",
+  "eval_action_rng_seed": 20042,
+  "python": "3.12.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+  "logical_cpus": 8,
+  "packages": {
+    "gymnasium": "1.4.0",
+    "numpy": "2.5.4"
+  }
+}

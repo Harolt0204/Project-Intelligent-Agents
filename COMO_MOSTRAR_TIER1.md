@@ -11,7 +11,7 @@ los modelos guardados: no hace falta volver a entrenarlos.
 3. **DQN actual entrenado:** usa el modelo actual de la semilla 42.
 4. **DQN anterior:** usa el DQN MSE previo a la mejora, semilla 42, para comparar.
 5. **Gráfica:** abre las curvas de entrenamiento y evaluación.
-6. **Resumen:** muestra en la consola los resultados finales de los cinco métodos.
+6. **Resumen:** muestra en la consola los resultados finales de los métodos comparados.
 
 Cada simulación muestra tres intentos. Al terminar vuelve al menú. Puedes
 interrumpir con Ctrl+C en la consola; cerrar la ventana de la simulación también
@@ -26,6 +26,8 @@ o derecha. Recibe un punto por paso y el intento dura como máximo 500 pasos.
 - Q-learning agrupa las observaciones en intervalos y consulta una tabla.
 - DQN recibe los cuatro números continuos y usa una red para puntuar acciones.
 - En esta demostración ambos usan lo aprendido sin modificar tabla ni red.
+- Q-learning actual usa 2/2/6/6 intervalos, Q inicial=100 y alpha de 0.1 a 0.01.
+  Sus tres medias finales fueron 487.19, 500 y 500; también superó 475 con nuevos inicios.
 - El menú imprime la media de 100 episodios del modelo mostrado y la media de
   las tres semillas. Los resultados actuales se indican en `results/tier1_actual.json`.
 - La opción 4 conserva un modelo anterior cuyo promedio fue cercano a 102;

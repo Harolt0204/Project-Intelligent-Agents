@@ -47,9 +47,14 @@ def cargar_modelo(folder):
         model = QNetwork(hidden_width=config["architecture"][1:-1]).eval()
         model.load_state_dict(torch.load(folder / "online_final.pt", weights_only=True, map_location="cpu"))
         return model, None, config
-    discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3])
+    discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3],
+                                     config.get("spacing_power", 1.0),
+                                     position_bins=config.get("bins_per_dimension", [None, None])[0],
+                                     velocity_bins=config.get("bins_per_dimension", [None, None])[1])
     if not np.allclose(discretizer.low, config["low"]) or not np.allclose(discretizer.high, config["high"]):
         raise ValueError("El discretizador no coincide con el modelo guardado")
+    if "edges" in config and not all(np.allclose(a, b) for a, b in zip(discretizer.edges, config["edges"])):
+        raise ValueError("Las fronteras no coinciden con el modelo guardado")
     model = QLearningAgent(discretizer.shape, seed=config["seed"] + 20_000)
     table = np.load(folder / "q_table.npy", allow_pickle=False)
     if table.shape != model.q.shape or not np.isfinite(table).all():
@@ -150,7 +155,9 @@ def entrenar(config, output, metodo="todos"):
         raise ValueError("Revisar pasos, intervalo y semillas independientes")
     dqn, tabular = config["dqn"], config["tabular"]
     numeric = [dqn["learning_rate"], dqn["gamma"], dqn["epsilon_end"], tabular["alpha"],
-               tabular["gamma"], tabular["epsilon_end"], tabular["velocity_limit"], tabular["angular_velocity_limit"]]
+               tabular["gamma"], tabular["epsilon_end"], tabular["velocity_limit"], tabular["angular_velocity_limit"],
+               tabular.get("initial_q", 0.0), tabular.get("spacing_power", 1.0),
+               tabular.get("alpha_end", tabular["alpha"])]
     if (not np.isfinite(numeric).all() or min(*dqn["hidden_widths"], dqn["batch_size"], dqn["buffer_size"], dqn["train_every"],
             dqn["target_sync_every"], dqn["learning_starts"], dqn["epsilon_decay_steps"]) < 1
             or dqn["batch_size"] > dqn["buffer_size"] or dqn["learning_rate"] <= 0
@@ -160,6 +167,12 @@ def entrenar(config, output, metodo="todos"):
             or not 0 <= tabular["gamma"] < 1 or not 0 <= tabular["epsilon_end"] <= 1
             or min(tabular["epsilon_decay_steps"], tabular["velocity_limit"], tabular["angular_velocity_limit"]) <= 0):
         raise ValueError("Parámetros de entrenamiento fuera de rango")
+    if not 0 < tabular.get("alpha_end", tabular["alpha"]) <= 1 or tabular.get("spacing_power", 1) <= 0:
+        raise ValueError("Revisar alpha_end y spacing_power")
+    for key in ("position_bins", "velocity_bins"):
+        value = tabular.get(key)
+        if value is not None and (isinstance(value, bool) or not isinstance(value, int) or value < 2):
+            raise ValueError(f"{key} debe ser un entero >=2 o no especificarse")
     output.mkdir(parents=True)
     (output / "protocol.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
     groups = []

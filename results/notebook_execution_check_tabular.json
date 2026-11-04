@@ -1,0 +1,14 @@
+{
+  "formal_result": false,
+  "steps": 1000,
+  "shape": [
+    2,
+    2,
+    6,
+    6
+  ],
+  "initial_q": 100,
+  "alpha_final_verified": true,
+  "loaded_evaluation_reproduced": true,
+  "overwrite_protected": true
+}

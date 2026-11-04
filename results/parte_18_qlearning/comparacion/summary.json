@@ -1,0 +1,74 @@
+[
+  {
+    "method": "Q-learning (2/2/6/6 intervalos)",
+    "final_mean_100_episodes": 495.73,
+    "std_across_seed_means": 6.038691911333117,
+    "final_returns_by_seed": {
+      "42": 487.19,
+      "43": 500.0,
+      "44": 500.0
+    },
+    "mean_training_seconds": 44.674911699995086,
+    "final_successful_seeds": 3,
+    "first_confirmed_threshold_step_by_seed": [
+      70000,
+      20000,
+      60000
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "Q-learning (2/2/10/10 intervalos)",
+    "final_mean_100_episodes": 163.83666666666667,
+    "std_across_seed_means": 43.19285769146973,
+    "final_returns_by_seed": {
+      "42": 136.22,
+      "43": 224.83,
+      "44": 130.46
+    },
+    "mean_training_seconds": 51.230584133261196,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      40000
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "Q-learning (2/2/20/20 intervalos)",
+    "final_mean_100_episodes": 170.21333333333334,
+    "std_across_seed_means": 24.869558813046027,
+    "final_returns_by_seed": {
+      "42": 136.99,
+      "43": 196.82,
+      "44": 176.83
+    },
+    "mean_training_seconds": 51.44176686690965,
+    "final_successful_seeds": 0,
+    "first_confirmed_threshold_step_by_seed": [
+      null,
+      null,
+      null
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  },
+  {
+    "method": "DQN ajustado",
+    "final_mean_100_episodes": 498.59666666666664,
+    "std_across_seed_means": 1.9846130325302338,
+    "final_returns_by_seed": {
+      "42": 495.79,
+      "43": 500.0,
+      "44": 500.0
+    },
+    "mean_training_seconds": 243.47979069997868,
+    "final_successful_seeds": 3,
+    "first_confirmed_threshold_step_by_seed": [
+      190000,
+      160000,
+      160000
+    ],
+    "threshold_note": "Consultar threshold_confirmation de cada config; el primer control no es el instante exacto de aprendizaje"
+  }
+]

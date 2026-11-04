@@ -4,7 +4,7 @@ Proyecto de dos integrantes, desarrollado en una sola computadora, por etapas.
 El enunciado de referencia está en `Project_01_Reinforcement_Learning_DQN.md`.
 
 **Estado actual:** Tier 1 experimental consolidado. Resumen vigente en
-`report/mejora_tier1.md`; los ensayos exploratorios anteriores se conservan.
+`report/qlearning_objetivo.md`; los ensayos exploratorios anteriores se conservan.
 El artículo final, Tier 2, Tier 3 y defensa siguen pendientes.
 
 ## Estudiar el código en VS Code
@@ -19,7 +19,7 @@ de preparar el proyecto, ejecuta **Preparar_Notebook.bat** una vez.
 1. Clona este repositorio o descarga y extrae su ZIP.
 2. En Windows con Python 3.12, abre **Preparar_Proyecto.bat** una vez.
 3. Abre **Mostrar_Tier1.bat** para ver los agentes ya entrenados.
-4. Lee [los resultados actuales](report/mejora_tier1.md) y la [guía completa de reproducción](REPRODUCIR_TIER1.md).
+4. Lee [los resultados actuales](report/qlearning_objetivo.md) y la [guía completa de reproducción](REPRODUCIR_TIER1.md).
 
 Se incluyen modelos y resultados: no necesitas repetir los entrenamientos para
 verlos funcionar. El entorno virtual se crea en cada computadora y no se sube a Git.
@@ -30,16 +30,23 @@ Se cargan los modelos ya entrenados; no se vuelve a entrenar.
 
 ## Resultados actuales del Tier 1
 
-DQN propio ajustado: **498.60 ± 1.98**, con **3/3 semillas ≥475** en 100 episodios
-por modelo (495.79, 500, 500). Una evaluación adicional fijada antes de medirla
-obtuvo **499.00 ± 1.41** con nuevos inicios. No se eligió el mejor checkpoint.
+| Método seleccionado | Media final ± DE | Nuevos inicios ± DE | Semillas ≥475 |
+|---|---:|---:|---:|
+| Q-learning (2/2/6/6 intervalos) | 495.73 ± 6.04 | 496.47 ± 4.99 | 3/3 en ambas evaluaciones |
+| DQN propio ajustado | 498.60 ± 1.98 | 498.61 ± 1.97 | 3/3 en ambas evaluaciones |
 
-La mejor granularidad tabular actual fue 6 intervalos: **414.48 ± 62.85**;
-solo una de sus tres semillas alcanzó 475. Las configuraciones de 10 y 20
-empeoraron y se conservan para el análisis. Mismo presupuesto: 200000 pasos.
+Cada modelo entrena 200000 pasos y se evalúa en 100 episodios. Q-learning pasó
+por 487.19, 500 y 500; con nuevos inicios obtuvo 489.41, 500 y 500.
+Se entregan modelos finales, sin elegir su mejor checkpoint.
 
-Informe: [mejora_tier1.md](report/mejora_tier1.md). El historial de las partes
-1–15 que aparece más abajo corresponde a las versiones anteriores.
+La tabla conserva cuatro observaciones: 2 intervalos para posición, 2 para velocidad,
+6 para ángulo y 6 para velocidad angular (144 estados). Empieza con Q=100 y reduce
+alpha de 0.1 a 0.01. Las variantes angulares de 10 y 20 también se probaron con los
+mismos parámetros y presupuesto; no alcanzaron 475 y se conservan en la comparación.
+
+Informe: [qlearning_objetivo.md](report/qlearning_objetivo.md). La [búsqueda tabular](report/busqueda_qlearning.md)
+incluye controles y resultados negativos. El cierre anterior permanece en
+[mejora_tier1.md](report/mejora_tier1.md); las partes 1–17 de abajo son el historial previo.
 
 ## Ruta de trabajo
 

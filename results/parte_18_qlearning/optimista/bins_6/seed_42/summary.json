@@ -1,0 +1,18 @@
+{
+  "seed": 42,
+  "before": 22.42,
+  "after": 396.74,
+  "final_threshold_met": false,
+  "first_confirmed_threshold_step": 60000,
+  "training_seconds": 38.0581618999131,
+  "total_seconds": 113.94893449998926,
+  "visited_states": 793,
+  "possible_states": 1296,
+  "training_input_observations": 200000,
+  "outside_range_counts_by_dimension": [
+    0,
+    16824,
+    0,
+    5304
+  ]
+}

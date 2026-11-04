@@ -1,0 +1,81 @@
+{
+  "purpose": "Buscar Q-learning tabular que alcance >=475 al final en tres semillas",
+  "steps_per_run": 200000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "baseline": "results/parte_17_tabular_ajustado",
+  "first_change": "initial_q: 0 to 100 = 1/(1-0.99)",
+  "unchanged": [
+    "original CartPole rewards",
+    "Q-learning update",
+    "alpha 0.1",
+    "gamma 0.99",
+    "velocity bounds 0.75 and 0.8726646259971648",
+    "epsilon decay 40000 to 0.01",
+    "final model, not best checkpoint"
+  ],
+  "planned_granularities": [
+    6,
+    10,
+    20
+  ],
+  "new_evaluation_base_if_selected": 5000000,
+  "new_evaluation_policy": "Fijada antes de evaluar. No ajustar modelos a esa muestra.",
+  "next_candidate": {
+    "folder": "centrado",
+    "initial_q": 100,
+    "spacing_power": 2.0,
+    "alpha": 0.1,
+    "alpha_end": 0.01,
+    "alpha_decay_steps": 200000,
+    "hypothesis": "Más resolución cerca de equilibrio y menores ajustes al final para reducir variación. Cambios conjuntos exploratorios, sin atribución causal aislada."
+  },
+  "diagnostic": "En evaluación documentada, la mayoría de fallos de las semillas débiles se debió al ángulo; detalle en diagnostico_fallos.json.",
+  "resolution_candidate": {
+    "folder": "resolucion",
+    "bins_per_dimension": [
+      [
+        2,
+        2,
+        6,
+        6
+      ],
+      [
+        2,
+        2,
+        10,
+        10
+      ],
+      [
+        2,
+        2,
+        20,
+        20
+      ]
+    ],
+    "initial_q": 100,
+    "alpha": 0.1,
+    "spacing_power": 1,
+    "hypothesis": "Dedicar resolución a ángulo y velocidad angular, con menos casillas totales. Misma recompensa, Q-learning y presupuesto."
+  },
+  "selection_rule": "Entre las tres granularidades compactas, priorizar número de semillas finales >=475 y después retorno medio. Siempre modelos finales de 200000 pasos. Declarado antes de terminar las tres granularidades.",
+  "stability_candidate": {
+    "folder": "resolucion_suave",
+    "change": "alpha final 0.01, lineal en 200000 pasos; resto igual a resolucion",
+    "initial_granularity": 6,
+    "extend_other_granularities_only_if_improved": true,
+    "new_evaluation_used_for_tuning": false,
+    "extended_after_three_seed_success": true
+  },
+  "selected_family": "resolucion_suave",
+  "selected_bins": 6,
+  "selected_development_means": {
+    "42": 487.19,
+    "43": 500.0,
+    "44": 500.0
+  },
+  "selection_data": "Solo evaluación de desarrollo; no se usa evaluacion_nueva para seleccionar"
+}

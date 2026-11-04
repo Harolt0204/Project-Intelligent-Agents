@@ -54,16 +54,18 @@ presenta como una instalación comprobada.
 Abre **Mostrar_Tier1.bat** y elige:
 
 - **1:** acciones aleatorias.
-- **2:** Q-learning actual de 6 intervalos, semilla 42.
+- **2:** Q-learning actual de 2/2/6/6 intervalos, semilla 42.
 - **3:** DQN ajustado actual, semilla 42.
 - **4:** DQN MSE anterior, semilla 42, para comparar antes y después.
 - **5:** gráfica comparativa.
 - **6:** resultados resumidos.
 
-La demostración es de un modelo individual. DQN ajustado obtuvo 498.60 de media
-entre tres semillas, todas por encima de 475. La mejor granularidad tabular actual
-fue 6 intervalos, con 414.48. En la versión anterior DQN MSE obtuvo 234.10; esa
-versión se conserva en la opción 4. Los resultados actuales están en report/mejora_tier1.md.
+La demostración es de un modelo individual. Q-learning obtuvo 495.73 de media
+entre tres semillas y DQN 498.60; los seis modelos seleccionados superan 475.
+La evaluación adicional de nuevos inicios mantuvo ese resultado en las tres semillas
+de cada método. El estudio tabular también conserva las variantes de 10 y 20
+intervalos angulares, que no alcanzaron el objetivo.
+Los resultados actuales están en report/qlearning_objetivo.md.
 La guía de explicación está en `COMO_MOSTRAR_TIER1.md`.
 
 Comandos equivalentes:
@@ -75,9 +77,12 @@ Comandos equivalentes:
 
 ## 4. Leer resultados y reconstruir figuras
 
-- `report/mejora_tier1.md`: protocolo, métricas y límites actuales.
+- `report/qlearning_objetivo.md`: protocolo, métricas y límites actuales.
+- `report/busqueda_qlearning.md`: todos los intentos tabulares, incluidos los negativos.
+- `results/parte_18_qlearning`: modelos tabulares actuales, comparación y evaluación nueva.
+- `report/mejora_tier1.md`: cierre anterior de la mejora DQN.
 - `results/parte_16_estabilidad`: DQN ajustado, comparación, GIF y evaluación nueva.
-- `results/parte_17_tabular_ajustado`: tres granularidades × tres semillas actuales.
+- `results/parte_17_tabular_ajustado`: tres granularidades × tres semillas anteriores.
 - `report/cierre_tier1.md`: cierre anterior conservado como historial.
 - `results/parte_06_bins`: tres granularidades × tres semillas.
 - `results/parte_10_dqn`: DQN inicial, incluidos sus fallos.
@@ -88,7 +93,7 @@ Comandos equivalentes:
 Regenerar la figura actual desde los registros incluidos, sin entrenar:
 
 ```powershell
-.\.venv\Scripts\python.exe -m experiments.comparar_tier1 --tabular-root results/parte_17_tabular_ajustado --dqn-root results/parte_16_estabilidad/dqn_referencia --dqn-label "DQN ajustado" --extra-dqn-root results/parte_15_mse_completo --extra-dqn-label "DQN MSE anterior"
+.\.venv\Scripts\python.exe -m experiments.comparar_tier1 --tabular-root results/parte_18_qlearning/resolucion_suave --dqn-root results/parte_16_estabilidad/dqn_referencia --dqn-label "DQN ajustado" --output results/parte_18_qlearning/comparacion
 ```
 
 Regenerar las figuras anteriores desde los registros, sin entrenar:
@@ -104,7 +109,7 @@ Comprobar los componentes:
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-Opcional: reproducir la evaluación adicional con las mismas condiciones nuevas,
+Opcional: reproducir la evaluación adicional anterior (etapa 15) con las mismas condiciones,
 guardando otra copia para conservar los resultados originales:
 
 ```powershell
@@ -114,6 +119,9 @@ guardando otra copia para conservar los resultados originales:
 ## 5. Repetir la mejora del Tier 1
 
 Los parámetros compartidos por el notebook están en `configs/tier1_mejorado.json`.
+Posición y velocidad usan 2 intervalos; ángulo y velocidad angular usan 6, 10 o 20.
+La inicialización es Q=100 y alpha decrece de 0.1 a 0.01. La comparación anterior
+con 6, 10 y 20 intervalos en las cuatro variables permanece en el historial.
 Para repetir el entrenamiento completo (tres granularidades y DQN, tres semillas cada
 uno, 200000 pasos por modelo), usa una carpeta que todavía no exista:
 
@@ -124,14 +132,14 @@ uno, 200000 pasos por modelo), usa una carpeta que todavía no exista:
 Para generar la figura comparativa de esa reproducción:
 
 ```powershell
-.\.venv\Scripts\python.exe -m experiments.comparar_tier1 --tabular-root results/reproduccion_mejora --dqn-root results/reproduccion_mejora/dqn --dqn-label "DQN ajustado" --extra-dqn-root results/parte_15_mse_completo --extra-dqn-label "DQN MSE anterior"
+.\.venv\Scripts\python.exe -m experiments.comparar_tier1 --tabular-root results/reproduccion_mejora --dqn-root results/reproduccion_mejora/dqn --dqn-label "DQN ajustado"
 ```
 
 Para comprobar exactamente los retornos de los modelos finales y evaluar la muestra
 adicional documentada, sin entrenar:
 
 ```powershell
-.\.venv\Scripts\python.exe -m experiments.cerrar_mejora_tier1 --tabular-root results/reproduccion_mejora --dqn-root results/reproduccion_mejora/dqn --output results/reproduccion_mejora/evaluacion_nueva
+.\.venv\Scripts\python.exe -m experiments.cerrar_mejora_tier1 --tabular-root results/reproduccion_mejora --dqn-root results/reproduccion_mejora/dqn --output results/reproduccion_mejora/evaluacion_nueva --evaluation-base 5000000
 ```
 
 Esta evaluación tiene su propio informe derivado en `evaluacion_nueva/report.md`.
@@ -139,6 +147,14 @@ No reemplaza el informe de la versión entregada. Repetir los inicios documentad
 verifica reproducibilidad; no constituye una muestra independiente nueva.
 
 Los experimentos originales descritos a continuación se conservan como historial.
+
+
+Verificar el notebook y la animación tabular con el kernel local:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.verificar_notebook
+.\.venv\Scripts\python.exe -m experiments.verificar_notebook --animacion --agente tabular
+```
 
 ## 6. Repetir los entrenamientos anteriores
 

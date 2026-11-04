@@ -1,0 +1,21 @@
+{
+  "source_run": "results\\parte_18_qlearning\\resolucion_suave\\bins_6\\seed_42",
+  "env_seed": 10042,
+  "action_seed": 20042,
+  "epsilon": 0,
+  "learning": false,
+  "selection": "Primer episodio de evaluaci\u00f3n; no seleccionado por rendimiento",
+  "before": {
+    "return": 63.0,
+    "steps": 63,
+    "terminated": true,
+    "truncated": false
+  },
+  "after": {
+    "return": 500.0,
+    "steps": 500,
+    "terminated": false,
+    "truncated": true
+  },
+  "note": "Una demostraci\u00f3n visual no sustituye la evaluaci\u00f3n de 100 episodios"
+}

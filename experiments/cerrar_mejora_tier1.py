@@ -7,10 +7,12 @@ from pathlib import Path
 import numpy as np
 
 from experiments.cuaderno_tier1 import evaluar_guardado
+from envs.discretizers import discretization_label
 
 
 def report(args, fresh_summary):
-    comparison = json.loads((args.dqn_root / "comparacion/summary.json").read_text(encoding="utf-8"))
+    comparison_root = getattr(args, "comparison", None) or args.dqn_root / "comparacion"
+    comparison = json.loads((comparison_root / "summary.json").read_text(encoding="utf-8"))
     dqn_config = json.loads((args.dqn_root / "seed_42/config.json").read_text(encoding="utf-8"))
     tab_config = json.loads((args.tabular_root / "bins_10/seed_42/config.json").read_text(encoding="utf-8"))
     lines = ["# Tier 1: notebook y mejora de CartPole", "",
@@ -34,7 +36,7 @@ def report(args, fresh_summary):
               "", "## Verificación y nuevos inicios", "",
               "Los 100 retornos finales de cada uno de los 12 modelos se reprodujeron exactamente al cargarlo.",
               "Después se evaluaron 100 inicios nuevos por modelo, sin entrenar ni ajustar parámetros.",
-              "La muestra se fijó antes de observarla: semilla de evaluación 3000000+1000*semilla_entrenada.",
+              f"La muestra se fijó antes de observarla: semilla de evaluación {getattr(args, 'evaluation_base', 3_000_000)}+1000*semilla_entrenada.",
               "Son nuevos inicios de la misma distribución, no nuevas semillas de entrenamiento.", "",
               "| Método | Media nueva ± DE | Semillas ≥475 |", "|---|---:|---:|"]
     for row in fresh_summary:
@@ -53,13 +55,16 @@ def report(args, fresh_summary):
         "  frente a los 500000 del default de referencia. También difieren generadores aleatorios y clipping de gradiente.",
         f"- Tabular: alpha={tab_config['alpha']}, gamma={tab_config['gamma']}, epsilon final={tab_config['epsilon_end']}; "
         f"límites inferiores={tab_config['low']}; superiores={tab_config['high']}.",
+        f"- Inicialización de la tabla Q: {tab_config.get('initial_q', 0.0)} en todas las casillas y acciones; no cambia recompensa ni fórmula Q-learning.",
+        f"- Alpha final: {tab_config.get('alpha_end', tab_config['alpha'])}; espaciado de intervalos: potencia {tab_config.get('spacing_power', 1.0)} (1=uniforme).",
+        f"- Ejemplo de resolución (configuración angular 10): {tab_config.get('bins_per_dimension', [10]*4)} intervalos por variable; "
+        f"{int(np.prod(tab_config.get('bins_per_dimension', [10]*4)))} estados tabulares.",
         "- Se modificaron varios parámetros para buscar una configuración funcional. Esto no es una ablación controlada",
         "  ni permite atribuir toda la mejora a un único cambio. El estudio controlado de Tier 2 sigue pendiente.",
         "- Las semillas 42/43/44 se usaron durante el desarrollo: no constituyen un test independiente de selección.",
         "  La evaluación nueva comprueba otros inicios, sin demostrar éxito universal ni eliminar esa limitación.",
         "- Más intervalos no garantizan mejor aprendizaje: cambian la resolución y el número de casillas por visitar.",
-        "- El ajuste tabular no mejoró todas las granularidades: 10 y 20 intervalos empeoraron respecto al diseño anterior.",
-        "  Los rangos y la exploración cambiaron juntos, por lo que no aislamos una causa única de ese deterioro.",
+        "- Las granularidades que no alcancen 475 se conservan e informan; la mejor se selecciona por su media entre semillas.",
         "- Los experimentos anteriores permanecen íntegros: DQN MSE anterior=234.10±188.02; mejor tabular anterior=359.70±102.57.",
         "", "## Pasos hasta el objetivo", "",
         "Primer control confirmado de 100 episodios; no identifica el instante exacto de aprendizaje:", ""]
@@ -98,19 +103,26 @@ def main():
     parser.add_argument("--tabular-root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--report", type=Path, help="Opcional: ruta del informe derivado; por defecto se guarda dentro de output")
+    parser.add_argument("--comparison", type=Path, help="Carpeta de figuras y summary.json, si difiere de dqn-root/comparacion")
+    parser.add_argument("--evaluation-base", type=int, default=3_000_000,
+                        help="Base fijada antes de evaluar; no cambiar después para buscar una muestra favorable")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
     protocol = {
         "training_seeds": [42, 43, 44], "episodes_per_model": 100,
-        "new_evaluation_function_seed": "3000000 + 1000 * training_seed",
-        "new_environment_reset_seed": "3010000 + 1000 * training_seed + episode",
+        "new_evaluation_function_seed": f"{args.evaluation_base} + 1000 * training_seed",
+        "new_environment_reset_seed": f"{args.evaluation_base + 10000} + 1000 * training_seed + episode",
         "purpose": "Verificar modelos finales y medir nuevos inicios tras fijar configuración",
         "model_selection": "Modelo final de 200000 pasos; no mejor checkpoint ni mejor semilla",
         "selection_history": "Configuración elegida tras pruebas exploratorias guardadas; estas semillas de entrenamiento no son un test independiente",
         "new_sample_policy": "Muestra fijada antes de evaluar. No ajustar estos modelos ni seleccionar otra muestra después de verla.",
     }
     (args.output / "protocol.json").write_text(json.dumps(protocol, indent=2), encoding="utf-8")
-    groups = [(f"Q-learning ({bins} intervalos)", args.tabular_root / f"bins_{bins}") for bins in (6, 10, 20)]
+    groups = []
+    for bins in (6, 10, 20):
+        root = args.tabular_root / f"bins_{bins}"
+        config = json.loads((root / "seed_42/config.json").read_text(encoding="utf-8"))
+        groups.append((discretization_label(config), root))
     groups.append(("DQN ajustado", args.dqn_root))
     records, summary = [], []
     for label, root in groups:
@@ -125,7 +137,7 @@ def main():
             if reproduced != saved_returns:
                 raise AssertionError(f"No se reprodujeron exactamente los retornos de {folder}")
             assert abs(float(np.mean(reproduced)) - expected) < 1e-9
-            fresh = evaluar_guardado(folder, evaluation_seed=3_000_000 + 1000 * seed, episodes=100)
+            fresh = evaluar_guardado(folder, evaluation_seed=args.evaluation_base + 1000 * seed, episodes=100)
             mean = float(np.mean(fresh))
             means.append(mean)
             records.append({"method": label, "training_seed": seed, "source_run": folder.as_posix(),

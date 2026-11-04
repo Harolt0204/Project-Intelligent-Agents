@@ -1,0 +1,101 @@
+{
+  "purpose": "Piloto did\u00e1ctico; comparaci\u00f3n formal de granularidades pendiente",
+  "environment": "CartPole-v1",
+  "seed": 42,
+  "bins": 20,
+  "training_steps": 200000,
+  "alpha": 0.1,
+  "gamma": 0.99,
+  "initial_q": 100.0,
+  "alpha_end": 0.1,
+  "alpha_decay_steps": 200000,
+  "alpha_schedule": "Lineal por pasos; constante si alpha_end=alpha",
+  "epsilon_start": 1.0,
+  "epsilon_end": 0.01,
+  "decay_fraction": 0.2,
+  "epsilon_decay_steps": 40000,
+  "eval_every": 10000,
+  "periodic_eval_episodes": 10,
+  "initial_and_final_eval_episodes": 100,
+  "success_threshold": 475,
+  "threshold_confirmation": "100 episodios cuando el control de 10 obtiene >=475",
+  "low": [
+    -2.4,
+    -0.75,
+    -0.20943951023931956,
+    -0.872664625997165
+  ],
+  "high": [
+    2.4,
+    0.75,
+    0.20943951023931956,
+    0.872664625997165
+  ],
+  "spacing_power": 1.0,
+  "bins_per_dimension": [
+    2,
+    2,
+    20,
+    20
+  ],
+  "edges": [
+    [
+      0.0
+    ],
+    [
+      0.0
+    ],
+    [
+      -0.1884955592153876,
+      -0.16755160819145565,
+      -0.1466076571675237,
+      -0.12566370614359174,
+      -0.10471975511965978,
+      -0.08377580409572782,
+      -0.06283185307179587,
+      -0.04188790204786391,
+      -0.020943951023931956,
+      0.0,
+      0.020943951023931956,
+      0.04188790204786391,
+      0.0628318530717959,
+      0.08377580409572782,
+      0.10471975511965975,
+      0.12566370614359174,
+      0.14660765716752372,
+      0.16755160819145565,
+      0.18849555921538758
+    ],
+    [
+      -0.7853981633974485,
+      -0.698131700797732,
+      -0.6108652381980155,
+      -0.5235987755982989,
+      -0.4363323129985825,
+      -0.34906585039886595,
+      -0.26179938779914946,
+      -0.17453292519943298,
+      -0.08726646259971649,
+      0.0,
+      0.08726646259971649,
+      0.1745329251994331,
+      0.26179938779914946,
+      0.34906585039886606,
+      0.43633231299858244,
+      0.523598775598299,
+      0.6108652381980156,
+      0.698131700797732,
+      0.7853981633974486
+    ]
+  ],
+  "eval_reset_seeds": "seed + 10000 + episode; mismas condiciones por checkpoint",
+  "eval_action_rng_seed": 20042,
+  "python": "3.12.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+  "logical_cpus": 8,
+  "packages": {
+    "gymnasium": "1.4.0",
+    "numpy": "2.5.4"
+  }
+}

@@ -105,9 +105,13 @@ ya guardados**. Sus parámetros originales se consultan en cada `config.json`.
 |---|---|
 | `steps` | Interacciones de entrenamiento por agente: mismo presupuesto para ambos métodos. |
 | `seeds` | Repeticiones independientes; mínimo 3, 5 recomendadas para Tier 1. |
-| `bins` | Tres granularidades de la tabla: 6, 10 y 20 intervalos por variable. |
+| `bins` | Tres granularidades: 6, 10 y 20. Se aplican al ángulo y su velocidad; por defecto también a las otras variables. |
+| `position_bins` / `velocity_bins` | Opcional: menos intervalos para posición y velocidad del carrito, manteniendo las cuatro observaciones. |
 | `eval_every` | Pasos entre evaluaciones de 10 episodios sin exploración. |
 | `alpha` / `learning_rate` | Tamaño de los ajustes de la tabla / red neuronal. |
+| `initial_q` | Estimación inicial en todas las casillas de la tabla; 0 o un valor optimista. |
+| `alpha_end` | Tamaño final de los ajustes tabulares; si coincide con alpha, permanece constante. |
+| `spacing_power` | 1 mantiene intervalos uniformes; >1 concentra detalle cerca del equilibrio. |
 | `gamma` | Peso de recompensas futuras. |
 | `epsilon_decay_steps` / `epsilon_end` | Duración del descenso de exploración / exploración final. |
 | `velocity_limit` / `angular_velocity_limit` | Rangos de velocidad cubiertos por los intervalos tabulares. |
@@ -132,25 +136,36 @@ print(json.dumps(CONFIG, indent=2, ensure_ascii=False))
 
 ### 3.1. Convertir observaciones en casillas
 Las observaciones son continuas; una tabla necesita índices enteros. `encode` asigna
-un intervalo a cada variable. Con 6 intervalos son 6⁴=1296 estados y 2 acciones.
-Con 20 hay 160000 estados: más detalle también exige repartir la experiencia entre
-más casillas. Los valores fuera de rango van a una casilla extrema; no se eliminan.
+un intervalo a cada variable. Si todas usan 6 intervalos, hay 6⁴=1296 estados;
+con 20 para todas, 160000. Podemos dedicar solo 2 intervalos a posición y velocidad:
+con 20 en cada variable angular, quedan 2×2×20×20=1600 estados. Mantenemos las cuatro
+observaciones, pero cambiamos cuánto detalle se conserva en cada una.
+Los valores fuera de rango van a una casilla extrema; no se eliminan.
 
 Los rangos de posición y ángulo conservan los límites físicos de fallo. Afinamos los
 rangos de velocidad para aprovechar la resolución cerca de las situaciones habituales.
+También podemos concentrar las fronteras cerca de cero con `spacing_power`: la tabla
+sigue teniendo el mismo número de casillas, pero distingue mejor diferencias pequeñas
+cerca del equilibrio. Los intervalos exteriores se hacen más amplios.
 """)
     code("""
 codigo(CartPoleDiscretizer)
 discretizador = CartPoleDiscretizer(
-    bins=10,
+    bins=CONFIG['bins'][0],
     velocity_limit=CONFIG['tabular']['velocity_limit'],
     angular_velocity_limit=CONFIG['tabular']['angular_velocity_limit'],
+    spacing_power=CONFIG['tabular'].get('spacing_power', 1.0),
+    position_bins=CONFIG['tabular'].get('position_bins'),
+    velocity_bins=CONFIG['tabular'].get('velocity_bins'),
 )
 estado_ejemplo = np.array([0.02, -0.1, 0.03, 0.2])
 print('Observación:', estado_ejemplo, '→ casilla:', discretizador.encode(estado_ejemplo))
 print('Límites inferiores:', discretizador.low)
+print('Fronteras del ángulo en grados:', np.rad2deg(discretizador.edges[2]))
 for bins in CONFIG['bins']:
-    print(f'{bins} intervalos → {bins**4:,} estados → {2*bins**4:,} valores Q')
+    shape = (CONFIG['tabular'].get('position_bins') or bins, CONFIG['tabular'].get('velocity_bins') or bins, bins, bins)
+    count = int(np.prod(shape))
+    print(f'Intervalos {shape} → {count:,} estados → {2*count:,} valores Q')
 """)
     md(r"""
 ### 3.2. Elegir y aprender
@@ -166,6 +181,16 @@ Q(s,a) \leftarrow Q(s,a) + \alpha\,[r + \gamma\max_{a'}Q(s',a') - Q(s,a)]
 
 Si hay fallo real (`terminated=True`), el término futuro es cero. Si solo se llega
 al límite de tiempo (`truncated=True`), conservamos la estimación futura.
+
+**Inicialización optimista:** empezar con Q=100 cuando gamma=0.99 supone que una
+acción aún desconocida podría producir el máximo retorno descontado. Al fallar,
+Q-learning reduce su estimación con la recompensa real. No cambiamos la recompensa
+del entorno ni ponemos acciones correctas en la tabla. El efecto se comprueba con
+entrenamientos completos, no se da por hecho que siempre mejore.
+
+**Alpha decreciente:** el bucle de entrenamiento puede reducir alpha linealmente
+hasta `alpha_end`. Al principio incorpora cambios mayores y al final hace ajustes
+más pequeños. La fórmula Q-learning y la recompensa se conservan.
 """)
     code("""
 codigo(QLearningAgent)
@@ -295,6 +320,9 @@ Esta sección muestra los resultados de la versión indicada por `results/tier1_
 **No dependen de cambios que acabes de hacer en CONFIG**: son mediciones guardadas de
 entrenamientos terminados. La tabla cuenta cuántas de las tres semillas alcanzan ≥475.
 La DE mide variación entre entrenamientos, no es un intervalo de confianza del 95%.
+
+La búsqueda adicional de Q-learning, incluidos los intentos que fallaron y la
+resolución por variable, está en [el estudio tabular](report/busqueda_qlearning.md).
 """)
     code("""
 ACTUAL = actual()
@@ -336,8 +364,16 @@ la evaluación adicional de nuevos inicios se documenta en la discusión.
 SEMILLA = 42  # Opciones: 42, 43, 44. No cambiar para buscar solo el mejor resultado.
 CARPETA_DQN = ROOT / ACTUAL['dqn_root'] / f'seed_{SEMILLA}'
 config_guardada = json.loads((CARPETA_DQN / 'config.json').read_text(encoding='utf-8'))
+print('Configuración DQN guardada:')
 print(json.dumps(config_guardada, indent=2, ensure_ascii=False))
 print('Resumen:', json.loads((CARPETA_DQN / 'summary.json').read_text(encoding='utf-8')))
+CARPETA_TABULAR = ROOT / ACTUAL['tabular_root'] / f"bins_{ACTUAL.get('tabular_bins', 10)}" / f'seed_{SEMILLA}'
+config_tabular = json.loads((CARPETA_TABULAR / 'config.json').read_text(encoding='utf-8'))
+claves = ['bins_per_dimension', 'training_steps', 'initial_q', 'alpha', 'alpha_end',
+          'alpha_decay_steps', 'gamma', 'epsilon_decay_steps', 'epsilon_end', 'low', 'high']
+print('Configuración Q-learning guardada:')
+print(json.dumps({k: config_tabular[k] for k in claves if k in config_tabular}, indent=2, ensure_ascii=False))
+print('Resumen:', json.loads((CARPETA_TABULAR / 'summary.json').read_text(encoding='utf-8')))
 """)
     md("""
 ### Volver a comprobar los 100 episodios del modelo guardado

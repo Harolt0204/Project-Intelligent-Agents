@@ -10,6 +10,13 @@ from experiments.entrenar_tabular import evaluate
 
 
 class QLearningTests(unittest.TestCase):
+    def test_optimistic_values_do_not_change_reward_or_terminal_target(self):
+        agent = QLearningAgent((2,), initial_q=100, gamma=0.99, alpha=1)
+        self.assertEqual(agent.update((0,), 0, 1, (1,), False), 100)
+        self.assertEqual(agent.update((0,), 0, 1, (1,), True), 1)
+        self.assertEqual(agent.q[0, 1], 100)
+        self.assertEqual(agent.choose_action((0,), 0), 1)
+
     def test_numeric_update_changes_only_chosen_entry(self):
         agent = QLearningAgent((2,), alpha=0.1, gamma=0.9)
         agent.q[:] = [[5, 0], [10, 2]]

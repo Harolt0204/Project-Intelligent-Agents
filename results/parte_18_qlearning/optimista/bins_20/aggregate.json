@@ -1,0 +1,62 @@
+{
+  "runs": [
+    {
+      "seed": 42,
+      "before": 22.42,
+      "after": 102.51,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "training_seconds": 40.44345749996137,
+      "total_seconds": 43.91616709996015,
+      "visited_states": 15539,
+      "possible_states": 160000,
+      "training_input_observations": 200000,
+      "outside_range_counts_by_dimension": [
+        0,
+        57613,
+        0,
+        18594
+      ]
+    },
+    {
+      "seed": 43,
+      "before": 21.71,
+      "after": 99.81,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "training_seconds": 42.846776199759915,
+      "total_seconds": 46.60397449997254,
+      "visited_states": 15625,
+      "possible_states": 160000,
+      "training_input_observations": 200000,
+      "outside_range_counts_by_dimension": [
+        0,
+        55616,
+        0,
+        18301
+      ]
+    },
+    {
+      "seed": 44,
+      "before": 24.16,
+      "after": 95.45,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "training_seconds": 64.50881069968455,
+      "total_seconds": 68.38891129998956,
+      "visited_states": 15408,
+      "possible_states": 160000,
+      "training_input_observations": 200000,
+      "outside_range_counts_by_dimension": [
+        0,
+        57752,
+        0,
+        18621
+      ]
+    }
+  ],
+  "mean_before": 22.763333333333335,
+  "mean_after": 99.25666666666666,
+  "std_across_seed_means": 2.9086690350666506,
+  "note": "Piloto; no sustituye la comparaci\u00f3n formal de Tier 1"
+}

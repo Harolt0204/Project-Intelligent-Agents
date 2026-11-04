@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from envs.discretizers import discretization_label
 
 
 def main():
@@ -18,11 +19,16 @@ def main():
     parser.add_argument("--dqn-label", default="DQN")
     parser.add_argument("--extra-dqn-root", type=Path)
     parser.add_argument("--extra-dqn-label", default="DQN adicional")
+    parser.add_argument("--output", type=Path, help="Carpeta nueva para la figura; por defecto dqn-root/comparacion")
     args = parser.parse_args()
-    output = args.dqn_root / "comparacion"
+    output = args.output or args.dqn_root / "comparacion"
     output.mkdir(parents=True, exist_ok=True)
-    groups = [(f"Q-learning ({bins} intervalos)", args.tabular_root / f"bins_{bins}")
-              for bins in (6, 10, 20)] + [(args.dqn_label, args.dqn_root)]
+    groups = []
+    for bins in (6, 10, 20):
+        root = args.tabular_root / f"bins_{bins}"
+        config = json.loads((root / "seed_42/config.json").read_text(encoding="utf-8"))
+        groups.append((discretization_label(config), root))
+    groups.append((args.dqn_label, args.dqn_root))
     if args.extra_dqn_root is not None:
         groups.append((args.extra_dqn_label, args.extra_dqn_root))
     colors = ["#2563eb", "#d97706", "#15803d", "#a21caf", "#64748b"]

@@ -4,15 +4,19 @@ import numpy as np
 
 
 class QLearningAgent:
-    def __init__(self, state_shape, n_actions=2, alpha=0.1, gamma=0.99, seed=42):
+    def __init__(self, state_shape, n_actions=2, alpha=0.1, gamma=0.99, seed=42,
+                 initial_q=0.0):
         if not 0 < alpha <= 1:
             raise ValueError("alpha debe estar en (0, 1]")
         if not 0 <= gamma <= 1:
             raise ValueError("gamma debe estar en [0, 1]")
+        if not np.isfinite(initial_q):
+            raise ValueError("initial_q debe ser finito")
         self.alpha = alpha  # Qué fracción del error incorporamos en cada ajuste.
         self.gamma = gamma  # Cuánto valoramos las recompensas futuras.
         self.n_actions = n_actions
-        self.q = np.zeros(tuple(state_shape) + (n_actions,), dtype=np.float64)
+        # Optimismo opcional: cambia la estimación inicial, no las recompensas.
+        self.q = np.full(tuple(state_shape) + (n_actions,), initial_q, dtype=np.float64)
         self.rng = np.random.default_rng(seed)
 
     def choose_action(self, state, epsilon):

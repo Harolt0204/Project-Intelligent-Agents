@@ -39,13 +39,17 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("results/parte_05_visual"))
     args = parser.parse_args()
     config = json.loads((args.run / "config.json").read_text(encoding="utf-8"))
-    discretizer = CartPoleDiscretizer(config["bins"])
+    discretizer = CartPoleDiscretizer(config["bins"], -config["low"][1], -config["low"][3],
+                                     config.get("spacing_power", 1.0),
+                                     position_bins=config.get("bins_per_dimension", [None, None])[0],
+                                     velocity_bins=config.get("bins_per_dimension", [None, None])[1])
     if not (np.allclose(discretizer.low, config["low"]) and
             np.allclose(discretizer.high, config["high"])):
         raise ValueError("Los rangos actuales no coinciden con los del entrenamiento")
     env_seed = config["seed"] + 10_000 if args.env_seed is None else args.env_seed
     action_seed = config["seed"] + 20_000
-    before_agent = QLearningAgent(discretizer.shape, seed=action_seed)
+    before_agent = QLearningAgent(discretizer.shape, seed=action_seed,
+                                  initial_q=config.get("initial_q", 0.0))
     after_agent = QLearningAgent(discretizer.shape, seed=action_seed)
     table = np.load(args.run / "q_table.npy", allow_pickle=False)
     if table.shape != after_agent.q.shape or not np.all(np.isfinite(table)):
@@ -61,7 +65,7 @@ def main():
         canvas = Image.new("RGB", (900, 370), "#edf2f7")
         draw = ImageDraw.Draw(canvas)
         for x, title, images, result in (
-            (0, "ANTES: tabla en cero", before_frames, before),
+            (0, "ANTES: sin entrenamiento", before_frames, before),
             (450, "DESPUES: tabla entrenada", after_frames, after),
         ):
             current = min(index, len(images) - 1)
