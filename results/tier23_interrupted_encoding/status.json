@@ -1,0 +1,4 @@
+{
+  "formal_result": false,
+  "reason": "El relé de registros interpretó CP1252 como UTF-8 y detuvo los procesos. Se conserva el intento parcial y se reinicia solo ese grupo; la base completa se reutiliza."
+}

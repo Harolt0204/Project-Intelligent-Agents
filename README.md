@@ -3,10 +3,10 @@
 Proyecto de dos integrantes, desarrollado en una sola computadora, por etapas.
 El enunciado de referencia está en `Project_01_Reinforcement_Learning_DQN.md`.
 
-**Estado actual:** Tier 1 experimental consolidado. Resumen vigente en
-`report/qlearning_objetivo.md`; los ensayos exploratorios anteriores se conservan.
-Tier 2 y Tier 3 tienen implementación y cuadernos separados; sus estudios están
-en ejecución. El artículo final y la defensa siguen pendientes.
+**Estado actual:** parte experimental de Tier 1, Tier 2 y Tier 3 completada y
+verificada. Resumen de Tier 1 en `report/qlearning_objetivo.md`; los ensayos
+exploratorios anteriores se conservan. Quedan el análisis teórico, el artículo
+final y la preparación de la defensa.
 
 ## Tier 2 y Tier 3: notebooks separados
 
@@ -14,10 +14,37 @@ en ejecución. El artículo final y la defensa siguen pendientes.
 - [Tier3_DoubleDQN.ipynb](Tier3_DoubleDQN.ipynb): Double DQN y comparación con el mismo DQN base.
 
 Guía: [COMO_USAR_TIER2_TIER3.md](COMO_USAR_TIER2_TIER3.md). Los algoritmos se comparten
-entre notebooks. Los entrenamientos largos están desactivados inicialmente; los
-resultados pendientes se identifican sin presentarlos como evaluaciones terminadas.
+entre notebooks. Ejecutar todo consulta los resultados incluidos; los
+entrenamientos largos están desactivados inicialmente.
 La comparación formal tiene siete grupos únicos × tres semillas, con 500000 pasos
 por modelo. DQN base se reutiliza en ambos estudios y Tier 3.
+
+| Resultado de LunarLander | Media final ± DE | Nuevos inicios ± DE | Semillas ≥200 |
+|---|---:|---:|---:|
+| DQN base | 194.77 ± 34.50 | 203.84 ± 32.62 | 1/3 en ambas |
+| DQN con lr=0.001, mayor media de Tier 2 | 226.04 ± 42.74 | 228.22 ± 37.73 | 2/3 en ambas |
+| Sin red objetivo | 161.76 ± 73.74 | No se evaluó esta muestra | 2/3 en desarrollo |
+| Double DQN, Tier 3 | 122.85 ± 91.26 | 124.13 ± 96.54 | 1/3 en ambas |
+
+Cada cifra final procede de 100 episodios greedy por modelo. La DE se calcula
+entre las medias de evaluación de las tres semillas de entrenamiento. La mejor variante de Tier 2 se eligió
+por desarrollo; las condiciones iniciales adicionales se fijaron antes de
+entrenar y no se utilizaron para reajustar parámetros. Superar 200 en la media
+agregada no significa que las tres semillas lo hayan logrado.
+
+Double DQN no mejoró la base con este protocolo: hubo 170 cortes por tiempo en
+300 episodios de desarrollo, frente a 111 de la base. La ablación también fue
+mixta: mejoró dos semillas, pero perdió 185.03 puntos en la tercera. Los
+resultados negativos, las regresiones y los límites se explican en los
+[resultados de Tier 2](results/tier23_lunarlander/report_tier2.md) y
+[Tier 3](results/tier23_lunarlander/report_tier3.md).
+
+Verificación: 28 pruebas unitarias, reproducción exacta de 2100 retornos desde
+los 21 modelos guardados, 900 episodios adicionales, ambos notebooks ejecutados
+con kernel real y animaciones comprobadas. Las huellas del código de entrenamiento
+coinciden con el commit `460af7c` en los 21 modelos; solo se generalizó después un
+comentario de DQN sobre el número de salidas. Evidencia en
+[audit.json](results/tier23_lunarlander/audit.json).
 
 Cada experimento puede reproducirse por separado. Estos comandos reutilizan
 ejecuciones completas; para volver a entrenar desde cero añade `--output` con
@@ -49,6 +76,7 @@ de preparar el proyecto, ejecuta **Preparar_Notebook.bat** una vez.
 2. En Windows con Python 3.12, abre **Preparar_Proyecto.bat** una vez.
 3. Abre **Mostrar_Tier1.bat** para ver los agentes ya entrenados.
 4. Lee [los resultados actuales](report/qlearning_objetivo.md) y la [guía completa de reproducción](REPRODUCIR_TIER1.md).
+5. Para LunarLander, abre **Tier2_LunarLander.ipynb** y **Tier3_DoubleDQN.ipynb** siguiendo [su guía](COMO_USAR_TIER2_TIER3.md).
 
 Se incluyen modelos y resultados: no necesitas repetir los entrenamientos para
 verlos funcionar. El entorno virtual se crea en cada computadora y no se sube a Git.
@@ -83,12 +111,12 @@ incluye controles y resultados negativos. El cierre anterior permanece en
 2. **Completado:** discretización y agente Q-learning propio.
 3. **Completado:** comparar 3 granularidades de discretización con múltiples semillas (Parte 6).
 4. **Completado, con limitaciones documentadas:** comparación DQN/Q-learning a 200 000 pasos y evaluación adicional con inicios nuevos.
-5. Tier 2: DQN en LunarLander, dos estudios de hiperparámetros y una ablación.
-6. Tier 3: Double DQN sobre el entorno de Tier 2.
-7. Análisis teórico, resultados reproducibles, artículo y defensa.
+5. **Completado:** Tier 2, DQN en LunarLander, dos estudios de hiperparámetros y una ablación.
+6. **Completado, resultado negativo documentado:** Tier 3, Double DQN sobre el entorno de Tier 2.
+7. **Pendiente:** análisis teórico, artículo y preparación de la defensa.
 
-CartPole, LunarLander y Double DQN son el alcance inicial. La viabilidad de
-LunarLander se comprobará antes de iniciar Tier 2.
+CartPole, LunarLander y Double DQN son el alcance implementado. LunarLander se
+verificó con Gymnasium 1.4.0 y Box2D 2.3.10 en Python 3.12 para Windows.
 
 ## Preparación (PowerShell, desde esta carpeta)
 

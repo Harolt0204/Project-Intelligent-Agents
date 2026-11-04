@@ -126,6 +126,9 @@ def report(output, config, rows, tier=None):
         "## Protocolo", "",
         f"Entorno {config['environment']}, acciones discretas, parámetros {config['environment_kwargs']}.",
         f"Presupuesto {config['steps']} pasos, semillas {config['seeds']}, evaluación greedy cada {config['eval_every']} pasos.",
+        f"Base: red 8 → {' → '.join(map(str, config['base']['hidden_widths']))} → 4, Adam lr={config['base']['learning_rate']}, pérdida {config['base']['loss']}, gamma={config['base']['gamma']}.",
+        f"Replay {config['base']['buffer_size']}, lote {config['base']['batch_size']}, ajustes desde {config['base']['learning_starts']} pasos: {config['base']['gradient_steps']} ajuste cada {config['base']['train_every']} pasos; copia target cada {config['base']['target_sync_every']}.",
+        f"Exploración lineal de 1 a {config['base']['epsilon_end']} en {config['base']['epsilon_decay_steps']} pasos, después constante. Evaluación sin exploración.",
         "Controles de 10 episodios; inicio/final de 100 y confirmación de 100 cuando un control alcanza 200.",
         "Se entregan modelos finales. No se elige el mejor checkpoint ni se descarta una semilla débil.",
         "Las curvas usan los primeros 10 episodios al inicio/final; las tablas finales usan los 100.",
@@ -140,10 +143,10 @@ def report(output, config, rows, tier=None):
     for r in rows:
         values=", ".join(f"{v:.2f}" for v in r["means_by_seed"].values())
         lines.append(f"| {r['group']} | {r['final_mean']:.2f} ± {r['std_across_seed_means']:.2f} | {values} | {r['successful_seeds']}/3 | {r['training_seconds_mean']:.1f} s | {r['total_seconds_mean']:.1f} s |")
-    lines += ["", "La columna entrenamiento excluye evaluación; total la incluye. Son tiempos de reloj por ejecución, dependen de esta máquina y no son benchmarks universales.",
+    lines += ["", "La columna entrenamiento excluye evaluación; total la incluye. El total va desde la evaluación inicial hasta guardar los modelos, excluyendo arranque de Python y preparación inicial.",
               "Los tratamientos se ejecutan en secuencia; sus semillas pueden correr en procesos paralelos, un hilo PyTorch por proceso.",
               "Consultar execution.json: la primera semilla base comenzó con ejecución secuencial. Los tiempos no se interpretan como comparaciones aisladas de hardware.",
-              "Durante el trabajo se realizan verificaciones y mediciones de coste; los tiempos no son benchmarks aislados."]
+              "Durante el trabajo se realizan verificaciones y mediciones de coste; estos tiempos de reloj describen esta máquina y no son benchmarks aislados."]
     if tier != 3:
         lines += ["", "## Hiperparámetros", ""]
     for key in (config["studies"] if tier != 3 else []):
@@ -153,19 +156,34 @@ def report(output, config, rows, tier=None):
             delta = by_name[best[0]]['final_mean'] - by_name['base']['final_mean']
             lines.append(f"- {key}: valores {config['studies'][key]}; mayor media observada: {best[1]} ({by_name[best[0]]['final_mean']:.2f}; diferencia frente a base: {delta:+.2f}).")
             lines.append("  Se varía solo ese parámetro respecto a base. La variación entre semillas limita la generalización del ranking.")
+            if key == 'learning_rate':
+                slow = min(names, key=lambda pair: by_name[pair[0]]['parameters'][key])[0]
+                gap = by_name[slow]['final_mean'] - by_name['base']['final_mean']
+                lines.append(f"  La menor tasa terminó {gap:+.2f} puntos frente a base con el mismo número de ajustes. Adam escala los cambios por learning_rate; una tasa pequeña puede ralentizar la adquisición de una política útil con presupuesto fijo. Esto no demuestra que bastaría aumentar los pasos para resolverla.")
+            elif key == 'target_sync_every':
+                intervals = config['studies'][key]
+                lines.append(f"  Las copias cada {intervals} pasos equivalen aproximadamente a {[round(value/config['base']['train_every'], 1) for value in intervals]} ajustes de online por copia. Un intervalo largo conserva objetivos más antiguos; uno corto los hace seguir más de cerca a online. El ranking mide esa compensación en esta configuración, no una frecuencia óptima universal.")
     if "base" in by_name and "no_target" in by_name:
         delta=by_name["no_target"]["final_mean"]-by_name["base"]["final_mean"]
+        paired = [by_name['no_target']['means_by_seed'][str(seed)] - by_name['base']['means_by_seed'][str(seed)] for seed in config['seeds']]
         lines += ["", "## Ablación de red objetivo", "",
             f"Sin target menos DQN base: {delta:+.2f} puntos de media final.",
+            f"Diferencias emparejadas por semilla {config['seeds']}: {', '.join(f'{value:+.2f}' for value in paired)}; mejora en {sum(value > 0 for value in paired)}/3.",
+            f"DE sin target: {by_name['no_target']['std_across_seed_means']:.2f}; base: {by_name['base']['std_across_seed_means']:.2f}.",
             "Replay, red online, optimizador, presupuesto y demás parámetros permanecen iguales; no hay red target independiente.",
             "Los objetivos se calculan con online dentro de no_grad. Cambia la referencia del bootstrap, no se añade un gradiente por ella.",
             ("La caída observada es compatible con el papel estabilizador de una referencia que permanece fija entre copias." if delta < 0 else
              "En esta configuración la ablación no reduce la media final: el resultado no respalda una mejora de retorno atribuible a target aquí."),
             "Al variar los objetivos de bootstrap cambia también la trayectoria de aprendizaje. Tres semillas no permiten concluir que target sea necesaria o innecesaria universalmente."]
+        if min(paired) < 0 < max(paired):
+            worst_seed = config['seeds'][int(np.argmin(paired))]
+            lines.append(f"El efecto es mixto: mejora en algunas semillas y empeora en otras. La mayor caída es {min(paired):.2f} en la semilla {worst_seed}; no se interpreta la diferencia media como una mejora o caída uniforme.")
     if "base" in by_name and "double" in by_name:
         delta=by_name["double"]["final_mean"]-by_name["base"]["final_mean"]
+        paired = [by_name['double']['means_by_seed'][str(seed)] - by_name['base']['means_by_seed'][str(seed)] for seed in config['seeds']]
         lines += ["", "## Tier 3 — Double DQN", "",
             f"Double DQN menos DQN base: {delta:+.2f} puntos de media final.",
+            f"Diferencias emparejadas por semilla {config['seeds']}: {', '.join(f'{value:+.2f}' for value in paired)}; mejora en {sum(value > 0 for value in paired)}/3.",
             "La red online elige argmax; target valora esa acción. En DQN estándar target selecciona y valora.",
             "Se mantienen parámetros, inicializaciones por semilla, presupuesto y evaluación del baseline.",
             ("Double DQN aumenta la media observada; la magnitud se debe leer junto con las tres semillas y la evaluación adicional." if delta > 0 else
@@ -196,6 +214,14 @@ def report(output, config, rows, tier=None):
         for r in declines:
             lines.append(f"- {r['group']}, semilla {r['seed']}: mejor confirmación observada {r['best_observed_100_episode_mean']:.2f} a {r['best_observed_100_episode_step']} pasos; final {r['final_100_episode_mean']:.2f}.")
         lines += ['La regresión es compatible con el aprendizaje sobre objetivos cambiantes y trayectorias distintas de replay/exploración; los registros por sí solos no aíslan una causa única.']
+        lines += ['', f"Valores por semilla, en orden {config['seeds']}. Pérdida: mediana del último bloque de entrenamiento; Q: máximo final en el banco de 256 estados aleatorios de cada semilla.",
+                  'Ese banco no estima el valor verdadero de la política ni permite demostrar sobreestimación.', '',
+                  '| Grupo | Medianas de pérdida | Máximos Q en el banco |', '|---|---|---|']
+        for group in by_name:
+            selected = sorted((r for r in measured if r['group'] == group), key=lambda r: config['seeds'].index(r['seed']))
+            loss_values = ', '.join(f"{r['last_block_loss_median']:.3f}" for r in selected)
+            q_values = ', '.join(f"{r['final_q_probe_max']:.2f}" for r in selected)
+            lines.append(f'| {group} | {loss_values} | {q_values} |')
     if rows:
         first=output/rows[0]["group"]/f"seed_{config['seeds'][0]}/config.json"
         machine=json.loads(first.read_text(encoding="utf-8"))
@@ -219,11 +245,23 @@ def report(output, config, rows, tier=None):
             lines += ['', '## Finalización de los episodios de desarrollo', '',
                 'Resting indica que el cuerpo quedó en reposo; body_contact indica contacto del cuerpo; time_limit es corte por tiempo.',
                 'Estos conteos describen comportamiento. El criterio del proyecto sigue siendo la recompensa media, no solo el contacto con el suelo.', '',
-                '| Grupo | Cuerpo/contacto | Fuera del área | Reposo | Límite de tiempo |', '|---|---:|---:|---:|---:|']
+                'La clasificación prioriza corte por tiempo, contacto del cuerpo, fuera del área y reposo; algunos eventos físicos pueden coincidir.', '',
+                '| Grupo | Cuerpo/contacto | Fuera del área | Reposo | Límite de tiempo | Otros |', '|---|---:|---:|---:|---:|---:|']
             for group in by_name:
                 selected=[r for r in verified_rows if r['group']==group]
-                counts={k:sum(r.get('endings',{}).get(k,0) for r in selected) for k in ['body_contact','outside_viewport','resting','time_limit']}
-                lines.append(f"| {group} | {counts['body_contact']} | {counts['outside_viewport']} | {counts['resting']} | {counts['time_limit']} |")
+                counts={k:sum(r.get('endings',{}).get(k,0) for r in selected) for k in ['body_contact','outside_viewport','resting','time_limit','other_termination']}
+                lines.append(f"| {group} | {counts['body_contact']} | {counts['outside_viewport']} | {counts['resting']} | {counts['time_limit']} | {counts['other_termination']} |")
+            lines += ['', 'Para los grupos cuya media final queda por debajo de 200, los finales observados ayudan a concretar el fallo:']
+            labels = {'body_contact':'contacto del cuerpo con el suelo', 'outside_viewport':'salida del área',
+                      'resting':'reposo del cuerpo', 'time_limit':'agotamiento del límite de tiempo', 'other_termination':'otra terminación'}
+            for group, row in by_name.items():
+                if row['final_mean'] >= config['threshold']: continue
+                selected = [r for r in verified_rows if r['group'] == group]
+                counts = {key: sum(r.get('endings',{}).get(key,0) for r in selected) for key in labels}
+                dominant = max(counts, key=counts.get)
+                total = sum(counts.values())
+                lines.append(f"- {group}: {labels[dominant]} en {counts[dominant]}/{total} episodios, la finalización más frecuente. Debe leerse junto con el retorno: reposar no basta para obtener ≥200, y alcanzar el límite no confirma un aterrizaje.")
+            lines.append('Son síntomas observados de las políticas finales; no identifican por sí solos una causa única del proceso de aprendizaje.')
     lines += ["", "## Referencias", "",
         "- Gymnasium LunarLander: https://gymnasium.farama.org/environments/box2d/lunar_lander/",
         "- Referencia de parámetros: https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/dqn.yml",

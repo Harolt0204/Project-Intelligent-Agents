@@ -1,0 +1,152 @@
+{
+  "training_code_commit": "460af7cdd535d64ed24ff8da4529e11f0595ee74",
+  "model_count": 21,
+  "training_steps_per_model": 500000,
+  "total_training_steps": 10500000,
+  "exact_saved_model_evaluation_episodes": 2100,
+  "new_start_evaluation_episodes": 900,
+  "source_checks": [
+    {
+      "group": "base",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "base",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "base",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "double",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "double",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "double",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p0001",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p0001",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p0001",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p001",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p001",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "learning_rate_0p001",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "no_target",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "no_target",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "no_target",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_500",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_500",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_500",
+      "seed": 44,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_8000",
+      "seed": 42,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_8000",
+      "seed": 43,
+      "training_code_matches": true
+    },
+    {
+      "group": "target_sync_every_8000",
+      "seed": 44,
+      "training_code_matches": true
+    }
+  ],
+  "gif_checks": [
+    {
+      "group": "base",
+      "return_matches_first_evaluation_episode": true,
+      "return": 123.45293729738295,
+      "gif_frames": 501,
+      "size": [
+        600,
+        435
+      ]
+    },
+    {
+      "group": "double",
+      "return_matches_first_evaluation_episode": true,
+      "return": 269.8516484587834,
+      "gif_frames": 89,
+      "size": [
+        600,
+        435
+      ]
+    }
+  ],
+  "notebook_checks": [
+    {
+      "notebook": "Tier2_LunarLander.ipynb",
+      "code_cells_executed": 17,
+      "animation": false,
+      "errors": 0
+    },
+    {
+      "notebook": "Tier3_DoubleDQN.ipynb",
+      "code_cells_executed": 12,
+      "animation": false,
+      "errors": 0
+    }
+  ],
+  "unit_tests_passed": 28
+}

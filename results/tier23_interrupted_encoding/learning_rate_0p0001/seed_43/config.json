@@ -1,0 +1,108 @@
+{
+  "input_hash": "be1439d8002e8e80cc17ed925f5baabad58198f343c684d45f092337ceac6e15",
+  "protocol": {
+    "environment": "LunarLander-v3",
+    "environment_kwargs": {
+      "continuous": false,
+      "enable_wind": false,
+      "gravity": -10.0
+    },
+    "steps": 500000,
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "eval_every": 50000,
+    "periodic_eval_episodes": 10,
+    "final_eval_episodes": 100,
+    "threshold": 200.0,
+    "evaluation_base": 10000000,
+    "heldout_evaluation_base": 20000000,
+    "base": {
+      "hidden_widths": [
+        128,
+        128
+      ],
+      "learning_rate": 0.0005,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 100000,
+      "batch_size": 64,
+      "learning_starts": 5000,
+      "train_every": 8,
+      "gradient_steps": 1,
+      "target_sync_every": 2000,
+      "epsilon_decay_steps": 150000,
+      "epsilon_end": 0.05
+    },
+    "studies": {
+      "learning_rate": [
+        0.0001,
+        0.0005,
+        0.001
+      ],
+      "target_sync_every": [
+        500,
+        2000,
+        8000
+      ]
+    },
+    "selection": "Modelos finales de 200000 pasos, sin escoger el mejor checkpoint. DQN base se reutiliza en ambos estudios, ablaci\u00f3n y Tier 3.",
+    "reference": "https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/dqn.yml",
+    "reference_note": "Implementaci\u00f3n propia. Protocolo fijado tras medir coste: red 128/128, lote 64, un ajuste cada ocho pasos. Todos los tratamientos usan 500000 pasos. Se conservan las pruebas parciales de coste, fuera de la comparaci\u00f3n formal."
+  },
+  "job": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        128,
+        128
+      ],
+      "learning_rate": 0.0001,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 100000,
+      "batch_size": 64,
+      "learning_starts": 5000,
+      "train_every": 8,
+      "gradient_steps": 1,
+      "target_sync_every": 2000,
+      "epsilon_decay_steps": 150000,
+      "epsilon_end": 0.05
+    },
+    "role": "learning_rate"
+  },
+  "seed": 43,
+  "architecture": [
+    8,
+    128,
+    128,
+    4
+  ],
+  "environment_max_steps": 1000,
+  "environment_declared_threshold": 200,
+  "python": "3.12.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD",
+  "logical_cpus": 8,
+  "device": "cpu",
+  "torch_threads": 1,
+  "packages": {
+    "gymnasium": "1.4.0",
+    "numpy": "2.5.4",
+    "torch": "2.15.0+cpu",
+    "Box2D": "2.3.10"
+  },
+  "source_hashes": {
+    "agents/dqn.py": "d8016ab391f5d82d267240bb0bd260887ef7de67697e5c3ee835b923ee432ce4",
+    "agents/double_dqn.py": "a500df1135c6f1fce11f9aaf3eea675eaad0a053925f0f710ef4b70ba19b027a",
+    "agents/dqn_without_target.py": "04456db2194cdb39d6c90b17ff55103b9a36fe63486f4c0e932e647235db761b",
+    "agents/replay.py": "a649fd993327e89c542a95f7efc51df9ba19e3d5b0ee00be2c3130eb52b21c6c",
+    "experiments/lunarlander.py": "db72e5bd14bf2544028c382937c92d7cfb240d9f12eda6874e5fa57f717d4a86"
+  },
+  "evaluation_reset_seed": "evaluation_base + 1000 * training_seed + episode",
+  "evaluation_action_seed": "evaluation_base + 500000 + 1000 * training_seed",
+  "replay_seed": 4000043,
+  "target_network": true
+}

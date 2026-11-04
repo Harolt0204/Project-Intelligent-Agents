@@ -1,0 +1,7 @@
+{
+  "mode": "Three independent seed processes; treatments run in sequence",
+  "torch_threads_per_process": 1,
+  "maximum_workers": 3,
+  "numerical_protocol_unchanged": true,
+  "timing_note": "Wall-clock observado con procesos compartiendo CPU; no benchmark aislado. La primera semilla base comenz\u00f3 antes de habilitar paralelismo."
+}

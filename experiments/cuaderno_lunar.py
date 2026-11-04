@@ -90,7 +90,10 @@ def demostrar(group='base',seed=42,output=OUTPUT,inline=True,save_gif=False):
             canvas=Image.new('RGB',(image.width,image.height+35),'#edf2f7')
             canvas.paste(image,(0,35))
             ImageDraw.Draw(canvas).text((10,10),f'{group} | semilla {seed} | sin aprendizaje',fill='#172b4d')
-            images.append(canvas)
+            # GIF usa paleta: evitar retener además todas las imágenes RGB con título.
+            images.append(canvas.quantize(colors=256))
+        if not inline:
+            frames.clear()
         images[0].save(dest/'lander.gif',save_all=True,append_images=images[1:],duration=[40]*(len(images)-1)+[1200],loop=0)
         images[min(80,len(images)-1)].save(dest/'vista_previa.png')
         (dest/'demostracion.json').write_text(json.dumps(result,indent=2,ensure_ascii=False),encoding='utf-8')

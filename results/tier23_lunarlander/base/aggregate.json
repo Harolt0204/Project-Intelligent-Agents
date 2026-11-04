@@ -1,0 +1,50 @@
+{
+  "runs": [
+    {
+      "seed": 42,
+      "input_hash": "b576842f7b41b9ac7145ce8a5e8172eeb373df5c151f0c32f1cfc1e9d9dcacf9",
+      "before": -189.96347508985764,
+      "after": 166.39840204035434,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": 400000,
+      "training_seconds": 1043.868291999912,
+      "total_seconds": 1270.674636599957,
+      "updates": 61876,
+      "target_syncs": 250,
+      "stored_experiences": 100000,
+      "complete": true
+    },
+    {
+      "seed": 43,
+      "input_hash": "9351df1565f938428cba63431423760198a309d95c3f6e6a10afa64c3298ea98",
+      "before": -932.6842364990828,
+      "after": 174.5833711856666,
+      "final_threshold_met": false,
+      "first_confirmed_threshold_step": null,
+      "training_seconds": 1037.3648612997495,
+      "total_seconds": 1182.914797000005,
+      "updates": 61876,
+      "target_syncs": 250,
+      "stored_experiences": 100000,
+      "complete": true
+    },
+    {
+      "seed": 44,
+      "input_hash": "cfc6c92e0cbd697b537ce65956fb533c21cdbc33932ef6f5ededa4bffcd62fe1",
+      "before": -446.11986135380323,
+      "after": 243.32540787792536,
+      "final_threshold_met": true,
+      "first_confirmed_threshold_step": 450000,
+      "training_seconds": 1000.8668686999008,
+      "total_seconds": 1173.3105370999547,
+      "updates": 61876,
+      "target_syncs": 250,
+      "stored_experiences": 100000,
+      "complete": true
+    }
+  ],
+  "mean_after": 194.7690603679821,
+  "std_across_seed_means": 34.49673987115505,
+  "successful_seeds": 1,
+  "complete": true
+}

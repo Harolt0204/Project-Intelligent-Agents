@@ -1,0 +1,149 @@
+{
+  "base": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.00063,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 250,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "baseline"
+  },
+  "learning_rate_0p0002": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.0002,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 250,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "learning_rate"
+  },
+  "learning_rate_0p001": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.001,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 250,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "learning_rate"
+  },
+  "target_sync_every_100": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.00063,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 100,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "target_sync_every"
+  },
+  "target_sync_every_1000": {
+    "variant": "dqn",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.00063,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 1000,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "target_sync_every"
+  },
+  "no_target": {
+    "variant": "no_target",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.00063,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 250,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "ablation"
+  },
+  "double": {
+    "variant": "double",
+    "parameters": {
+      "hidden_widths": [
+        256,
+        256
+      ],
+      "learning_rate": 0.00063,
+      "loss": "smooth_l1",
+      "gamma": 0.99,
+      "buffer_size": 50000,
+      "batch_size": 128,
+      "learning_starts": 1000,
+      "train_every": 4,
+      "gradient_steps": 4,
+      "target_sync_every": 250,
+      "epsilon_decay_steps": 24000,
+      "epsilon_end": 0.1
+    },
+    "role": "tier3"
+  }
+}

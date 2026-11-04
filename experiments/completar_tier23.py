@@ -40,7 +40,7 @@ def main():
     execute('experiments.verificar_notebooks_lunar','--animacion','2')
     execute('experiments.verificar_notebooks_lunar','--animacion','3')
     (output/'workflow_complete.json').write_text(json.dumps({'studies_executed':True,'saved_models_verified':True,
-        'notebooks_executed':True,'animations_verified':True,'published':False},indent=2),encoding='utf-8')
+        'notebooks_executed':True,'animations_verified':True},indent=2),encoding='utf-8')
     print('Estudios y verificaciones terminados. Falta revisión y publicación.',flush=True)
 
 

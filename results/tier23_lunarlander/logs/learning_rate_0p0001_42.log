@@ -1,0 +1,11 @@
+learning_rate_0p0001 | semilla 42 | paso      0 | evaluación 100: -189.96
+learning_rate_0p0001 | semilla 42 | paso  50000 | evaluación 10: -82.61
+learning_rate_0p0001 | semilla 42 | paso 100000 | evaluación 10: -124.73
+learning_rate_0p0001 | semilla 42 | paso 150000 | evaluación 10: 56.74
+learning_rate_0p0001 | semilla 42 | paso 200000 | evaluación 10: -26.82
+learning_rate_0p0001 | semilla 42 | paso 250000 | evaluación 10: -30.81
+learning_rate_0p0001 | semilla 42 | paso 300000 | evaluación 10: -33.07
+learning_rate_0p0001 | semilla 42 | paso 350000 | evaluación 10: 42.98
+learning_rate_0p0001 | semilla 42 | paso 400000 | evaluación 10: 171.56
+learning_rate_0p0001 | semilla 42 | paso 450000 | evaluación 10: 66.24
+learning_rate_0p0001 | semilla 42 | paso 500000 | evaluación 100: 174.60

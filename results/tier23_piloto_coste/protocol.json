@@ -1,0 +1,52 @@
+{
+  "environment": "LunarLander-v3",
+  "environment_kwargs": {
+    "continuous": false,
+    "enable_wind": false,
+    "gravity": -10.0
+  },
+  "steps": 200000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "eval_every": 20000,
+  "periodic_eval_episodes": 10,
+  "final_eval_episodes": 100,
+  "threshold": 200.0,
+  "evaluation_base": 10000000,
+  "heldout_evaluation_base": 20000000,
+  "base": {
+    "hidden_widths": [
+      256,
+      256
+    ],
+    "learning_rate": 0.00063,
+    "loss": "smooth_l1",
+    "gamma": 0.99,
+    "buffer_size": 50000,
+    "batch_size": 128,
+    "learning_starts": 1000,
+    "train_every": 4,
+    "gradient_steps": 4,
+    "target_sync_every": 250,
+    "epsilon_decay_steps": 24000,
+    "epsilon_end": 0.1
+  },
+  "studies": {
+    "learning_rate": [
+      0.0002,
+      0.00063,
+      0.001
+    ],
+    "target_sync_every": [
+      100,
+      250,
+      1000
+    ]
+  },
+  "selection": "Modelos finales de 200000 pasos, sin escoger el mejor checkpoint. DQN base se reutiliza en ambos estudios, ablación y Tier 3.",
+  "reference": "https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/dqn.yml",
+  "reference_note": "Inspiración de parámetros, no agente de librería. Se usan red y replay propios; warmup=1000 y presupuesto=200000 son decisiones de este proyecto."
+}

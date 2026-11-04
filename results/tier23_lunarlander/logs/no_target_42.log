@@ -1,0 +1,11 @@
+no_target | semilla 42 | paso      0 | evaluación 100: -189.96
+no_target | semilla 42 | paso  50000 | evaluación 10: -148.78
+no_target | semilla 42 | paso 100000 | evaluación 10: -40.33
+no_target | semilla 42 | paso 150000 | evaluación 10: 44.95
+no_target | semilla 42 | paso 200000 | evaluación 10: -83.44
+no_target | semilla 42 | paso 250000 | evaluación 10: 74.64
+no_target | semilla 42 | paso 300000 | evaluación 10: 50.42
+no_target | semilla 42 | paso 350000 | evaluación 10: -87.22
+no_target | semilla 42 | paso 400000 | evaluación 10: 219.68
+no_target | semilla 42 | paso 450000 | evaluación 10: -14.01
+no_target | semilla 42 | paso 500000 | evaluación 100: 202.20

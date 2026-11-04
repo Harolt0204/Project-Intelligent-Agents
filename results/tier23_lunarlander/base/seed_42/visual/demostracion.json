@@ -1,0 +1,11 @@
+{
+  "group": "base",
+  "training_seed": 42,
+  "environment_seed": 10042000,
+  "return": 123.45293729738295,
+  "steps": 1000,
+  "terminated": false,
+  "truncated": true,
+  "selection": "Primer episodio de evaluación, no mejor intento",
+  "learning": false
+}

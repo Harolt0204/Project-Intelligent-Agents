@@ -14,6 +14,11 @@ En otra computadora, con Python 3.12, abre **Preparar_Proyecto.bat** y después
 **Preparar_Notebook.bat**. Box2D está incluido en los requisitos para LunarLander-v3.
 El entorno se verificó en Windows, CPU, con Gymnasium 1.4.0 y Box2D 2.3.10.
 
+Los 21 modelos formales están completos. La mejor media de Tier 2 fue
+226.04 ± 42.74 con lr=0.001 (2/3 semillas ≥200); Double DQN obtuvo
+122.85 ± 91.26 y no mejoró la base. El análisis incluye esos límites y los
+resultados negativos. No es necesario volver a entrenar para revisarlos.
+
 ## Consultar resultados y ver la nave
 
 Ejecutar todo muestra ejemplos y los resultados disponibles. Si falta completar un
@@ -22,9 +27,12 @@ grupo de tres semillas, se indica como pendiente; no se inventan puntuaciones.
 Para animar la nave, cambia **VER_NAVE=False** a **True** en su celda. Tier 2 usa
 el modelo `base` y Tier 3 el modelo `double`. Puedes elegir semilla 42, 43 o 44.
 La animación de un episodio no sustituye el promedio de 100 episodios por modelo.
+Para consultar la variante de mayor media de Tier 2, cambia GRUPO a
+`learning_rate_0p001`; están disponibles sus tres semillas. Cambiar el grupo
+solo elige qué modelo guardado se reproduce.
 
 También puedes abrir **Mostrar_LunarLander.bat** o **Mostrar_DoubleDQN.bat** para
-ver una ventana independiente cuando los modelos estén disponibles.
+ver una ventana independiente con los modelos incluidos.
 
 ## Ejecutar entrenamientos
 

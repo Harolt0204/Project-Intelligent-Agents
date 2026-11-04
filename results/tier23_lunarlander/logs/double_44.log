@@ -1,0 +1,11 @@
+double | semilla 44 | paso      0 | evaluación 100: -446.12
+double | semilla 44 | paso  50000 | evaluación 10: -189.48
+double | semilla 44 | paso 100000 | evaluación 10: -85.32
+double | semilla 44 | paso 150000 | evaluación 10: -178.84
+double | semilla 44 | paso 200000 | evaluación 10: -9.31
+double | semilla 44 | paso 250000 | evaluación 10: -14.41
+double | semilla 44 | paso 300000 | evaluación 10: -28.25
+double | semilla 44 | paso 350000 | evaluación 10: -2.38
+double | semilla 44 | paso 400000 | evaluación 10: -27.12
+double | semilla 44 | paso 450000 | evaluación 10: 24.07
+double | semilla 44 | paso 500000 | evaluación 100: 135.60

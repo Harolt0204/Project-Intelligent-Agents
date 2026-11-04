@@ -1,0 +1,7 @@
+{
+  "formal_result": false,
+  "status": "Interrumpido después de medir coste; no se informa como una semilla final",
+  "last_evaluated_step": 20000,
+  "training_seconds_at_checkpoint": 139.68476470001042,
+  "reason": "Red 256/256 con cuatro gradientes cada cuatro pasos excede el presupuesto para 21 ejecuciones. Se fija otra configuración antes de los estudios formales."
+}

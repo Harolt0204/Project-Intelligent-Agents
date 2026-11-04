@@ -9,7 +9,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from experiments.lunarlander import load_model, evaluate, make_env, plan
+from experiments.lunarlander import load_model, make_env, plan, fingerprint
 
 
 def outcomes(model,config,seed,base):
@@ -60,14 +60,33 @@ def main():
         for seed in config['seeds']:
             folder=args.root/name/f'seed_{seed}'
             model,run_config=load_model(folder)
+            job = plan(config)[name]
+            summary_run = json.loads((folder/'summary.json').read_text(encoding='utf-8'))
+            expected_hash = fingerprint(config, job, seed)
+            if (run_config['protocol'] != config or run_config['job'] != job or run_config['seed'] != seed
+                    or run_config['input_hash'] != expected_hash or summary_run['input_hash'] != expected_hash
+                    or not summary_run['complete']):
+                raise ValueError(f'Configuración o resultado incompatible: {folder}')
+            params = job['parameters']
+            first_update = max(params['learning_starts'], params['batch_size'])
+            first_update = ((first_update + params['train_every'] - 1)//params['train_every'])*params['train_every']
+            expected_updates = max(0, (config['steps'] - first_update)//params['train_every'] + 1)*params['gradient_steps']
+            expected_syncs = 0 if job['variant'] == 'no_target' else config['steps']//params['target_sync_every']
+            if (summary_run['updates'] != expected_updates or summary_run['target_syncs'] != expected_syncs
+                    or summary_run['stored_experiences'] != min(config['steps'], params['buffer_size'])):
+                raise ValueError(f'Contadores de aprendizaje incompatibles: {folder}')
             with (folder/'evaluation.csv').open(encoding='utf-8',newline='') as f:
                 final=list(csv.DictReader(f))[-1]
             assert int(final['episodes'])==config['final_eval_episodes']
+            if int(final['training_steps']) != config['steps']:
+                raise ValueError(f'Presupuesto incompleto: {folder}')
             expected=json.loads(final['returns'])
             episodes=outcomes(model,config,seed,config['evaluation_base'])
             actual=[episode['return'] for episode in episodes]
             if actual!=expected: raise AssertionError(f'No se reprodujeron exactamente los retornos: {folder}')
             checks.append({'group':name,'seed':seed,'exact_returns':True,'mean_return':float(np.mean(actual)),
+                           'configuration_verified':True,'training_steps':config['steps'],
+                           'updates':summary_run['updates'],'target_syncs':summary_run['target_syncs'],
                            'endings':dict(Counter(e['ending'] for e in episodes)),'episodes':episodes})
             print(f'Verificado {name}, semilla {seed}: {np.mean(actual):.2f}',flush=True)
             (dest/'reproduction.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')

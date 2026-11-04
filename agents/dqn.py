@@ -74,7 +74,7 @@ class DQNAgent:
         next_observations = torch.as_tensor(batch.next_observations, dtype=torch.float32)
         terminated = torch.as_tensor(batch.terminated, dtype=torch.bool)
 
-        # De las dos salidas solo comparamos la correspondiente a la acción tomada.
+        # De todas las salidas Q, comparamos solo la correspondiente a la acción tomada.
         predictions = self.online(observations).gather(1, actions[:, None]).squeeze(1)
         with torch.no_grad():
             next_values = self.bootstrap_values(next_observations)

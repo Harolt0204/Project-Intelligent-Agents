@@ -1,0 +1,11 @@
+target_sync_every_8000 | semilla 42 | paso      0 | evaluación 100: -189.96
+target_sync_every_8000 | semilla 42 | paso  50000 | evaluación 10: -154.61
+target_sync_every_8000 | semilla 42 | paso 100000 | evaluación 10: -121.57
+target_sync_every_8000 | semilla 42 | paso 150000 | evaluación 10: -79.55
+target_sync_every_8000 | semilla 42 | paso 200000 | evaluación 10: -51.90
+target_sync_every_8000 | semilla 42 | paso 250000 | evaluación 10: -64.53
+target_sync_every_8000 | semilla 42 | paso 300000 | evaluación 10: -64.11
+target_sync_every_8000 | semilla 42 | paso 350000 | evaluación 10: 13.61
+target_sync_every_8000 | semilla 42 | paso 400000 | evaluación 10: 67.71
+target_sync_every_8000 | semilla 42 | paso 450000 | evaluación 10: 155.03
+target_sync_every_8000 | semilla 42 | paso 500000 | evaluación 100: 144.02

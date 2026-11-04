@@ -1,0 +1,12 @@
+{
+  "evaluation_base": 20000000,
+  "groups": [
+    "base",
+    "double",
+    "learning_rate_0p001"
+  ],
+  "episodes_per_model": 100,
+  "tier2_selected_group": "learning_rate_0p001",
+  "selection_note": "Base y Double son la comparaci\u00f3n predefinida. Se a\u00f1ade el DQN de mayor media de desarrollo en Tier 2; esa selecci\u00f3n se decidi\u00f3 despu\u00e9s de observar desarrollo. Las condiciones iniciales adicionales estaban fijadas antes de entrenar y no se usan para reajustar.",
+  "purpose": "Comprobar modelos con otras condiciones iniciales sin volver a entrenar"
+}

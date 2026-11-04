@@ -1,0 +1,7 @@
+{
+  "formal_result": false,
+  "status": "Prueba parcial de coste, no resultado formal de tres semillas",
+  "last_evaluated_step": 250000,
+  "training_seconds": 545.569737099926,
+  "reason": "Se fija train_every=8 y target_sync_every=2000 antes de iniciar la comparación formal de 21 modelos; parámetros comunes a todos los tratamientos."
+}

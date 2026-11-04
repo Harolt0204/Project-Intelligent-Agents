@@ -1,0 +1,17 @@
+[
+  {
+    "mode": "default",
+    "seconds_per_update": 0.00430790150014218,
+    "formal_result": false
+  },
+  {
+    "mode": "foreach",
+    "seconds_per_update": 0.007484767499845475,
+    "formal_result": false
+  },
+  {
+    "mode": "fused",
+    "seconds_per_update": 0.055109923500567676,
+    "formal_result": false
+  }
+]

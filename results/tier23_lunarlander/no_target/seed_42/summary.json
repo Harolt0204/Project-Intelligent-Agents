@@ -1,0 +1,14 @@
+{
+  "seed": 42,
+  "input_hash": "288573060b1f412ea515dafbdbc296001a83ff74eaa40cebd41f0cab6a694988",
+  "before": -189.96347508985764,
+  "after": 202.201939814818,
+  "final_threshold_met": true,
+  "first_confirmed_threshold_step": 400000,
+  "training_seconds": 813.1935263996711,
+  "total_seconds": 1052.124592499924,
+  "updates": 61876,
+  "target_syncs": 0,
+  "stored_experiences": 100000,
+  "complete": true
+}
