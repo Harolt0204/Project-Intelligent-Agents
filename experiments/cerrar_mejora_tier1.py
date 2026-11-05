@@ -85,7 +85,7 @@ def report(args, fresh_summary):
         f"Python {dqn_config['python']}; paquetes {dqn_config['packages']}; plataforma {dqn_config['platform']}.",
         f"CPU {dqn_config['processor']}; {dqn_config['logical_cpus']} procesadores lógicos; PyTorch CPU, un hilo.",
         "Parámetros editables en configs/tier1_mejorado.json y notebook Tier1_Explicado.ipynb.",
-        "Los comandos están en REPRODUCIR_TIER1.md. El notebook muestra el código real y los archivos guardados.",
+        "Los comandos están en README.md. El notebook muestra el código real y los archivos guardados.",
         "", "## Referencias y alcance", "",
         "- CleanRL DQN: https://docs.cleanrl.dev/rl-algorithms/dqn/",
         "- Configuración de referencia: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/dqn.py",

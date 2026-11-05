@@ -265,3 +265,12 @@ de prompts del artículo final. No sustituye la revisión de los integrantes.
 - Se conservaron byte a byte los tres notebooks que ya tenían modificaciones del usuario. Un cuaderno complementario reúne el análisis, el cálculo y ocho figuras. El primer control detectó que faltaba incluir la comparación inicial Double DQN; se añadió y el control completo pasó.
 - Validación: 31 pruebas unitarias; diez registros de IC comprobados mediante cálculo independiente; ocho celdas de código del nuevo cuaderno ejecutadas con kernel real sin errores y ocho figuras incrustadas; PDF de dos páginas renderizado y revisado visualmente, diez enlaces; comprobadas las huellas de 300 archivos protegidos, incluidos pesos, tablas, registros y los tres notebooks originales. No se cambió el código de entrenamiento.
 - Entregables: report/analisis_teorico.md, output/pdf/analisis_teorico.pdf, report/intervalos_confianza.md y Analisis_Teorico_e_Intervalos.ipynb. El artículo completo de 6–8 páginas y la defensa oral siguen pendientes.
+
+
+## Organización del repositorio para revisión académica
+
+- Solicitud del equipo: retirar de GitHub lanzadores .bat y guías personales o redundantes antes de la revisión docente.
+- Se centralizaron instalación, dependencias, configuración, comandos por experimento, figuras, evaluación y modelos en el README. El historial experimental previo permanece en report/historial_experimentos.md, identificado como histórico.
+- Se retiraron del seguimiento cinco lanzadores y cuatro guías, conservando sus archivos locales y un respaldo ignorado por Git. Se mantienen el enunciado, los informes científicos, los resultados negativos, la ablación y esta declaración de uso de IA.
+- Se corrigieron las referencias a auxiliares retirados. En los notebooks públicos Tier2 y Tier3 solo se modificaron dos líneas Markdown de instalación; las ediciones locales de los tres notebooks se preservaron sin publicarlas. No se modificaron agentes, configuraciones, pesos ni registros experimentales.
+- Verificación de la reorganización: 24 enlaces relativos válidos en los documentos revisados; nueve auxiliares retirados del índice y conservados localmente; huellas de los tres notebooks locales sin cambios; celdas de código y salidas de los dos notebooks públicos idénticas a las anteriores. El verificador de instalación pasó y reprodujo exactamente los episodios guardados de Q-learning y DQN sin entrenar. No se modificaron resultados experimentales.

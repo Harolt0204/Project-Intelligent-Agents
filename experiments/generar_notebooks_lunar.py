@@ -46,8 +46,8 @@ Este notebook es una entrada independiente del Tier 1. Comparte los algoritmos d
 
 **VS Code:** abre la carpeta del proyecto, selecciona el kernel `.venv\\Scripts\\python.exe`
 y usa **Shift+Enter** o **Ejecutar todo**. Tras actualizar el código, reinicia el kernel.
-Las extensiones Python y Jupyter de Microsoft son necesarias. `Preparar_Proyecto.bat`
-y `Preparar_Notebook.bat` instalan las dependencias del proyecto.
+Las extensiones Python y Jupyter de Microsoft son necesarias.
+La instalación de dependencias está documentada en el README.
 
 Los entrenamientos y la animación se activan expresamente en sus celdas. Ejecutar todo
 consulta resultados guardados y ejemplos. Si un estudio sigue en curso, se indica como pendiente.

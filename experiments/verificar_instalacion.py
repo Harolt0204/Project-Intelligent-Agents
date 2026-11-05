@@ -39,7 +39,7 @@ def main():
         if not (root / relative).is_file():
             raise SystemExit(f"Falta un archivo del Tier 1: {relative}")
     print("\nInstalación comprobada: ambos agentes cargan, reproducen su intento y los resultados están incluidos.")
-    print("Puedes abrir Mostrar_Tier1.bat. No fue necesario entrenar.")
+    print("Puedes consultar los notebooks o ejecutar python -m experiments.mostrar_tier1. No fue necesario entrenar.")
 
 
 if __name__ == "__main__":

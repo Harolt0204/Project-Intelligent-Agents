@@ -81,7 +81,7 @@ Este valor descontado es distinto del retorno de hasta 500 puntos por episodio.
 Python 3.12.0; paquetes {'gymnasium': '1.4.0', 'numpy': '2.5.4', 'torch': '2.15.0+cpu'}; plataforma Windows-11-10.0.26200-SP0.
 CPU AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD; 8 procesadores lógicos; PyTorch CPU, un hilo.
 Parámetros editables en configs/tier1_mejorado.json y notebook Tier1_Explicado.ipynb.
-Los comandos están en REPRODUCIR_TIER1.md. El notebook muestra el código real y los archivos guardados.
+Los comandos están en README.md. El notebook muestra el código real y los archivos guardados.
 
 ## Referencias y alcance
 
