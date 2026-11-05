@@ -1,5 +1,11 @@
 # Tier 2 y Tier 3 en notebooks separados
 
+El componente teórico y todas las curvas nuevas con IC del 95% están en
+**Analisis_Teorico_e_Intervalos.ipynb**. Ejecútalo con el mismo kernel, sin entrenar.
+Tus tres notebooks de trabajo se conservan; sus salidas guardadas pueden mostrar
+figuras anteriores con DE. El cuaderno complementario incluye las figuras actuales,
+la fórmula de los intervalos y sus limitaciones con tres semillas.
+
 Abre la carpeta completa del proyecto en VS Code. Conserva **Tier1_Explicado.ipynb**
 para CartPole y usa:
 

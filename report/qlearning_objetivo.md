@@ -6,7 +6,8 @@ Implementaciones propias de Q-learning y DQN estándar. Cada agente entrena 2000
 con semillas 42, 43 y 44. Evaluación greedy separada cada 10000 pasos (10 episodios),
 evaluación final de 100 episodios y confirmaciones de 100 si un control da ≥475.
 Se entrega el modelo final; no se elige el mejor checkpoint ni se descartan semillas.
-Las bandas son una desviación estándar entre las tres medias por semilla, no IC del 95%.
+Las bandas se actualizaron desde los mismos datos a IC t del 95% puntuales entre tres medias por semilla.
+Las tablas conservan media ± DE descriptiva. Método y límites en intervalos_confianza.md.
 Las curvas usan los primeros 10 episodios también al inicio/final; las tablas finales usan 100.
 El objetivo del enunciado es ≥475; se registra por separado el umbral declarado por Gymnasium.
 
@@ -51,7 +52,7 @@ Si una granularidad no alcanza 475, se informa como resultado negativo; no se re
 - Alpha final: 0.01; espaciado de intervalos: potencia 1.0 (1=uniforme).
 - Ejemplo de resolución (configuración angular 10): [2, 2, 10, 10] intervalos por variable; 400 estados tabulares.
 - Se modificaron varios parámetros para buscar una configuración funcional. Esto no es una ablación controlada
-  ni permite atribuir toda la mejora a un único cambio. El estudio controlado de Tier 2 sigue pendiente.
+  ni permite atribuir toda la mejora a un único cambio. Los estudios controlados de Tier 2 se documentan por separado.
 - Las semillas 42/43/44 se usaron durante el desarrollo: no constituyen un test independiente de selección.
   La evaluación nueva comprueba otros inicios, sin demostrar éxito universal ni eliminar esa limitación.
 - Más intervalos no garantizan mejor aprendizaje: cambian la resolución y el número de casillas por visitar.
@@ -88,5 +89,6 @@ Los comandos están en REPRODUCIR_TIER1.md. El notebook muestra el código real 
 - Configuración de referencia: https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/dqn.py
 - Gymnasium CartPole: https://gymnasium.farama.org/environments/classic_control/cart_pole/
 
-Este bloque corresponde a Tier 1. Faltan Tier 2, Tier 3 para la pareja, análisis teórico,
-integración del artículo final y preparación de defensa. El notebook no sustituye el paper.
+Este bloque corresponde a Tier 1. Tier 2, Tier 3 y el análisis teórico ya están documentados
+en sus informes. Quedan la integración del artículo final y la preparación de defensa.
+El notebook no sustituye el paper.

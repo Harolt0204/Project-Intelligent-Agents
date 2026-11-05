@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from experiments.lunarlander import configuration, plan
+from experiments.intervalos import mean_ci95, ci_record
 
 
 def available(output, config):
@@ -22,6 +23,7 @@ def available(output, config):
         runs = [json.loads(path.read_text(encoding="utf-8")) for path in files]
         values = [r["after"] for r in runs]
         rows.append({"group": name, "variant": job["variant"], "role": job["role"],
+            "final_ci95": ci_record(values),
             "parameters": job["parameters"], "final_mean": float(np.mean(values)),
             "std_across_seed_means": float(np.std(values)), "means_by_seed": dict(zip(map(str,config["seeds"]),values)),
             "successful_seeds": sum(v >= config["threshold"] for v in values),
@@ -91,13 +93,17 @@ def diagnostics(output, config, rows):
 
 def plot(output, config, groups, filename, title):
     fig, axes = plt.subplots(1,2,figsize=(12,4.8),layout="constrained")
+    interval_rows = []
     colors = ["#2563eb","#d97706","#15803d"]
     for (name,label), color in zip(groups,colors):
         xs, eval_values, train_values = curves(output,name,config)
         for ax,values,steps in [(axes[0],eval_values,xs),(axes[1],train_values,xs[1:])]:
-            mean, spread = np.nanmean(values,axis=0),np.nanstd(values,axis=0)
+            mean, low, high = mean_ci95(values)
             ax.plot(steps,mean,label=label,color=color,linewidth=2)
-            ax.fill_between(steps,mean-spread,mean+spread,color=color,alpha=.15)
+            ax.fill_between(steps,low,high,color=color,alpha=.15)
+            for step, average, lower, upper in zip(steps, mean, low, high):
+                interval_rows.append({'group':name,'kind':'evaluation' if ax is axes[0] else 'training',
+                    'training_steps':step,'mean':float(average),'ci95_low':float(lower),'ci95_high':float(upper)})
             ax.set_xlabel("Pasos de entrenamiento")
             ax.grid(alpha=.2)
             ax.ticklabel_format(axis="x",style="plain")
@@ -108,10 +114,14 @@ def plot(output, config, groups, filename, title):
     axes[1].set_ylabel("Retorno por episodio completo, media por bloque")
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles,labels,loc="outside lower center",ncol=min(3,len(labels)),fontsize=9)
-    fig.suptitle(title+" | media ± DE entre 3 semillas",fontsize=11)
+    fig.suptitle(title+" | media e IC 95% puntual (t, 3 semillas)",fontsize=11)
     for suffix in ("png","pdf"):
         fig.savefig(output / "figures" / f"{filename}.{suffix}",dpi=160)
     plt.close(fig)
+    with (output/'figures'/f'{filename}_intervals.csv').open('w',encoding='utf-8',newline='') as f:
+        writer=csv.DictWriter(f,fieldnames=list(interval_rows[0]))
+        writer.writeheader()
+        writer.writerows(interval_rows)
 
 
 def report(output, config, rows, tier=None):
@@ -132,7 +142,8 @@ def report(output, config, rows, tier=None):
         "Controles de 10 episodios; inicio/final de 100 y confirmación de 100 cuando un control alcanza 200.",
         "Se entregan modelos finales. No se elige el mejor checkpoint ni se descarta una semilla débil.",
         "Las curvas usan los primeros 10 episodios al inicio/final; las tablas finales usan los 100.",
-        "La banda es una DE entre las medias de las semillas (ddof=0), no un IC del 95%.",
+        "Las bandas son IC t del 95% puntuales entre tres medias de semillas (DE muestral, ddof=1). Las tablas conservan media ± DE descriptiva (ddof=0).",
+        "Con tres réplicas, la normalidad no se verifica bien; los IC son orientativos, condicionales a esta configuración y no bandas simultáneas de toda la curva. Véase report/intervalos_confianza.md.",
         "DQN base se reutiliza en los dos estudios, la ablación y Tier 3. No son entrenamientos adicionales independientes.",
         "Todos los agentes son propios; la referencia SB3 Zoo solo orientó parámetros. No se importó un agente entrenado.",
         "Errata del protocolo congelado: el texto descriptivo selection menciona 200000 por arrastre de un piloto. El campo steps, los bucles y los CSV usan 500000; no se cambia el protocolo histórico.",

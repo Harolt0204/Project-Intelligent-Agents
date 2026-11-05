@@ -21,7 +21,7 @@ def report(args, fresh_summary):
         "con semillas 42, 43 y 44. Evaluación greedy separada cada 10000 pasos (10 episodios),",
         "evaluación final de 100 episodios y confirmaciones de 100 si un control da ≥475.",
         "Se entrega el modelo final; no se elige el mejor checkpoint ni se descartan semillas.",
-        "Las bandas son una desviación estándar entre las tres medias por semilla, no IC del 95%.",
+        "Las bandas son IC t del 95% puntuales entre tres medias por semilla. Las tablas conservan media ± DE descriptiva; método y límites en intervalos_confianza.md.",
         "Las curvas usan los primeros 10 episodios también al inicio/final; las tablas finales usan 100.",
         "El objetivo del enunciado es ≥475; se registra por separado el umbral declarado por Gymnasium.",
         "", "## Resultados finales", "",

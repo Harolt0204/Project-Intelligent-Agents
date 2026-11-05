@@ -29,6 +29,14 @@ Grupos completos: 2/2. Objetivo de ambas pruebas, tres semillas por método: Tru
 | base | 272.52 ± 4.23 | 273.69 ± 4.08 | 3/3 |
 | double | 277.37 ± 4.69 | 278.07 ± 2.96 | 3/3 |
 
+Las bandas de las curvas son IC t del 95% puntuales, con tres semillas y dos grados de libertad. Las DE de la tabla son descriptivas (ddof=0).
+Los IC suponen medias independientes aproximadamente normales; n=3 no permite comprobar bien ese supuesto. No son bandas simultáneas ni corrigen la selección de parámetros. Véase report/intervalos_confianza.md.
+
+| Método | IC 95% de la media de prueba | IC 95% de la media de confirmación |
+|---|---:|---:|
+| base | [259.64, 285.39] | [261.28, 286.10] |
+| double | [263.11, 291.63] | [269.06, 287.08] |
+
 Double menos DQN en prueba: +4.85; diferencias por semilla +6.00, +4.72, +3.83.
 La diferencia describe estas tres repeticiones; no demuestra una superioridad universal de un método.
 Alcanzar 200 en las tres semillas no garantiza éxito para cualquier inicialización futura. La DE es entre medias de semillas (ddof=0).

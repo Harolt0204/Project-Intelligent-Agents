@@ -3,6 +3,15 @@
     "group": "base",
     "variant": "dqn",
     "role": "baseline",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 194.7690603679821,
+      "ci95_low": 89.81497427989721,
+      "ci95_high": 299.72314645606696,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -40,6 +49,15 @@
     "group": "learning_rate_0p0001",
     "variant": "dqn",
     "role": "learning_rate",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 49.8547747813555,
+      "ci95_low": -219.21651483004422,
+      "ci95_high": 318.9260643927552,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -77,6 +95,15 @@
     "group": "learning_rate_0p001",
     "variant": "dqn",
     "role": "learning_rate",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 226.03672944894637,
+      "ci95_low": 96.0132300608272,
+      "ci95_high": 356.06022883706555,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -114,6 +141,15 @@
     "group": "target_sync_every_500",
     "variant": "dqn",
     "role": "target_sync_every",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 166.41887592870162,
+      "ci95_low": 108.68342087043422,
+      "ci95_high": 224.15433098696903,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -151,6 +187,15 @@
     "group": "target_sync_every_8000",
     "variant": "dqn",
     "role": "target_sync_every",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 149.78404121778723,
+      "ci95_low": 101.89094728408666,
+      "ci95_high": 197.6771351514878,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -188,6 +233,15 @@
     "group": "no_target",
     "variant": "no_target",
     "role": "ablation",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 161.76032297586534,
+      "ci95_low": -62.59548853994488,
+      "ci95_high": 386.11613449167555,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,
@@ -225,6 +279,15 @@
     "group": "double",
     "variant": "double",
     "role": "tier3",
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 122.85470144904889,
+      "ci95_low": -154.80375692987718,
+      "ci95_high": 400.51315982797496,
+      "method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "parameters": {
       "hidden_widths": [
         128,

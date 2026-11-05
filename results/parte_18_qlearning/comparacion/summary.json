@@ -2,6 +2,15 @@
   {
     "method": "Q-learning (2/2/6/6 intervalos)",
     "final_mean_100_episodes": 495.73,
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 495.73,
+      "ci95_low": 477.3576728441975,
+      "ci95_high": 514.1023271558025,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "std_across_seed_means": 6.038691911333117,
     "final_returns_by_seed": {
       "42": 487.19,
@@ -20,6 +29,15 @@
   {
     "method": "Q-learning (2/2/10/10 intervalos)",
     "final_mean_100_episodes": 163.83666666666667,
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 163.83666666666667,
+      "ci95_low": 32.42520803397804,
+      "ci95_high": 295.2481252993553,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "std_across_seed_means": 43.19285769146973,
     "final_returns_by_seed": {
       "42": 136.22,
@@ -38,6 +56,15 @@
   {
     "method": "Q-learning (2/2/20/20 intervalos)",
     "final_mean_100_episodes": 170.21333333333334,
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 170.21333333333334,
+      "ci95_low": 94.54931909934922,
+      "ci95_high": 245.87734756731746,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "std_across_seed_means": 24.869558813046027,
     "final_returns_by_seed": {
       "42": 136.99,
@@ -56,6 +83,15 @@
   {
     "method": "DQN ajustado",
     "final_mean_100_episodes": 498.59666666666664,
+    "final_ci95": {
+      "n_training_seeds": 3,
+      "mean": 498.59666666666664,
+      "ci95_low": 492.5586106693264,
+      "ci95_high": 504.63472266400686,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
     "std_across_seed_means": 1.9846130325302338,
     "final_returns_by_seed": {
       "42": 495.79,

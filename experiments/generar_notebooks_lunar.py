@@ -266,6 +266,8 @@ else:
 Las tablas usan 100 episodios por modelo. La DE describe variación entre las medias de
 las tres semillas. Las curvas usan 10 episodios por control, incluidos los primeros 10
 al inicio/final; por ello su último punto puede diferir de la tabla final de 100.
+Las bandas actuales son IC t del 95% puntuales entre tres semillas; sus supuestos
+y límites se explican en Analisis_Teorico_e_Intervalos.ipynb.
 Editar CONFIG no cambia estos resultados: corresponden al protocolo guardado en OUTPUT.
 """)
     code(f"filas = resumen(tier={tier})")

@@ -1,5 +1,11 @@
 # Estudiar y ejecutar Tier 1 en VS Code
 
+El análisis teórico y las figuras con intervalos del 95% están reunidos en
+**Analisis_Teorico_e_Intervalos.ipynb**, con el mismo kernel. No entrena agentes.
+Las figuras externas se actualizaron desde los datos guardados; las salidas ya
+guardadas en tu notebook de trabajo pueden seguir mostrando la versión anterior.
+Para consultar las nuevas con su explicación, abre el cuaderno complementario.
+
 1. Abre la carpeta completa del proyecto con **Archivo → Abrir carpeta**.
 2. Abre **Tier1_Explicado.ipynb**.
 3. Si VS Code lo solicita, instala las extensiones **Python** y **Jupyter** de Microsoft.

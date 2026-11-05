@@ -5,8 +5,8 @@ El enunciado de referencia está en `Project_01_Reinforcement_Learning_DQN.md`.
 
 **Estado actual:** parte experimental de Tier 1, Tier 2 y Tier 3 completada y
 verificada. Resumen de Tier 1 en `report/qlearning_objetivo.md`; los ensayos
-exploratorios anteriores se conservan. Quedan el análisis teórico, el artículo
-final y la preparación de la defensa.
+exploratorios anteriores se conservan. El análisis teórico y los intervalos están
+completados; quedan la integración del artículo final y la preparación de la defensa.
 
 **Mejora verificada:** DQN y Double DQN superan 200 individualmente en las
 semillas 42, 43 y 44, en dos muestras nuevas de 100 episodios cada una.
@@ -64,6 +64,40 @@ Verificación de la mejora: 29 pruebas unitarias, auditoría de los seis modelos
 ambos notebooks ejecutados sin errores (23 y 18 celdas de código) y animaciones
 comprobadas. Los GIF reproducen el primer episodio de prueba de cada método.
 Evidencia en `results/tier23_mejora_v1/workflow_complete.json`.
+
+### Análisis teórico e intervalos
+
+Abre [Analisis_Teorico_e_Intervalos.ipynb](Analisis_Teorico_e_Intervalos.ipynb) para
+leer el análisis y revisar todas las curvas con IC, sin entrenar. Los tres
+cuadernos de trabajo del usuario se conservan. El análisis obligatorio también
+está en [Markdown](report/analisis_teorico.md) y en
+[PDF de dos páginas](output/pdf/analisis_teorico.pdf).
+
+La guía permite DE o IC; las figuras anteriores con DE eran válidas. Las nuevas
+curvas usan IC t del 95% **puntuales**, sobre tres medias de semillas, con dos
+grados de libertad. Su interpretación supone normalidad aproximada, difícil de
+comprobar con tres réplicas. No son bandas simultáneas ni garantías para futuros
+entrenamientos. Las tablas “media ± DE” mantienen su significado descriptivo.
+[Método y límites](report/intervalos_confianza.md).
+
+Reproducir cada conjunto de figuras desde los resultados incluidos, sin entrenar:
+
+```powershell
+# CartPole: comparación de tres granularidades y DQN
+.\.venv\Scripts\python.exe -m experiments.comparar_tier1 --dqn-root results/parte_16_estabilidad/dqn_referencia --tabular-root results/parte_18_qlearning/resolucion_suave --dqn-label "DQN ajustado" --output results/parte_18_qlearning/comparacion
+# LunarLander: learning_rate, target_sync_every, ablation y double_dqn iniciales
+.\.venv\Scripts\python.exe -m experiments.analizar_tier23
+# Mejora: learning, tests, dqn_learning y dqn_tests
+.\.venv\Scripts\python.exe -m experiments.resumir_mejora
+# Figura y tablas de IC finales y diferencias emparejadas
+.\.venv\Scripts\python.exe -m experiments.resumir_intervalos
+# Regenerar únicamente el cuaderno complementario
+.\.venv\Scripts\python.exe -m experiments.generar_cuaderno_analisis
+```
+
+La exportación opcional del análisis a PDF usa `reportlab` (no es necesario para
+entrenar ni consultar resultados): `python -m pip install reportlab`, seguido de
+`python -m experiments.exportar_analisis_pdf`. El PDF ya está incluido.
 
 ### Estudios iniciales: 500000 pasos
 
@@ -164,7 +198,8 @@ incluye controles y resultados negativos. El cierre anterior permanece en
 4. **Completado, con limitaciones documentadas:** comparación DQN/Q-learning a 200 000 pasos y evaluación adicional con inicios nuevos.
 5. **Completado:** Tier 2, DQN en LunarLander, dos estudios de hiperparámetros y una ablación.
 6. **Completado con mejora verificada:** Tier 3, Double DQN sobre el entorno de Tier 2; 3/3 semillas en ambas muestras nuevas.
-7. **Pendiente:** análisis teórico, artículo y preparación de la defensa.
+7. **Completado:** análisis teórico sin implementación e intervalos de confianza.
+8. **Pendiente:** integrar el artículo final y preparar la defensa.
 
 CartPole, LunarLander y Double DQN son el alcance implementado. LunarLander se
 verificó con Gymnasium 1.4.0 y Box2D 2.3.10 en Python 3.12 para Windows.

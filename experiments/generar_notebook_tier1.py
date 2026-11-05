@@ -335,7 +335,7 @@ display(Image(filename=str(ROOT / ACTUAL['comparison'] / 'tier1_comparacion.png'
 
 - **Horizontal:** pasos de entrenamiento, no episodios.
 - **Vertical izquierda:** recompensa de evaluación sin explorar. Más alto es mejor.
-- **Bandas:** una desviación estándar entre semillas. Una banda amplia indica variación.
+- **Bandas:** IC t del 95% puntuales entre tres semillas. La interpretación supone normalidad aproximada y tiene limitaciones con tres réplicas; consulta Analisis_Teorico_e_Intervalos.ipynb.
 - **Panel derecho:** retorno durante entrenamiento, donde el agente todavía explora.
 - La línea de 475 orienta; el éxito se confirma con **100 episodios**, no solo con 10.
 

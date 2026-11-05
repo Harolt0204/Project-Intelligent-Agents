@@ -75,6 +75,24 @@
           "test_seconds": 21.806845400016755
         }
       ],
+      "test_ci95": {
+        "n_training_seeds": 3,
+        "mean": 272.51929877369054,
+        "ci95_low": 259.64452774785485,
+        "ci95_high": 285.3940697995262,
+        "ci_method": "Student t, df=2, ddof=1",
+        "unit": "training seed mean",
+        "scope": "pointwise, conditional on selected configuration"
+      },
+      "confirmation_ci95": {
+        "n_training_seeds": 3,
+        "mean": 273.69112130258816,
+        "ci95_low": 261.2775651287146,
+        "ci95_high": 286.1046774764617,
+        "ci_method": "Student t, df=2, ddof=1",
+        "unit": "training seed mean",
+        "scope": "pointwise, conditional on selected configuration"
+      },
       "test_mean": 272.51929877369054,
       "test_std_across_seed_means": 4.231732594061995,
       "confirmation_mean": 273.69112130258816,
@@ -156,6 +174,24 @@
           "test_seconds": 23.13577189994976
         }
       ],
+      "test_ci95": {
+        "n_training_seeds": 3,
+        "mean": 277.3713610297976,
+        "ci95_low": 263.11141904902405,
+        "ci95_high": 291.6313030105711,
+        "ci_method": "Student t, df=2, ddof=1",
+        "unit": "training seed mean",
+        "scope": "pointwise, conditional on selected configuration"
+      },
+      "confirmation_ci95": {
+        "n_training_seeds": 3,
+        "mean": 278.0688423005604,
+        "ci95_low": 269.0596869553829,
+        "ci95_high": 287.07799764573787,
+        "ci_method": "Student t, df=2, ddof=1",
+        "unit": "training seed mean",
+        "scope": "pointwise, conditional on selected configuration"
+      },
       "test_mean": 277.3713610297976,
       "test_std_across_seed_means": 4.68701626991114,
       "confirmation_mean": 278.0688423005604,

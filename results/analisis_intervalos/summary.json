@@ -1,0 +1,176 @@
+{
+  "method": "95% pointwise Student t, n=3 training seeds, df=2",
+  "runs_retrained": 0,
+  "rows": [
+    {
+      "tier": 1,
+      "method": "Q-learning (2/2/6/6 intervalos)",
+      "sample": "final",
+      "values": [
+        487.19,
+        500.0,
+        500.0
+      ],
+      "n_training_seeds": 3,
+      "mean": 495.73,
+      "ci95_low": 477.3576728441975,
+      "ci95_high": 514.1023271558025,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 1,
+      "method": "Q-learning (2/2/10/10 intervalos)",
+      "sample": "final",
+      "values": [
+        136.22,
+        224.83,
+        130.46
+      ],
+      "n_training_seeds": 3,
+      "mean": 163.83666666666667,
+      "ci95_low": 32.42520803397804,
+      "ci95_high": 295.2481252993553,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 1,
+      "method": "Q-learning (2/2/20/20 intervalos)",
+      "sample": "final",
+      "values": [
+        136.99,
+        196.82,
+        176.83
+      ],
+      "n_training_seeds": 3,
+      "mean": 170.21333333333334,
+      "ci95_low": 94.54931909934922,
+      "ci95_high": 245.87734756731746,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 1,
+      "method": "DQN ajustado",
+      "sample": "final",
+      "values": [
+        495.79,
+        500.0,
+        500.0
+      ],
+      "n_training_seeds": 3,
+      "mean": 498.59666666666664,
+      "ci95_low": 492.5586106693264,
+      "ci95_high": 504.63472266400686,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 2,
+      "method": "DQN LunarLander",
+      "sample": "test",
+      "values": [
+        272.70260009424294,
+        277.60800925824617,
+        267.2472869685826
+      ],
+      "n_training_seeds": 3,
+      "mean": 272.51929877369054,
+      "ci95_low": 259.64452774785485,
+      "ci95_high": 285.3940697995262,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 2,
+      "method": "DQN LunarLander",
+      "sample": "confirmation",
+      "values": [
+        269.0758242973306,
+        278.9980316637898,
+        272.99950794664403
+      ],
+      "n_training_seeds": 3,
+      "mean": 273.69112130258816,
+      "ci95_low": 261.2775651287146,
+      "ci95_high": 286.1046774764617,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 3,
+      "method": "Double DQN LunarLander",
+      "sample": "test",
+      "values": [
+        278.70640897960703,
+        282.32659594180944,
+        271.0810781679762
+      ],
+      "n_training_seeds": 3,
+      "mean": 277.3713610297976,
+      "ci95_low": 263.11141904902405,
+      "ci95_high": 291.6313030105711,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "tier": 3,
+      "method": "Double DQN LunarLander",
+      "sample": "confirmation",
+      "values": [
+        274.1773282796787,
+        278.67488048339266,
+        281.3543181386098
+      ],
+      "n_training_seeds": 3,
+      "mean": 278.0688423005604,
+      "ci95_low": 269.0596869553829,
+      "ci95_high": 287.07799764573787,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    }
+  ],
+  "paired_differences": [
+    {
+      "comparison": "Double minus DQN",
+      "sample": "test_mean",
+      "values": [
+        6.003808885364094,
+        4.718586683563274,
+        3.833791199393602
+      ],
+      "n_training_seeds": 3,
+      "mean": 4.85206225610699,
+      "ci95_low": 2.1414980519660283,
+      "ci95_high": 7.562626460247952,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    },
+    {
+      "comparison": "Double minus DQN",
+      "sample": "confirmation_mean",
+      "values": [
+        5.101503982348106,
+        -0.323151180397133,
+        8.354810191965782
+      ],
+      "n_training_seeds": 3,
+      "mean": 4.377720997972252,
+      "ci95_low": -6.512793623451061,
+      "ci95_high": 15.268235619395565,
+      "ci_method": "Student t, df=2, ddof=1",
+      "unit": "training seed mean",
+      "scope": "pointwise, conditional on selected configuration"
+    }
+  ]
+}

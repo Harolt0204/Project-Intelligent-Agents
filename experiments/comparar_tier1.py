@@ -10,6 +10,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 from envs.discretizers import discretization_label
+from experiments.intervalos import mean_ci95, ci_record
 
 
 def main():
@@ -62,17 +63,19 @@ def main():
             first_confirmed.append(summary.get("first_confirmed_threshold_step"))
         for ax, values, xs in ((axes[0], np.asarray(curves), steps),
                                (axes[1], np.asarray(training_curves), list(range(10_000, 200_001, 10_000)))):
-            mean, std = np.nanmean(values, axis=0), np.nanstd(values, axis=0)
+            mean, low, high = mean_ci95(values)
+            std = np.std(values, axis=0)
             ax.plot(xs, mean, color=color, linewidth=2, label=label)
-            ax.fill_between(xs, mean - std, mean + std, color=color, alpha=0.12)
+            ax.fill_between(xs, low, high, color=color, alpha=0.12)
             ax.grid(alpha=0.2)
             ax.set_xlabel("Pasos de entrenamiento")
             ax.set_xlim(0, 200_000)
-            for step, average, spread in zip(xs, mean, std):
+            for step, average, spread, lower, upper in zip(xs, mean, std, low, high):
                 curve_rows.append({"method": label, "kind": "evaluation" if ax is axes[0] else "training",
                                    "training_steps": step, "mean_return": float(average),
-                                   "std_across_seeds": float(spread)})
+                                   "std_across_seeds": float(spread), "ci95_low": float(lower), "ci95_high": float(upper)})
         summaries.append({"method": label, "final_mean_100_episodes": float(np.mean(finals)),
+                          "final_ci95": ci_record(finals),
                           "std_across_seed_means": float(np.std(finals)),
                           "final_returns_by_seed": dict(zip(["42", "43", "44"], finals)),
                           "mean_training_seconds": float(np.mean(times)),
@@ -86,7 +89,7 @@ def main():
     fig.legend(handles, labels, fontsize=8, loc="outside lower center", ncol=3)
     axes[1].set_title("Entrenamiento con exploración")
     axes[1].set_ylabel("Retorno por episodio completo; bloques de 10.000 pasos")
-    fig.suptitle("CartPole: mismo presupuesto de 200.000 pasos | media ± DE entre 3 semillas", fontsize=11)
+    fig.suptitle("CartPole: 200.000 pasos | media e IC 95% puntual (t, 3 semillas)", fontsize=11)
     fig.savefig(output / "tier1_comparacion.png", dpi=160)
     fig.savefig(output / "tier1_comparacion.pdf")
     plt.close(fig)

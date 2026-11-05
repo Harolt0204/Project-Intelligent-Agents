@@ -10,7 +10,8 @@ Exploración lineal de 1 a 0.05 en 150000 pasos, después constante. Evaluación
 Controles de 10 episodios; inicio/final de 100 y confirmación de 100 cuando un control alcanza 200.
 Se entregan modelos finales. No se elige el mejor checkpoint ni se descarta una semilla débil.
 Las curvas usan los primeros 10 episodios al inicio/final; las tablas finales usan los 100.
-La banda es una DE entre las medias de las semillas (ddof=0), no un IC del 95%.
+Las bandas son IC t del 95% puntuales entre tres medias de semillas (DE muestral, ddof=1). Las tablas conservan media ± DE descriptiva (ddof=0).
+Con tres réplicas, la normalidad no se verifica bien; los IC son orientativos, condicionales a esta configuración y no bandas simultáneas de toda la curva. Véase report/intervalos_confianza.md.
 DQN base se reutiliza en los dos estudios, la ablación y Tier 3. No son entrenamientos adicionales independientes.
 Todos los agentes son propios; la referencia SB3 Zoo solo orientó parámetros. No se importó un agente entrenado.
 Errata del protocolo congelado: el texto descriptivo selection menciona 200000 por arrastre de un piloto. El campo steps, los bucles y los CSV usan 500000; no se cambia el protocolo histórico.

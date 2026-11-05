@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+from experiments.intervalos import mean_ci95, ci_record
 
 
 def summarize(root):
@@ -25,6 +26,8 @@ def summarize(root):
             print(f'{group}: pruebas independientes pendientes; no se calcula una media final.')
             continue
         groups.append({'group':group,'runs':runs,
+            'test_ci95':ci_record([r['test_mean'] for r in runs]),
+            'confirmation_ci95':ci_record([r['confirmation_mean'] for r in runs]),
             'test_mean':float(np.mean([r['test_mean'] for r in runs])),
             'test_std_across_seed_means':float(np.std([r['test_mean'] for r in runs])),
             'confirmation_mean':float(np.mean([r['confirmation_mean'] for r in runs])),
@@ -57,6 +60,12 @@ def summarize(root):
               '|---|---:|---:|---:|']
     for group in groups:
         lines.append(f"| {group['group']} | {group['test_mean']:.2f} ± {group['test_std_across_seed_means']:.2f} | {group['confirmation_mean']:.2f} ± {group['confirmation_std_across_seed_means']:.2f} | {group['successful_seeds_both']}/3 |")
+    lines += ['', 'Las bandas de las curvas son IC t del 95% puntuales, con tres semillas y dos grados de libertad. Las DE de la tabla son descriptivas (ddof=0).',
+        'Los IC suponen medias independientes aproximadamente normales; n=3 no permite comprobar bien ese supuesto. No son bandas simultáneas ni corrigen la selección de parámetros. Véase report/intervalos_confianza.md.',
+        '', '| Método | IC 95% de la media de prueba | IC 95% de la media de confirmación |', '|---|---:|---:|']
+    for group in groups:
+        a,b=group['test_ci95'],group['confirmation_ci95']
+        lines.append(f"| {group['group']} | [{a['ci95_low']:.2f}, {a['ci95_high']:.2f}] | [{b['ci95_low']:.2f}, {b['ci95_high']:.2f}] |")
     if len(groups)==2:
         paired=[b['test_mean']-a['test_mean'] for a,b in zip(groups[0]['runs'],groups[1]['runs'])]
         lines += ['',f"Double menos DQN en prueba: {groups[1]['test_mean']-groups[0]['test_mean']:+.2f}; diferencias por semilla {', '.join(f'{value:+.2f}' for value in paired)}.",
@@ -87,6 +96,7 @@ def figures(root,config,groups,prefix=''):
     folder=root/'figures'
     folder.mkdir(exist_ok=True)
     colors=['#2563eb','#d97706']
+    interval_rows=[]
     fig,axes=plt.subplots(1,2,figsize=(12,4.8),layout='constrained')
     for group,color in zip(groups,colors):
         curves=[]
@@ -100,9 +110,12 @@ def figures(root,config,groups,prefix=''):
                 episodes=list(csv.DictReader(f))
             training.append([np.mean([float(r['return']) for r in episodes if start<int(r['training_steps'])<=end and r['budget_cut']=='False']) for start,end in zip(xs[:-1],xs[1:])])
         for ax,values,steps in [(axes[0],np.asarray(curves),xs),(axes[1],np.asarray(training),xs[1:])]:
-            mean,spread=np.nanmean(values,axis=0),np.nanstd(values,axis=0)
+            mean,low,high=mean_ci95(values)
             ax.plot(steps,mean,label='DQN' if group['group']=='base' else 'Double DQN',color=color)
-            ax.fill_between(steps,mean-spread,mean+spread,color=color,alpha=.15)
+            ax.fill_between(steps,low,high,color=color,alpha=.15)
+            for step,average,lower,upper in zip(steps,mean,low,high):
+                interval_rows.append({'group':group['group'],'kind':'validation' if ax is axes[0] else 'training',
+                    'training_steps':step,'mean':float(average),'ci95_low':float(lower),'ci95_high':float(upper)})
             ax.set_xlabel('Pasos del entorno')
             ax.set_ylabel('Retorno medio')
             ax.grid(alpha=.2)
@@ -111,9 +124,13 @@ def figures(root,config,groups,prefix=''):
     axes[1].set_title('Entrenamiento: episodios completos por bloque')
     axes[0].axhline(config['threshold'],color='#64748b',ls='--',label='Referencia: 200')
     axes[0].legend()
-    fig.suptitle(('Nueva comparación DQN / Double DQN' if len(groups)==2 else 'DQN: nueva configuración')+' | media ± DE de tres semillas')
+    fig.suptitle(('DQN / Double DQN' if len(groups)==2 else 'DQN: nueva configuración')+' | media e IC 95% puntual (t, 3 semillas)')
     for suffix in ('png','pdf'): fig.savefig(folder/f'{prefix}learning.{suffix}',dpi=160)
     plt.close(fig)
+    with (folder/f'{prefix}learning_intervals.csv').open('w',encoding='utf-8',newline='') as f:
+        writer=csv.DictWriter(f,fieldnames=list(interval_rows[0]))
+        writer.writeheader()
+        writer.writerows(interval_rows)
     fig,axes=plt.subplots(1,2,figsize=(11,5))
     fig.subplots_adjust(left=.08,right=.99,bottom=.22,top=.88,wspace=.28)
     xs=np.arange(len(config['seeds']))
