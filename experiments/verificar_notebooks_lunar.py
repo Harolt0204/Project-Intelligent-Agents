@@ -28,7 +28,7 @@ def main():
         path=ROOT/name
         original_hash=hashlib.sha256(path.read_bytes()).hexdigest()
         nb=nbformat.read(path,as_version=4)
-        if any(c.cell_type=='code' and re.search(r'(?m)^\s*EJECUTAR_TIER[23]\s*=\s*True\b',c.source) for c in nb.cells):
+        if any(c.cell_type=='code' and re.search(r'(?m)^\s*EJECUTAR_(?:TIER[23]|MEJORA|PRUEBA)\s*=\s*True\b',c.source) for c in nb.cells):
             raise RuntimeError(f'{name} tiene activado un entrenamiento largo. Se conserva el archivo y no se relanza durante la verificación.')
         if args.animacion:
             setup=next(c.source for c in nb.cells if c.cell_type=='code' and 'from pathlib import Path' in c.source)

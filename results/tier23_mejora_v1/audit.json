@@ -1,0 +1,90 @@
+{
+  "model_count": 6,
+  "training_code_commit": "8a5d3096b66ce95ca6902ea8281e7941cdfbb7b3",
+  "models": [
+    {
+      "group": "base",
+      "seed": 42,
+      "selected_step": 500000,
+      "test_mean": 272.70260009424294,
+      "confirmation_mean": 269.0758242973306,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    },
+    {
+      "group": "base",
+      "seed": 43,
+      "selected_step": 850000,
+      "test_mean": 277.60800925824617,
+      "confirmation_mean": 278.9980316637898,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    },
+    {
+      "group": "base",
+      "seed": 44,
+      "selected_step": 850000,
+      "test_mean": 267.2472869685826,
+      "confirmation_mean": 272.99950794664403,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    },
+    {
+      "group": "double",
+      "seed": 42,
+      "selected_step": 950000,
+      "test_mean": 278.70640897960703,
+      "confirmation_mean": 274.1773282796787,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    },
+    {
+      "group": "double",
+      "seed": 43,
+      "selected_step": 400000,
+      "test_mean": 282.32659594180944,
+      "confirmation_mean": 278.67488048339266,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    },
+    {
+      "group": "double",
+      "seed": 44,
+      "selected_step": 800000,
+      "test_mean": 271.0810781679762,
+      "confirmation_mean": 281.3543181386098,
+      "goal_met": true,
+      "weights_frozen": true,
+      "training_code_matches": true,
+      "configuration_and_budget_verified": true,
+      "validation_reproduced_episodes": 100,
+      "test_prefix_reproduced_episodes": 2
+    }
+  ],
+  "paired_initial_policies_verified": true,
+  "validation_returns_reproduced": 600,
+  "test_episodes": 1200,
+  "test_prefix_episodes_reproduced": 12,
+  "goal_met": true,
+  "note": "Las pruebas completas se ejecutaron desde los pesos cargados tras congelar su elecci\u00f3n; esta auditor\u00eda repite el primer episodio de cada muestra."
+}

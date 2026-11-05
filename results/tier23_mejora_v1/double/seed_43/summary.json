@@ -1,0 +1,23 @@
+{
+  "seed": 43,
+  "group": "double",
+  "input_hash": "c5202ed702256a9b361ff4d215276eaf32d82a39f0e4a8d612c54109dc53746a",
+  "training_complete": true,
+  "complete": true,
+  "training_steps": 1000000,
+  "selected_step": 400000,
+  "selected_validation_mean": 281.6705092580813,
+  "last_validation_mean": 223.22649054033275,
+  "first_confirmed_validation_threshold_step": 200000,
+  "training_seconds": 1994.102430899744,
+  "total_seconds": 2291.6719262000406,
+  "updates": 248751,
+  "target_syncs": 1000,
+  "stored_experiences": 100000,
+  "selected_validation_reproduced": true,
+  "selected_model_sha256": "2be1564b57a90b07f0b7b07001365f97cd886ddb919f626a31ddc1a325ef88ca",
+  "test_mean": 282.32659594180944,
+  "confirmation_mean": 278.67488048339266,
+  "threshold_met_both_tests": true,
+  "test_seconds": 17.670942800003104
+}

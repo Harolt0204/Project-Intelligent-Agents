@@ -1,0 +1,38 @@
+[
+  {
+    "group": "base",
+    "seed": 42,
+    "sha256": "37eba473a40fb68371692635cf5dc4f62a4925bbf7f7afdaf78235b6fc160ec2",
+    "selected_step": 500000
+  },
+  {
+    "group": "base",
+    "seed": 43,
+    "sha256": "724852ab9b5597121d8cbc88965ace90c78910f5c3234a3396196159687c9cc8",
+    "selected_step": 850000
+  },
+  {
+    "group": "base",
+    "seed": 44,
+    "sha256": "e8bd3195eb0e400e90d4d1fa55b7882e525f14b148681e09f1a817130278c609",
+    "selected_step": 850000
+  },
+  {
+    "group": "double",
+    "seed": 42,
+    "sha256": "38e0e57298334405545d7a041392af508ef5e4d798f22d14ad39894c6697e363",
+    "selected_step": 950000
+  },
+  {
+    "group": "double",
+    "seed": 43,
+    "sha256": "2be1564b57a90b07f0b7b07001365f97cd886ddb919f626a31ddc1a325ef88ca",
+    "selected_step": 400000
+  },
+  {
+    "group": "double",
+    "seed": 44,
+    "sha256": "288a089110ae54e4dbf37df771be3f49133d3954c6c6238ee749981759b5122c",
+    "selected_step": 800000
+  }
+]

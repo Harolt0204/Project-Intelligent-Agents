@@ -1,0 +1,40 @@
+{
+  "complete": true,
+  "goal_met_both_samples": true,
+  "models_audited": 6,
+  "unit_tests_passed": 29,
+  "notebooks": [
+    {
+      "notebook": "Tier2_LunarLander.ipynb",
+      "code_cells": 23,
+      "errors": 0,
+      "training_disabled": true
+    },
+    {
+      "notebook": "Tier3_DoubleDQN.ipynb",
+      "code_cells": 18,
+      "errors": 0,
+      "training_disabled": true
+    }
+  ],
+  "both_inline_animations_verified": true,
+  "demonstrations": {
+    "base": {
+      "first_test_episode_reproduced": true,
+      "return": 247.73412773656884,
+      "gif_frames": 114
+    },
+    "double": {
+      "first_test_episode_reproduced": true,
+      "return": 241.74401555682533,
+      "gif_frames": 115
+    }
+  },
+  "figures_visually_reviewed": [
+    "learning",
+    "tests",
+    "dqn_learning",
+    "dqn_tests"
+  ],
+  "tier1_user_notebook_unchanged_sha256": "F35FBDAA291CAFCF403A0E63981EEDEC297E9ED515525B7BFB100AF26D08F696"
+}

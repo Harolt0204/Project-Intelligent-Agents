@@ -8,6 +8,12 @@ verificada. Resumen de Tier 1 en `report/qlearning_objetivo.md`; los ensayos
 exploratorios anteriores se conservan. Quedan el análisis teórico, el artículo
 final y la preparación de la defensa.
 
+**Mejora verificada:** DQN y Double DQN superan 200 individualmente en las
+semillas 42, 43 y 44, en dos muestras nuevas de 100 episodios cada una.
+Los modelos de presentación usan esta ronda. Plan y protocolo en
+[plan_mejora_lunar.md](report/plan_mejora_lunar.md); resultados y límites en
+[el informe de mejora](results/tier23_mejora_v1/report.md).
+
 ## Tier 2 y Tier 3: notebooks separados
 
 - [Tier2_LunarLander.ipynb](Tier2_LunarLander.ipynb): DQN propio, estudios de tasa de aprendizaje y frecuencia de target, y ablación sin target.
@@ -16,8 +22,53 @@ final y la preparación de la defensa.
 Guía: [COMO_USAR_TIER2_TIER3.md](COMO_USAR_TIER2_TIER3.md). Los algoritmos se comparten
 entre notebooks. Ejecutar todo consulta los resultados incluidos; los
 entrenamientos largos están desactivados inicialmente.
-La comparación formal tiene siete grupos únicos × tres semillas, con 500000 pasos
-por modelo. DQN base se reutiliza en ambos estudios y Tier 3.
+La ronda vigente tiene dos métodos × tres semillas, con 1000000 pasos por modelo.
+Se elige el checkpoint con mayor media confirmada de validación de 100 episodios;
+sus pesos quedan fijados antes de las dos pruebas nuevas. Se conservan también
+los pesos del último paso. DQN se reutiliza como baseline de Tier 3.
+
+| Modelo vigente | Semilla 42 | Semilla 43 | Semilla 44 |
+|---|---:|---:|---:|
+| DQN, Tier 2 | 272.70 | 277.61 | 267.25 |
+| Double DQN, Tier 3 | 278.71 | 282.33 | 271.08 |
+
+Cada celda es una media de 100 episodios de la prueba nueva. En la confirmación,
+otros 100 por modelo, ambos métodos vuelven a lograr **3/3**. Media ± DE entre
+semillas: DQN 272.52 ± 4.23 (confirmación 273.69 ± 4.08); Double 277.37 ± 4.69
+(confirmación 278.07 ± 2.96). Son las tres semillas fijadas, no las mejores de
+una selección de entrenamientos.
+
+La mejora combina más entrenamiento, ajustes más frecuentes, tasa decreciente
+y selección por validación. Cambian varios factores a la vez: no se atribuye la
+mejora a uno solo. La comparación vigente entre DQN y Double comparte todos esos
+ajustes. Los barridos originales mantienen su diseño de un parámetro a la vez.
+
+Consultar resultados y ver la nave no requiere entrenar de nuevo. Para reproducir
+la nueva ronda desde cero, o regenerar sus cuatro figuras desde los datos:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.mejorar_tier23 --output results/reproduccion_mejora
+.\.venv\Scripts\python.exe -m experiments.resumir_mejora --root results/tier23_mejora_v1
+```
+
+Auditar modelos, datos y fuentes con el historial Git disponible:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.verificar_mejora
+```
+
+La configuración de presentación está en `results/tier23_actual.json` y los
+modelos elegidos en `results/tier23_mejora_v1/<grupo>/seed_<semilla>/online_selected.pt`.
+
+Verificación de la mejora: 29 pruebas unitarias, auditoría de los seis modelos,
+ambos notebooks ejecutados sin errores (23 y 18 celdas de código) y animaciones
+comprobadas. Los GIF reproducen el primer episodio de prueba de cada método.
+Evidencia en `results/tier23_mejora_v1/workflow_complete.json`.
+
+### Estudios iniciales: 500000 pasos
+
+Se conservan siete grupos únicos × tres semillas. DQN base se reutilizó en ambos
+estudios, la ablación y Tier 3. Sus resultados motivaron la ronda de mejora.
 
 | Resultado de LunarLander | Media final ± DE | Nuevos inicios ± DE | Semillas ≥200 |
 |---|---:|---:|---:|
@@ -46,7 +97,7 @@ coinciden con el commit `460af7c` en los 21 modelos; solo se generalizó despué
 comentario de DQN sobre el número de salidas. Evidencia en
 [audit.json](results/tier23_lunarlander/audit.json).
 
-Cada experimento puede reproducirse por separado. Estos comandos reutilizan
+Cada experimento inicial puede reproducirse por separado. Estos comandos reutilizan
 ejecuciones completas; para volver a entrenar desde cero añade `--output` con
 una carpeta nueva, como explica la guía.
 
@@ -57,7 +108,7 @@ una carpeta nueva, como explica la guía.
 | Ablación | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base no_target` |
 | Double DQN | `.\.venv\Scripts\python.exe -m experiments.paralelo_tier23 --groups base double` |
 
-Regenerar las cuatro figuras desde los CSV incluidos, sin entrenar:
+Regenerar las cuatro figuras iniciales desde sus CSV, sin entrenar:
 
 ```powershell
 .\.venv\Scripts\python.exe -m experiments.analizar_tier23
@@ -112,7 +163,7 @@ incluye controles y resultados negativos. El cierre anterior permanece en
 3. **Completado:** comparar 3 granularidades de discretización con múltiples semillas (Parte 6).
 4. **Completado, con limitaciones documentadas:** comparación DQN/Q-learning a 200 000 pasos y evaluación adicional con inicios nuevos.
 5. **Completado:** Tier 2, DQN en LunarLander, dos estudios de hiperparámetros y una ablación.
-6. **Completado, resultado negativo documentado:** Tier 3, Double DQN sobre el entorno de Tier 2.
+6. **Completado con mejora verificada:** Tier 3, Double DQN sobre el entorno de Tier 2; 3/3 semillas en ambas muestras nuevas.
 7. **Pendiente:** análisis teórico, artículo y preparación de la defensa.
 
 CartPole, LunarLander y Double DQN son el alcance implementado. LunarLander se

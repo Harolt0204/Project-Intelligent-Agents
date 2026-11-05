@@ -1,0 +1,10 @@
+{
+  "root": "results/tier23_mejora_v1",
+  "reviewed": true,
+  "model_file": "online_selected.pt",
+  "selection": "Mayor validacion confirmada de 100 episodios, antes de ambas pruebas",
+  "previous_root": "results/tier23_lunarlander",
+  "audit": "results/tier23_mejora_v1/audit.json",
+  "training_code_commit": "8a5d3096b66ce95ca6902ea8281e7941cdfbb7b3",
+  "goal_met_both_samples": true
+}

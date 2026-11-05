@@ -1,0 +1,50 @@
+{
+  "environment": "LunarLander-v3",
+  "environment_kwargs": {
+    "continuous": false,
+    "enable_wind": false,
+    "gravity": -10.0
+  },
+  "steps": 1000000,
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "eval_every": 50000,
+  "periodic_eval_episodes": 10,
+  "final_eval_episodes": 100,
+  "threshold": 200.0,
+  "validation_gate": 230.0,
+  "evaluation_base": 30000000,
+  "heldout_evaluation_base": 40000000,
+  "confirmation_evaluation_base": 50000000,
+  "demonstration_base": 40000000,
+  "base": {
+    "hidden_widths": [
+      128,
+      128
+    ],
+    "learning_rate": 0.00063,
+    "loss": "smooth_l1",
+    "gamma": 0.99,
+    "buffer_size": 100000,
+    "batch_size": 128,
+    "learning_starts": 5000,
+    "train_every": 4,
+    "gradient_steps": 1,
+    "target_sync_every": 1000,
+    "epsilon_decay_steps": 200000,
+    "epsilon_end": 0.05
+  },
+  "learning_rate_schedule": {
+    "decay_start": 300000,
+    "decay_end": 800000,
+    "final": 5e-05
+  },
+  "selection": "Presupuesto completo de 1000000 pasos por modelo. Se conserva el checkpoint con mayor media de validacion de 100 episodios; se confirma un control cuando sus 10 episodios alcanzan 200 y siempre al final. Los dos conjuntos de prueba no participan en la seleccion. No se cambian semillas, recompensas ni limite del entorno.",
+  "goal": "DQN y Double DQN: cada una de las semillas 42, 43 y 44 obtiene media >=200 en ambos conjuntos de prueba de 100 episodios.",
+  "comparison": "Nueva confirmacion con parametros y presupuesto iguales para ambos algoritmos. Los estudios originales de 500000 pasos permanecen como historial; esta ronda conjunta no aisla el efecto de cada cambio.",
+  "reference": "https://github.com/DLR-RM/rl-baselines3-zoo/blob/master/hyperparams/dqn.yml",
+  "reference_note": "Implementacion propia: la referencia orienta lr y lote. Red 128/128 y un ajuste cada cuatro pasos se mantienen por coste; no se afirma replicar SB3. Protocolo fijado antes de consultar las muestras nuevas."
+}

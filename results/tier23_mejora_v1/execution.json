@@ -1,0 +1,35 @@
+{
+  "maximum_workers": 3,
+  "torch_threads_per_worker": 1,
+  "rounds": [
+    [
+      [
+        "double",
+        43
+      ],
+      [
+        "base",
+        42
+      ],
+      [
+        "double",
+        44
+      ]
+    ],
+    [
+      [
+        "base",
+        43
+      ],
+      [
+        "base",
+        44
+      ],
+      [
+        "double",
+        42
+      ]
+    ]
+  ],
+  "note": "Casos debiles primero; todos usan el mismo presupuesto. Procesos comparten CPU, no benchmark aislado."
+}

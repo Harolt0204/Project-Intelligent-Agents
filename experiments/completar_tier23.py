@@ -33,8 +33,8 @@ def main():
     execute('experiments.analizar_tier23')
     if not (output/'verification/new_summary.json').exists():
         execute('experiments.verificar_tier23')
-    execute('experiments.mostrar_lunarlander','--group','base','--gif')
-    execute('experiments.mostrar_lunarlander','--group','double','--gif')
+    execute('experiments.mostrar_lunarlander','--group','base','--root',str(output),'--gif')
+    execute('experiments.mostrar_lunarlander','--group','double','--root',str(output),'--gif')
     execute('experiments.analizar_tier23')
     execute('experiments.verificar_notebooks_lunar')
     execute('experiments.verificar_notebooks_lunar','--animacion','2')

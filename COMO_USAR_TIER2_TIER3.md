@@ -14,10 +14,11 @@ En otra computadora, con Python 3.12, abre **Preparar_Proyecto.bat** y después
 **Preparar_Notebook.bat**. Box2D está incluido en los requisitos para LunarLander-v3.
 El entorno se verificó en Windows, CPU, con Gymnasium 1.4.0 y Box2D 2.3.10.
 
-Los 21 modelos formales están completos. La mejor media de Tier 2 fue
-226.04 ± 42.74 con lr=0.001 (2/3 semillas ≥200); Double DQN obtuvo
-122.85 ± 91.26 y no mejoró la base. El análisis incluye esos límites y los
-resultados negativos. No es necesario volver a entrenar para revisarlos.
+Los modelos vigentes son los de **Mejora: confirmación en las tres semillas**.
+DQN obtuvo 272.70, 277.61 y 267.25; Double obtuvo 278.71, 282.33 y 271.08.
+Cada valor es una media de 100 episodios nuevos. Ambos volvieron a superar 200
+en las tres semillas con otra muestra de 100 por modelo. Los estudios iniciales
+de 21 modelos se conservan como historial. No hace falta volver a entrenar.
 
 ## Consultar resultados y ver la nave
 
@@ -27,9 +28,9 @@ grupo de tres semillas, se indica como pendiente; no se inventan puntuaciones.
 Para animar la nave, cambia **VER_NAVE=False** a **True** en su celda. Tier 2 usa
 el modelo `base` y Tier 3 el modelo `double`. Puedes elegir semilla 42, 43 o 44.
 La animación de un episodio no sustituye el promedio de 100 episodios por modelo.
-Para consultar la variante de mayor media de Tier 2, cambia GRUPO a
-`learning_rate_0p001`; están disponibles sus tres semillas. Cambiar el grupo
-solo elige qué modelo guardado se reproduce.
+Los grupos vigentes son `base` (DQN) y `double` (Double DQN). Puedes cambiar
+SEMILLA entre 42, 43 y 44. Los modelos de presentación se eligen según
+`results/tier23_actual.json`.
 
 También puedes abrir **Mostrar_LunarLander.bat** o **Mostrar_DoubleDQN.bat** para
 ver una ventana independiente con los modelos incluidos.
@@ -40,12 +41,34 @@ Los indicadores **EJECUTAR_PRUEBA**, **EJECUTAR_TIER2** y **EJECUTAR_TIER3** est
 desactivados inicialmente. La prueba corta es para comprobar funcionamiento y no
 es un resultado formal. Las ejecuciones formales usan tres semillas y pueden tardar.
 
+La sección **Mejora: confirmación en las tres semillas** consulta la nueva ronda.
+CONFIG_MEJORA contiene sus parámetros; EJECUTAR_MEJORA vuelve a entrenar los seis
+modelos en otra carpeta y está desactivado inicialmente. Se conservan por separado
+los pesos del último paso y los elegidos por validación. Los modelos usados para
+mostrar la nave ya fueron actualizados tras comprobar 3/3 de ambos métodos en
+las dos pruebas nuevas. `online_selected.pt` contiene el checkpoint elegido por
+validación; `online_final.pt` conserva los pesos del último paso del entrenamiento.
+
 Cambiar CONFIG afecta nuevos entrenamientos. No modifica modelos ya guardados.
 Para cambiar parámetros usa una carpeta nueva. Los resultados completos del mismo
 protocolo pueden reutilizarse, especialmente el DQN base compartido entre Tiers.
 Las ejecuciones parciales no se sobrescriben.
 
 ## Reproducción desde terminal
+
+Repetir la nueva ronda en una carpeta distinta, regenerar figuras o auditarla:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.mejorar_tier23 --output results/reproduccion_mejora
+.\.venv\Scripts\python.exe -m experiments.resumir_mejora --root results/tier23_mejora_v1
+.\.venv\Scripts\python.exe -m experiments.verificar_mejora
+```
+
+La auditoría de fuentes requiere el historial del repositorio Git. Los notebooks,
+figuras y modelos también se pueden consultar desde una copia descargada.
+Las figuras nuevas son `learning`, `tests`, `dqn_learning` y `dqn_tests`, en PNG y PDF.
+
+### Estudios iniciales
 
 Ejecutar todos los estudios en orden, reutilizando resultados completos del mismo protocolo:
 
@@ -104,6 +127,13 @@ Generar los GIF del primer episodio de las semillas 42:
 ```powershell
 .\.venv\Scripts\python.exe -m experiments.mostrar_lunarlander --group base --gif
 .\.venv\Scripts\python.exe -m experiments.mostrar_lunarlander --group double --gif
+```
+
+Los comandos anteriores usan los modelos vigentes. Para ver una variante inicial,
+indica su carpeta explícitamente, por ejemplo:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.mostrar_lunarlander --root results/tier23_lunarlander --group learning_rate_0p001 --seed 43
 ```
 
 Comprobar los notebooks con kernel real:

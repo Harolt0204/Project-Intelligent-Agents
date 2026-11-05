@@ -1,0 +1,12 @@
+{
+  "group": "base",
+  "training_seed": 42,
+  "environment_seed": 40042000,
+  "return": 247.73412773656884,
+  "steps": 239,
+  "terminated": true,
+  "truncated": false,
+  "selection": "Primer episodio de prueba, checkpoint elegido por validación",
+  "model_file": "online_selected.pt",
+  "learning": false
+}

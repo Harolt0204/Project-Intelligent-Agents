@@ -1,7 +1,7 @@
 @echo off
 cd /d "%~dp0"
-if not exist "results\tier23_lunarlander\double\seed_42\online_final.pt" (
-    echo El modelo final todavia no esta disponible. Consulta el estado en Tier3_DoubleDQN.ipynb.
+if not exist ".venv\Scripts\python.exe" (
+    echo Ejecuta Preparar_Proyecto.bat antes de mostrar los modelos.
     pause
     exit /b 1
 )

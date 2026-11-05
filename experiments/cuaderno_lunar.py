@@ -47,21 +47,33 @@ def discusion(tier, output=OUTPUT):
         print('La discusión se genera desde resultados completos, no desde valores supuestos.')
 
 
-def demostrar(group='base',seed=42,output=OUTPUT,inline=True,save_gif=False):
+def demostrar(group='base',seed=42,output=None,inline=True,save_gif=False):
     """Primer episodio del protocolo, sin aprender ni buscar un intento exitoso."""
     from PIL import Image,ImageDraw
+    if output is None:
+        from experiments.cuaderno_mejora import active_root
+        output=active_root()
     folder=Path(output)/group/f'seed_{seed}'
-    if not (folder/'online_final.pt').exists():
+    if not (folder/'config.json').exists():
         raise FileNotFoundError(f'El modelo final todavía no está disponible: {folder}')
-    model,run_config=load_model(folder)
+    metadata=json.loads((folder/'config.json').read_text(encoding='utf-8'))
+    if metadata.get('model_file')=='online_selected.pt':
+        summary_path=folder/'summary.json'
+        if not summary_path.exists() or not json.loads(summary_path.read_text(encoding='utf-8')).get('complete',False):
+            raise RuntimeError('La mejora sigue en validación. Su demostración de prueba se habilita después de completar las dos evaluaciones nuevas.')
+        from experiments.refinar_lunar import load_selected
+        model,run_config=load_selected(folder)
+    else:
+        model,run_config=load_model(folder)
     config=run_config['protocol']
+    base=config.get('demonstration_base',config['evaluation_base'])
     env=make_env(config,render_mode='rgb_array' if inline or save_gif else 'human')
-    rng=np.random.default_rng(config['evaluation_base']+500_000+1000*seed)
+    rng=np.random.default_rng(base+500_000+1000*seed)
     frames=[]
     total=0.
     step=0
     try:
-        obs,_=env.reset(seed=config['evaluation_base']+1000*seed)
+        obs,_=env.reset(seed=base+1000*seed)
         while True:
             if (inline or save_gif) and step%2==0:
                 frames.append(env.render())
@@ -77,9 +89,10 @@ def demostrar(group='base',seed=42,output=OUTPUT,inline=True,save_gif=False):
                 break
     finally:
         env.close()
-    result={'group':group,'training_seed':seed,'environment_seed':config['evaluation_base']+1000*seed,
+    result={'group':group,'training_seed':seed,'environment_seed':base+1000*seed,
             'return':float(total),'steps':step,'terminated':bool(terminated),'truncated':bool(truncated),
-            'selection':'Primer episodio de evaluación, no mejor intento','learning':False}
+            'selection':'Primer episodio de prueba, checkpoint elegido por validación' if metadata.get('model_file') else 'Primer episodio de evaluación, no mejor intento',
+            'model_file':metadata.get('model_file','online_final.pt'),'learning':False}
     print(json.dumps(result,indent=2,ensure_ascii=False))
     if save_gif:
         dest=folder/'visual'

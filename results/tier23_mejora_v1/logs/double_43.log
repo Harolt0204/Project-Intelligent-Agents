@@ -1,0 +1,21 @@
+double semilla 43 | paso       0 | validacion 10: -746.77
+double semilla 43 | paso   50000 | validacion 10: -83.71
+double semilla 43 | paso  100000 | validacion 10: -93.64
+double semilla 43 | paso  150000 | validacion 10: 162.02
+double semilla 43 | paso  200000 | validacion 10: 223.33 | confirmacion100: 202.39
+double semilla 43 | paso  250000 | validacion 10: 246.09 | confirmacion100: 233.06
+double semilla 43 | paso  300000 | validacion 10: 256.44 | confirmacion100: 257.31
+double semilla 43 | paso  350000 | validacion 10: 262.06 | confirmacion100: 263.52
+double semilla 43 | paso  400000 | validacion 10: 277.24 | confirmacion100: 281.67
+double semilla 43 | paso  450000 | validacion 10: 26.28
+double semilla 43 | paso  500000 | validacion 10: 155.61
+double semilla 43 | paso  550000 | validacion 10: 246.35 | confirmacion100: 236.30
+double semilla 43 | paso  600000 | validacion 10: 259.43 | confirmacion100: 269.21
+double semilla 43 | paso  650000 | validacion 10: 264.48 | confirmacion100: 264.59
+double semilla 43 | paso  700000 | validacion 10: 266.33 | confirmacion100: 263.38
+double semilla 43 | paso  750000 | validacion 10: 263.96 | confirmacion100: 257.83
+double semilla 43 | paso  800000 | validacion 10: 273.43 | confirmacion100: 261.51
+double semilla 43 | paso  850000 | validacion 10: 201.27 | confirmacion100: 230.25
+double semilla 43 | paso  900000 | validacion 10: 233.92 | confirmacion100: 238.20
+double semilla 43 | paso  950000 | validacion 10: 185.15
+double semilla 43 | paso 1000000 | validacion 100: 223.23 | confirmacion100: 223.23

@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import nbformat as nbf
+from experiments.seccion_mejora import add_refinement_cells
 
 ROOT=Path(__file__).resolve().parents[1]
 SETUP="""
@@ -28,7 +29,7 @@ torch.set_num_threads(1)
 torch.manual_seed(123)
 CONFIG = configuration()
 print('Python:', sys.executable)
-print('Resultados:', OUTPUT)
+print('Resultados iniciales:', OUTPUT)
 """
 
 
@@ -50,6 +51,9 @@ y `Preparar_Notebook.bat` instalan las dependencias del proyecto.
 
 Los entrenamientos y la animación se activan expresamente en sus celdas. Ejecutar todo
 consulta resultados guardados y ejemplos. Si un estudio sigue en curso, se indica como pendiente.
+
+La sección **Mejora: confirmación en las tres semillas** añade la nueva ronda.
+Los estudios iniciales se conservan identificados como tales.
 """)
     code(SETUP)
     if tier==2:
@@ -232,7 +236,7 @@ else:
     print('Prueba corta desactivada.')
 """)
     md(f"""
-## Repetir Tier {tier} (opcional, entrenamiento largo)
+## Repetir estudios iniciales de Tier {tier} (opcional, entrenamiento largo)
 
 Activa la celda solo para volver a entrenar. La carpeta debe ser nueva si cambias parámetros.
 Para continuar el protocolo original puedes usar OUTPUT: se reutilizan resultados completos
@@ -240,6 +244,7 @@ con el mismo protocolo y se rechaza sobrescribir ejecuciones parciales.
 
 Los estudios formales necesitan al menos tres semillas. Tier 2 comprende seis grupos únicos;
 Tier 3 comprende base y Double DQN. Si base ya existe, puede reutilizarse.
+Para repetir la nueva comparación usa EJECUTAR_MEJORA en la sección siguiente.
 """)
     groups="[n for n in plan(CONFIG) if n != 'double']" if tier==2 else "['base', 'double']"
     code(f"""
@@ -254,8 +259,9 @@ if EJECUTAR_TIER{tier}:
 else:
     print('Entrenamiento formal desactivado. Los resultados guardados se consultan abajo.')
 """)
+    add_refinement_cells(tier,md,code)
     md("""
-## Resultados guardados
+## Estudios iniciales: 500000 pasos
 
 Las tablas usan 100 episodios por modelo. La DE describe variación entre las medias de
 las tres semillas. Las curvas usan 10 episodios por control, incluidos los primeros 10
